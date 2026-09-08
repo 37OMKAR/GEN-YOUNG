@@ -562,6 +562,25 @@ Every image in the showcase above intentionally features users with visible mobi
 
 ---
 
+## 🤟 Text-to-Sign-Language Integration & Citation
+
+Gen-Young proudly incorporates assistive-technology research and sign-language glossing architecture developed in:
+
+> **Core Engine:** [37OMKAR / text-to-signlanguage](https://github.com/37OMKAR/text-to-signlanguage.git)
+> *"Type a sentence. A 3D avatar signs it. Web-based, accessibility-first, no video playback anywhere in the pipeline."*
+
+As articulated in **Chapter 23 of the Gen-Young Concept Paper** (*"Sign language, Braille and inclusive communication"*):
+
+> *"Your existing text-to-sign-language work can become a major Gen-Young differentiator. Important Government-benefit information, banking instructions and educational material can be made available through a sign-language interface. For an Indian customer base, the product should be designed around Indian Sign Language (ISL) as the local requirement..."*
+
+### Key Capabilities Powered by this Integration
+
+1. **Rule-Based NLP Glossing** — Deterministic lemmatization, stopword filtering, and SOV grammar reordering that converts conversational banking prompts into Indian Sign Language (ISL) gloss tokens.
+2. **Interactive Gesture Demonstrator** — Animated procedural handshape and posture visualization for high-stakes banking flows (card freeze, UPI transfer, balance query) and Emergency SOS dispatches.
+3. **Universal Multi-Modal Access** — Seamless parity across visual text, Web Speech TTS narration, and ISL visual gestures — without heavy external video dependencies.
+
+---
+
 ## 🏛️ The 7 Core Pillars
 
 | # | Pillar | Description & Key Features |
