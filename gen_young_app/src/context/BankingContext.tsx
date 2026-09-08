@@ -48,6 +48,14 @@ export const BankingProvider: React.FC<BankingProviderProps> = ({ children }) =>
 
   const storageKey = `gen_young_banking_${activePersonaId}`;
 
+  // Concurrency and lifecycle tracking refs
+  const activePersonaIdRef = useRef<string>(activePersonaId);
+  const personaEpochRef = useRef<number>(0);
+  const inFlightAbortControllersRef = useRef<Set<AbortController>>(new Set());
+
+  // Synchronously update active persona ref on each render
+  activePersonaIdRef.current = activePersonaId;
+
   // Helper to load or initialize banking state for the active persona
   const loadAccount = useCallback((): BankAccount => {
     if (typeof window !== 'undefined') {
@@ -63,7 +71,8 @@ export const BankingProvider: React.FC<BankingProviderProps> = ({ children }) =>
         console.warn(`Error loading banking state for ${activePersonaId}:`, err);
       }
     }
-    return activePersona.initialBankAccount;
+    // Return deep clone to prevent accidental mutation of global mock references
+    return JSON.parse(JSON.stringify(activePersona.initialBankAccount));
   }, [activePersonaId, activePersona.initialBankAccount, storageKey]);
 
   const [account, setAccount] = useState<BankAccount>(loadAccount);
@@ -73,8 +82,20 @@ export const BankingProvider: React.FC<BankingProviderProps> = ({ children }) =>
 
   const cvvTimerRef = useRef<NodeJS.Timeout | null>(null);
 
-  // When active persona changes, rehydrate banking state
+  // When active persona changes, rehydrate banking state and abort in-flight requests
   useEffect(() => {
+    personaEpochRef.current += 1;
+
+    // Instantly abort any in-flight payments from previous persona
+    inFlightAbortControllersRef.current.forEach((controller) => {
+      try {
+        controller.abort();
+      } catch {
+        // ignore
+      }
+    });
+    inFlightAbortControllersRef.current.clear();
+
     setAccount(loadAccount());
     // Clear CVV timer on persona switch
     if (cvvTimerRef.current) {
@@ -244,13 +265,18 @@ export const BankingProvider: React.FC<BankingProviderProps> = ({ children }) =>
     });
   }, [persistAccount]);
 
-  // Send Simulated UPI Payment
+  // Send Simulated UPI Payment with Atomic Persona Binding and Race Condition Guard
   const sendUpiPayment = useCallback(
     async (payload: UpiPaymentPayload): Promise<UpiPaymentResult> => {
       const upiId = payload.recipientUpiId || payload.recipient || '';
       const name = payload.recipientName || payload.recipient || 'Merchant';
 
-      // Input Validation
+      // 1. Snapshot identity, epoch, and account at call time
+      const initiatingPersonaId = activePersonaIdRef.current;
+      const callEpoch = personaEpochRef.current;
+      const snapshotAccount = account;
+
+      // 2. Input Validation against snapshot
       if (!upiId || (!upiId.includes('@') && upiId.length < 10)) {
         playErrorSound();
         return {
@@ -268,7 +294,7 @@ export const BankingProvider: React.FC<BankingProviderProps> = ({ children }) =>
       }
 
       // Check card freeze / account lock
-      if (account.virtualCard.isFrozen) {
+      if (snapshotAccount.virtualCard.isFrozen) {
         playErrorSound();
         return {
           success: false,
@@ -277,28 +303,57 @@ export const BankingProvider: React.FC<BankingProviderProps> = ({ children }) =>
       }
 
       // Check available balance
-      if (payload.amount > account.balance) {
+      if (payload.amount > snapshotAccount.balance) {
         playErrorSound();
         return {
           success: false,
-          errorMessage: `Insufficient account balance. Available: ₹${account.balance.toLocaleString('en-IN')}`,
+          errorMessage: `Insufficient account balance. Available: ₹${snapshotAccount.balance.toLocaleString('en-IN')}`,
         };
       }
 
       // Check daily limit
-      if (payload.amount > account.virtualCard.onlineLimit) {
+      if (payload.amount > snapshotAccount.virtualCard.onlineLimit) {
         playErrorSound();
         return {
           success: false,
-          errorMessage: `Amount exceeds daily online card limit of ₹${account.virtualCard.onlineLimit.toLocaleString('en-IN')}`,
+          errorMessage: `Amount exceeds daily online card limit of ₹${snapshotAccount.virtualCard.onlineLimit.toLocaleString('en-IN')}`,
         };
       }
 
-      // Simulate slight processing latency
-      await new Promise((resolve) => setTimeout(resolve, 300));
+      // 3. Register AbortController for cancellable latency
+      const abortController = new AbortController();
+      inFlightAbortControllersRef.current.add(abortController);
 
-      const newBalance = account.balance - payload.amount;
-      const newMonthlySpent = account.monthlySpent + payload.amount;
+      try {
+        await new Promise<void>((resolve) => {
+          if (abortController.signal.aborted) {
+            resolve();
+            return;
+          }
+          const timer = setTimeout(() => {
+            abortController.signal.removeEventListener('abort', onAbort);
+            resolve();
+          }, 300);
+
+          function onAbort() {
+            clearTimeout(timer);
+            abortController.signal.removeEventListener('abort', onAbort);
+            resolve();
+          }
+          abortController.signal.addEventListener('abort', onAbort);
+        });
+      } finally {
+        inFlightAbortControllersRef.current.delete(abortController);
+      }
+
+      // 4. Concurrency Guard: Detect if persona changed during the 300ms latency
+      const hasPersonaChanged =
+        abortController.signal.aborted ||
+        personaEpochRef.current !== callEpoch ||
+        activePersonaIdRef.current !== initiatingPersonaId;
+
+      const newBalance = snapshotAccount.balance - payload.amount;
+      const newMonthlySpent = snapshotAccount.monthlySpent + payload.amount;
 
       const newTransaction: TransactionRecord = {
         id: payload.txId || `tx_upi_${Date.now()}_${Math.floor(Math.random() * 1000)}`,
@@ -315,11 +370,24 @@ export const BankingProvider: React.FC<BankingProviderProps> = ({ children }) =>
         note: payload.note,
       };
 
+      // STRATEGY A: Safe Abort (Recommended)
+      // If persona changed, immediately abort to prevent state bleeding into newly active persona
+      if (hasPersonaChanged) {
+        console.warn(
+          `[BankingContext] Payment safely aborted: persona switched during processing from ${initiatingPersonaId} to ${activePersonaIdRef.current}.`
+        );
+        return {
+          success: false,
+          errorMessage: 'Payment cancelled: Active persona changed during transaction processing.',
+        };
+      }
+
+      // 5. Standard Commit: Persona remained unchanged throughout latency
       const updatedAccount: BankAccount = {
-        ...account,
+        ...snapshotAccount,
         balance: newBalance,
         monthlySpent: newMonthlySpent,
-        transactions: [newTransaction, ...account.transactions],
+        transactions: [newTransaction, ...snapshotAccount.transactions],
       };
 
       persistAccount(updatedAccount);

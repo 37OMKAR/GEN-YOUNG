@@ -361,6 +361,7 @@ class GenYoungEngine {
       paperSheetsAvoided: 12, waterSavedLiters: 120, badges: MOCK_GREEN_BADGES.map((b) => ({ ...b })),
     };
     this.accessibility = { highContrast: false, fontSize: 'normal', speechRate: 1.0, locationSharing: true, partnerPersonalization: true };
+    this.upiLedger = [];
     this.privacyAuditTrail = [];
     this.logPrivacyAccess('BankingCore', ['account_balance', 'kyc_status'], 'Initial Dashboard Render');
   }

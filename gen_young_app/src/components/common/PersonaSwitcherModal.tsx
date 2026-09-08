@@ -1,6 +1,7 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import { X, Check, Laptop, BookOpen, Briefcase, Sparkles, ShieldCheck } from 'lucide-react';
 import { usePersona } from '../../context/PersonaContext';
+import { useBanking } from '../../context/BankingContext';
 import { useToast } from '../../context/ToastContext';
 
 export interface PersonaSwitcherModalProps {
@@ -10,6 +11,7 @@ export interface PersonaSwitcherModalProps {
 
 export const PersonaSwitcherModal: React.FC<PersonaSwitcherModalProps> = ({ isOpen, onClose }) => {
   const { activePersona, switchPersona, availablePersonas } = usePersona();
+  const { balance: activeBalance, savingsGoals: activeGoals } = useBanking();
   const { showToast } = useToast();
 
   useEffect(() => {
@@ -19,6 +21,48 @@ export const PersonaSwitcherModal: React.FC<PersonaSwitcherModalProps> = ({ isOp
     if (isOpen) window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [isOpen, onClose]);
+
+  // Compute live, persisted banking stats for all personas reactively
+  const liveBankingData = useMemo(() => {
+    const data: Record<string, { balance: number; goalTitle: string }> = {};
+
+    for (const persona of availablePersonas) {
+      if (persona.id === activePersona.id) {
+        // Active persona uses live in-memory BankingContext state
+        data[persona.id] = {
+          balance: activeBalance,
+          goalTitle: activeGoals?.[0]?.title ?? 'None',
+        };
+      } else {
+        // Other personas check localStorage for session updates, falling back to mock initial
+        let b = persona.initialBankAccount?.balance ?? persona.bankAccount?.balance ?? 0;
+        let g =
+          persona.initialBankAccount?.savingsGoals?.[0]?.title ??
+          persona.bankAccount?.savingsGoals?.[0]?.title ??
+          'None';
+
+        if (typeof window !== 'undefined') {
+          try {
+            const raw = localStorage.getItem(`gen_young_banking_${persona.id}`);
+            if (raw) {
+              const parsed = JSON.parse(raw);
+              if (parsed && typeof parsed.balance === 'number') {
+                b = parsed.balance;
+                if (Array.isArray(parsed.savingsGoals) && parsed.savingsGoals.length > 0) {
+                  g = parsed.savingsGoals[0].title || g;
+                }
+              }
+            }
+          } catch {
+            // Ignore parse errors, fallback cleanly
+          }
+        }
+        data[persona.id] = { balance: b, goalTitle: g };
+      }
+    }
+
+    return data;
+  }, [availablePersonas, activePersona.id, activeBalance, activeGoals, isOpen]);
 
   if (!isOpen) return null;
 
@@ -72,11 +116,12 @@ export const PersonaSwitcherModal: React.FC<PersonaSwitcherModalProps> = ({ isOp
         <div className="mt-4 space-y-3">
           {availablePersonas.map((persona) => {
             const isSelected = activePersona.id === persona.id;
-            const balance = persona.initialBankAccount?.balance ?? persona.bankAccount?.balance ?? 0;
-            const goalTitle =
-              persona.initialBankAccount?.savingsGoals?.[0]?.title ??
-              persona.bankAccount?.savingsGoals?.[0]?.title ??
-              'None';
+            const liveStats = liveBankingData[persona.id] || {
+              balance: persona.initialBankAccount?.balance ?? 0,
+              goalTitle: 'None',
+            };
+            const balance = liveStats.balance;
+            const goalTitle = liveStats.goalTitle;
 
             return (
               <div
@@ -117,7 +162,7 @@ export const PersonaSwitcherModal: React.FC<PersonaSwitcherModalProps> = ({ isOp
                     <div className="grid grid-cols-2 gap-2 mt-3 pt-2.5 border-t border-slate-700/40 text-xs">
                       <div>
                         <span className="text-[10px] text-slate-400 block">Youth Balance</span>
-                        <span className="font-bold text-emerald-400">
+                        <span className="font-bold text-emerald-400 font-mono">
                           ₹{balance.toLocaleString('en-IN')}
                         </span>
                       </div>
