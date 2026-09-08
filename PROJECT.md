@@ -60,7 +60,7 @@
 ## Milestones
 | # | Name | Scope | Dependencies | Status |
 |---|------|-------|-------------|--------|
-| M1 | Core Scaffolding, App Shell & Banking Foundation | Setup React 18 + Vite + TS + Tailwind in `gen_young_app`. Build App Shell with 6 persistent bottom tabs, TopHeader, PersonaContext with 3 profiles, and Core Banking Dashboard (Features #1-#7). | none | PLANNED |
+| M1 | Core Scaffolding, App Shell & Banking Foundation | Setup React 18 + Vite + TS + Tailwind in `gen_young_app`. Build App Shell with 6 persistent bottom tabs, TopHeader, PersonaContext with 3 profiles, and Core Banking Dashboard (Features #1-#7). | none | DONE |
 | M2 | Benefits Engine & 4-State Wallet | Implement Categorized Benefits Marketplace, 5-Question Benefit Cards, "Why am I seeing this?" modal, future renewal disclosures, and 4-State Benefits Wallet (Features #8-#13). | M1 | PLANNED |
 | M3 | Friday Drop Engagement Engine & Emergency SOS Hub | Implement Friday 10 AM Drop with real-time countdown, inventory meter, instant claim decrement, and waitlist (Features #14-#18). Implement Emergency SOS Hub with 3s hold, audio countdown beeps, false-alarm cancel, 112 ERSS dispatch, GPS picker, contacts alert, and weather warnings (Features #19-#24). | M1 | PLANNED |
 | M4 | Financial Literacy, Green Passport, Accessibility & Privacy | Implement Literacy modules, 5-min quizzes, streaks, level progression, 3-step quests (Features #25-#29). Implement Green Future Hub, Green Passport, and sustainability badges (Features #30-#33). Implement Web Speech TTS, high contrast, text resize, ISL visuals, and DPDP privacy center (Features #34-#39). | M1 | PLANNED |

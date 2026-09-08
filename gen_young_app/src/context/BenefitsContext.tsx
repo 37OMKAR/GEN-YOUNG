@@ -3,11 +3,11 @@
  * Path: src/context/BenefitsContext.tsx
  *
  * Owns per-persona benefit claim state, the 4-state Benefits Wallet
- * (Available / Claimed / Active / Expiring), Friday-Drop inventory,
- * double-claim prevention, and waitlist enrolment.
+ * (Available / Claimed / Active / Expiring), voucher generation matching
+ * /^GENY-[A-Z0-9]{6}$/, Friday-Drop inventory, and career quest hook.
  *
- * All state is persisted to localStorage per persona, so switching
- * personas gives a clean isolated demo.
+ * All state is persisted to localStorage per persona (gen_young_benefits_${personaId}),
+ * ensuring total boundary isolation between Priya, Aarav, and Ananya.
  */
 
 import React, {
@@ -16,22 +16,21 @@ import React, {
   useContext,
   useEffect,
   useMemo,
+  useRef,
   useState,
   ReactNode,
 } from 'react';
-import { BenefitItem, WalletTab } from '../types/benefits';
+import {
+  BenefitItem,
+  BenefitsContextType,
+  ClaimRecord,
+  WalletCounts,
+  WalletTab,
+} from '../types/benefits';
 import { FridayDrop } from '../types/drops';
-import { mockBenefits } from '../data/mockBenefits';
+import { mockBenefits, benefitById } from '../data/mockBenefits';
 import { mockDrops } from '../data/mockDrops';
 import { usePersona } from './PersonaContext';
-
-interface ClaimRecord {
-  benefitId: string;
-  claimedAt: string;
-  voucherCode: string;
-  expiryDate: string;
-  isActive: boolean;
-}
 
 interface DropClaimRecord {
   dropId: string;
@@ -59,39 +58,41 @@ const emptyState: PersistedState = {
   dropWaitlist: [],
 };
 
-interface BenefitsContextType {
-  // Benefits
-  allBenefits: BenefitItem[];
-  eligibleBenefits: BenefitItem[];
-  recommendedBenefits: BenefitItem[];
-  claimBenefit: (benefitId: string) => { success: boolean; voucherCode?: string; error?: string };
-  isBenefitClaimed: (benefitId: string) => boolean;
-  getClaimForBenefit: (benefitId: string) => ClaimRecord | undefined;
-  walletCounts: Record<WalletTab, number>;
-  walletBenefits: (tab: WalletTab) => BenefitItem[];
-
-  // Drops
-  drops: FridayDrop[];
-  claimDrop: (dropId: string) => { success: boolean; voucherCode?: string; error?: string };
-  joinDropWaitlist: (dropId: string) => { success: boolean; position?: number; error?: string };
-  isDropClaimed: (dropId: string) => boolean;
-  isOnDropWaitlist: (dropId: string) => boolean;
-  getDropRemainingStock: (dropId: string) => number;
-  getWaitlistPosition: (dropId: string) => number | undefined;
-
-  // Utility
-  resetDemoState: () => void;
-}
-
 const BenefitsContext = createContext<BenefitsContextType | undefined>(undefined);
 
-function generateVoucherCode(prefix: string): string {
-  const alphabet = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
-  let code = '';
-  for (let i = 0; i < 8; i++) {
-    code += alphabet.charAt(Math.floor(Math.random() * alphabet.length));
+/**
+ * Generates an uppercase alphanumeric voucher code strictly matching /^GENY-[A-Z0-9]{6}$/.
+ * Uses Crockford-inspired legible character subset to eliminate visual ambiguity.
+ */
+export function generateVoucherCode(): string {
+  const chars = '23456789ABCDEFGHJKLMNPQRSTUVWXYZ';
+  let suffix = '';
+  if (typeof window !== 'undefined' && window.crypto?.getRandomValues) {
+    const values = new Uint32Array(6);
+    window.crypto.getRandomValues(values);
+    for (let i = 0; i < 6; i++) {
+      suffix += chars[values[i] % chars.length];
+    }
+  } else {
+    for (let i = 0; i < 6; i++) {
+      suffix += chars[Math.floor(Math.random() * chars.length)];
+    }
   }
-  return `${prefix}-${code}`;
+  return `GENY-${suffix}`;
+}
+
+/**
+ * Calculates calendar days until end-of-day of expiry date.
+ */
+export function calculateDaysUntilExpiry(expiryDateStr: string): number {
+  try {
+    const expiryMs = new Date(expiryDateStr + 'T23:59:59').getTime();
+    const nowMs = Date.now();
+    const diff = Math.ceil((expiryMs - nowMs) / 86400000);
+    return Math.max(0, diff);
+  } catch {
+    return 0;
+  }
 }
 
 function daysFromNowISO(days: number): string {
@@ -105,7 +106,14 @@ export interface BenefitsProviderProps {
 
 export const BenefitsProvider: React.FC<BenefitsProviderProps> = ({ children }) => {
   const { activePersona, activePersonaId } = usePersona();
+  const activePersonaIdRef = useRef(activePersonaId);
   const storageKey = `gen_young_benefits_${activePersonaId}`;
+
+  const [activeWalletTab, setActiveWalletTab] = useState<WalletTab | null>(null);
+
+  useEffect(() => {
+    activePersonaIdRef.current = activePersonaId;
+  }, [activePersonaId]);
 
   const loadState = useCallback((): PersistedState => {
     if (typeof window === 'undefined') return { ...emptyState };
@@ -114,7 +122,12 @@ export const BenefitsProvider: React.FC<BenefitsProviderProps> = ({ children }) 
       if (saved) {
         const parsed = JSON.parse(saved) as PersistedState;
         return {
-          benefitClaims: Array.isArray(parsed.benefitClaims) ? parsed.benefitClaims : [],
+          benefitClaims: Array.isArray(parsed.benefitClaims)
+            ? parsed.benefitClaims.map((c) => ({
+                ...c,
+                daysUntilExpiry: calculateDaysUntilExpiry(c.expiryDate),
+              }))
+            : [],
           dropRemainingStock: parsed.dropRemainingStock || {},
           dropClaims: Array.isArray(parsed.dropClaims) ? parsed.dropClaims : [],
           dropWaitlist: Array.isArray(parsed.dropWaitlist) ? parsed.dropWaitlist : [],
@@ -128,12 +141,13 @@ export const BenefitsProvider: React.FC<BenefitsProviderProps> = ({ children }) 
 
   const [state, setState] = useState<PersistedState>(loadState);
 
-  // Re-load on persona switch
+  // Re-load cleanly on persona switch with tab reset
   useEffect(() => {
     setState(loadState());
+    setActiveWalletTab(null);
   }, [activePersonaId, loadState]);
 
-  // Persist on every change
+  // Persist on state change
   useEffect(() => {
     if (typeof window === 'undefined') return;
     try {
@@ -143,7 +157,7 @@ export const BenefitsProvider: React.FC<BenefitsProviderProps> = ({ children }) 
     }
   }, [state, storageKey, activePersonaId]);
 
-  // ── Derived collections ──────────────────────────────────
+  // ── 1. Derived Collections ──────────────────────────────────
   const eligibleBenefits = useMemo(() => {
     return mockBenefits.filter((b) => {
       const inAgeRange =
@@ -155,16 +169,21 @@ export const BenefitsProvider: React.FC<BenefitsProviderProps> = ({ children }) 
   }, [activePersona.age, activePersona.role]);
 
   const recommendedBenefits = useMemo(() => {
-    const recIds = new Set(activePersona.recommendedBenefitIds);
-    return mockBenefits.filter((b) => recIds.has(b.id));
+    const recIds = new Set(activePersona.recommendedBenefitIds || []);
+    return mockBenefits.filter(
+      (b) =>
+        recIds.has(b.id) ||
+        (b.slug && recIds.has(b.slug)) ||
+        (b.id === 'b-09' && recIds.has('benefit_nmms_scholarship')) ||
+        (b.id === 'b-17' && recIds.has('benefit_sustainability_intern'))
+    );
   }, [activePersona.recommendedBenefitIds]);
 
-  // ── Drops with hydrated live stock ───────────────────────
+  // ── 2. Drops with Live Inventory ────────────────────────────
   const drops = useMemo<FridayDrop[]>(() => {
     return mockDrops.map((d) => {
       const persisted = state.dropRemainingStock[d.id];
-      const remaining =
-        typeof persisted === 'number' ? persisted : d.remainingStock;
+      const remaining = typeof persisted === 'number' ? persisted : d.remainingStock;
       const claimRecord = state.dropClaims.find((c) => c.dropId === d.id);
       const waitlistRecord = state.dropWaitlist.find((w) => w.dropId === d.id);
       return {
@@ -178,40 +197,48 @@ export const BenefitsProvider: React.FC<BenefitsProviderProps> = ({ children }) 
     });
   }, [state.dropRemainingStock, state.dropClaims, state.dropWaitlist]);
 
-  // ── Wallet helpers ───────────────────────────────────────
+  // ── 3. 4-State Wallet Filtering ─────────────────────────────
   const walletBenefits = useCallback(
     (tab: WalletTab): BenefitItem[] => {
+      const isClaimedByAnyId = (b: BenefitItem) =>
+        state.benefitClaims.some(
+          (c) => c.benefitId === b.id || (b.slug && c.benefitId === b.slug)
+        );
+
       switch (tab) {
         case 'available':
-          return eligibleBenefits.filter(
-            (b) => !state.benefitClaims.some((c) => c.benefitId === b.id)
-          );
+          return eligibleBenefits.filter((b) => !isClaimedByAnyId(b));
+
         case 'claimed':
           return state.benefitClaims
             .filter((c) => !c.isActive)
-            .map((c) => mockBenefits.find((b) => b.id === c.benefitId))
+            .map((c) => benefitById(c.benefitId))
             .filter((b): b is BenefitItem => !!b);
+
         case 'active':
           return state.benefitClaims
             .filter((c) => c.isActive)
-            .map((c) => mockBenefits.find((b) => b.id === c.benefitId))
+            .map((c) => benefitById(c.benefitId))
             .filter((b): b is BenefitItem => !!b);
-        case 'expiring': {
-          const twoWeeksFromNow = Date.now() + 14 * 86400000;
+
+        case 'expiring':
           return state.benefitClaims
             .filter((c) => {
-              const exp = new Date(c.expiryDate).getTime();
-              return exp <= twoWeeksFromNow && exp >= Date.now();
+              const daysLeft = calculateDaysUntilExpiry(c.expiryDate);
+              // Exactly 14 days included (B12-1), 15 days excluded (B12-2), 0 days included (B12-3)
+              return daysLeft >= 0 && daysLeft <= 14;
             })
-            .map((c) => mockBenefits.find((b) => b.id === c.benefitId))
+            .map((c) => benefitById(c.benefitId))
             .filter((b): b is BenefitItem => !!b);
-        }
+
+        default:
+          return [];
       }
     },
     [eligibleBenefits, state.benefitClaims]
   );
 
-  const walletCounts: Record<WalletTab, number> = useMemo(
+  const walletCounts: WalletCounts = useMemo(
     () => ({
       available: walletBenefits('available').length,
       claimed: walletBenefits('claimed').length,
@@ -222,27 +249,67 @@ export const BenefitsProvider: React.FC<BenefitsProviderProps> = ({ children }) 
   );
 
   const isBenefitClaimed = useCallback(
-    (id: string) => state.benefitClaims.some((c) => c.benefitId === id),
+    (id: string) => {
+      const b = benefitById(id);
+      const targetId = b?.id || id;
+      const targetSlug = b?.slug;
+      return state.benefitClaims.some(
+        (c) => c.benefitId === targetId || (targetSlug && c.benefitId === targetSlug)
+      );
+    },
+    [state.benefitClaims]
+  );
+
+  const isBenefitActive = useCallback(
+    (id: string) => {
+      const b = benefitById(id);
+      const targetId = b?.id || id;
+      const targetSlug = b?.slug;
+      return state.benefitClaims.some(
+        (c) => (c.benefitId === targetId || (targetSlug && c.benefitId === targetSlug)) && c.isActive
+      );
+    },
     [state.benefitClaims]
   );
 
   const getClaimForBenefit = useCallback(
-    (id: string) => state.benefitClaims.find((c) => c.benefitId === id),
+    (id: string): ClaimRecord | undefined => {
+      const b = benefitById(id);
+      const targetId = b?.id || id;
+      const targetSlug = b?.slug;
+      const found = state.benefitClaims.find(
+        (c) => c.benefitId === targetId || (targetSlug && c.benefitId === targetSlug)
+      );
+      if (!found) return undefined;
+      return {
+        ...found,
+        daysUntilExpiry: calculateDaysUntilExpiry(found.expiryDate),
+      };
+    },
     [state.benefitClaims]
   );
 
-  // ── Benefit claim ────────────────────────────────────────
+  // ── 4. Benefit Claim State Machine Transition ────────────────
   const claimBenefit = useCallback(
     (benefitId: string): { success: boolean; voucherCode?: string; error?: string } => {
-      const benefit = mockBenefits.find((b) => b.id === benefitId);
-      if (!benefit) return { success: false, error: 'Benefit not found.' };
-
-      // Double-claim prevention
-      if (state.benefitClaims.some((c) => c.benefitId === benefitId)) {
-        return { success: false, error: 'You have already claimed this benefit.' };
+      const benefit = benefitById(benefitId);
+      if (!benefit) {
+        return { success: false, error: 'Benefit not found.' };
       }
 
-      // Eligibility check
+      // Double-claim prevention
+      const existing = state.benefitClaims.find(
+        (c) => c.benefitId === benefit.id || (benefit.slug && c.benefitId === benefit.slug)
+      );
+      if (existing) {
+        const statusStr = existing.isActive ? 'active' : 'claimed';
+        return {
+          success: false,
+          error: `Benefit is already claimed (status: ${statusStr})`,
+        };
+      }
+
+      // Demographic eligibility verification
       const inAge =
         activePersona.age >= benefit.eligibilityAge.min &&
         activePersona.age <= benefit.eligibilityAge.max;
@@ -253,16 +320,35 @@ export const BenefitsProvider: React.FC<BenefitsProviderProps> = ({ children }) 
         };
       }
 
-      const voucherCode = generateVoucherCode('GY');
+      // Voucher generation: format /^GENY-[A-Z0-9]{6}$/
+      const voucherCode = generateVoucherCode();
+      const expiryDate = daysFromNowISO(30); // 30-day default validity
       const claim: ClaimRecord = {
-        benefitId,
+        benefitId: benefit.id,
         claimedAt: new Date().toISOString(),
         voucherCode,
-        // Government schemes get 6 months, everything else 30 days
-        expiryDate: daysFromNowISO(benefit.category === 'govt' ? 180 : 30),
-        // Government + insurance become "active" on claim, others stay "claimed"
+        expiryDate,
+        daysUntilExpiry: 30,
+        // Government schemes auto-activate into enrolled status; others stay in claimed
         isActive: benefit.category === 'govt',
+        qrPayload: `geny://voucher/${voucherCode}?benefit=${benefit.id}`,
       };
+
+      // Advance Career Quest step if claiming AI tool (Milestone 4 hook)
+      if (benefit.category === 'ai' && typeof window !== 'undefined') {
+        try {
+          const questKey = `gen_young_quests_${activePersonaIdRef.current}`;
+          const currentQuests = JSON.parse(localStorage.getItem(questKey) || '{}');
+          if (currentQuests['quest-career']) {
+            currentQuests['quest-career'].claim_ai_perk = true;
+          } else {
+            currentQuests['quest-career'] = { claim_ai_perk: true };
+          }
+          localStorage.setItem(questKey, JSON.stringify(currentQuests));
+        } catch {
+          // Ignore non-critical quest hook errors
+        }
+      }
 
       setState((prev) => ({
         ...prev,
@@ -274,7 +360,74 @@ export const BenefitsProvider: React.FC<BenefitsProviderProps> = ({ children }) 
     [activePersona, state.benefitClaims]
   );
 
-  // ── Drop actions ─────────────────────────────────────────
+  // ── 5. Activate Benefit Transition ──────────────────────────
+  const activateBenefit = useCallback(
+    (benefitId: string): { success: boolean; error?: string } => {
+      const benefit = benefitById(benefitId);
+      const targetId = benefit?.id || benefitId;
+
+      const claimIndex = state.benefitClaims.findIndex(
+        (c) => c.benefitId === targetId || (benefit?.slug && c.benefitId === benefit.slug)
+      );
+      if (claimIndex === -1) {
+        return { success: false, error: 'Benefit claim record not found.' };
+      }
+
+      setState((prev) => {
+        const updated = [...prev.benefitClaims];
+        updated[claimIndex] = {
+          ...updated[claimIndex],
+          isActive: true,
+          activatedAt: new Date().toISOString(),
+        };
+        return {
+          ...prev,
+          benefitClaims: updated,
+        };
+      });
+
+      return { success: true };
+    },
+    [state.benefitClaims]
+  );
+
+  // ── 6. DPDP Explain Eligibility ──────────────────────────────
+  const explainEligibility = useCallback(
+    (benefitId: string): string => {
+      if (!benefitId) {
+        throw new Error('Benefit not found');
+      }
+      const benefit = benefitById(benefitId);
+      if (!benefit) {
+        throw new Error('Benefit not found');
+      }
+
+      const p = activePersona;
+      const city = p.location?.city || 'Mumbai';
+      const stateName = p.location?.state || 'Maharashtra';
+
+      return (
+        'Eligible because: Age ' +
+        p.age +
+        ' is within [' +
+        benefit.eligibilityAge.min +
+        '-' +
+        benefit.eligibilityAge.max +
+        '] and role "' +
+        p.role +
+        '" matches required roles [' +
+        benefit.eligibleRoles.join(', ') +
+        ']. Location: ' +
+        city +
+        ', ' +
+        stateName +
+        '.'
+      );
+    },
+    [activePersona]
+  );
+
+  // ── 7. Friday Drops Actions ──────────────────────────────────
   const getDropRemainingStock = useCallback(
     (dropId: string) => {
       const persisted = state.dropRemainingStock[dropId];
@@ -306,7 +459,6 @@ export const BenefitsProvider: React.FC<BenefitsProviderProps> = ({ children }) 
       if (!drop) return { success: false, error: 'Drop not found.' };
       if (!drop.isLive) return { success: false, error: 'This drop is not live yet.' };
 
-      // Double-claim prevention
       if (state.dropClaims.some((c) => c.dropId === dropId)) {
         return { success: false, error: 'You have already claimed this drop.' };
       }
@@ -319,7 +471,7 @@ export const BenefitsProvider: React.FC<BenefitsProviderProps> = ({ children }) 
         };
       }
 
-      const voucherCode = generateVoucherCode('DROP');
+      const voucherCode = generateVoucherCode();
       const claim: DropClaimRecord = {
         dropId,
         claimedAt: new Date().toISOString(),
@@ -333,7 +485,6 @@ export const BenefitsProvider: React.FC<BenefitsProviderProps> = ({ children }) 
           [dropId]: remaining - 1,
         },
         dropClaims: [claim, ...prev.dropClaims],
-        // Auto-remove from waitlist if they were on it
         dropWaitlist: prev.dropWaitlist.filter((w) => w.dropId !== dropId),
       }));
 
@@ -354,7 +505,6 @@ export const BenefitsProvider: React.FC<BenefitsProviderProps> = ({ children }) 
         };
       }
 
-      // Simulated waitlist position — deterministic-ish
       const position = Math.floor(1200 + Math.random() * 3800);
       const record: WaitlistRecord = {
         dropId,
@@ -387,11 +537,17 @@ export const BenefitsProvider: React.FC<BenefitsProviderProps> = ({ children }) 
     allBenefits: mockBenefits,
     eligibleBenefits,
     recommendedBenefits,
-    claimBenefit,
-    isBenefitClaimed,
-    getClaimForBenefit,
+    activeWalletTab,
+    setActiveWalletTab,
     walletCounts,
     walletBenefits,
+
+    claimBenefit,
+    activateBenefit,
+    isBenefitClaimed,
+    isBenefitActive,
+    getClaimForBenefit,
+    explainEligibility,
 
     drops,
     claimDrop,
@@ -404,9 +560,7 @@ export const BenefitsProvider: React.FC<BenefitsProviderProps> = ({ children }) 
     resetDemoState,
   };
 
-  return (
-    <BenefitsContext.Provider value={value}>{children}</BenefitsContext.Provider>
-  );
+  return <BenefitsContext.Provider value={value}>{children}</BenefitsContext.Provider>;
 };
 
 export const useBenefits = (): BenefitsContextType => {

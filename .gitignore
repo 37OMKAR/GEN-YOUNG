@@ -30,3 +30,4 @@ build/
 .agents/*/logs/
 .agents/*/scratch/
 .agents/
+scratch_signlanguage/
