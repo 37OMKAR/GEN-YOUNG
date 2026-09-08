@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { PersonaProvider } from './context/PersonaContext';
 import { BankingProvider } from './context/BankingContext';
 import { BenefitsProvider } from './context/BenefitsContext';
+import { DemoProvider } from './context/DemoContext';
 import { AccessibilityProvider } from './context/AccessibilityContext';
 import { ToastProvider } from './context/ToastContext';
 import { TopHeader } from './components/common/TopHeader';
@@ -74,7 +75,9 @@ export const App: React.FC = () => {
         <BankingProvider>
           <ToastProvider>
             <BenefitsProvider>
-              <AppContent />
+              <DemoProvider>
+                <AppContent />
+              </DemoProvider>
             </BenefitsProvider>
           </ToastProvider>
         </BankingProvider>

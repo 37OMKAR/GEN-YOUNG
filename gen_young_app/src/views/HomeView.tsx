@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Sparkles, Flame } from 'lucide-react';
+import { Sparkles, Flame, Leaf, Users, Shield } from 'lucide-react';
 import { usePersona } from '../context/PersonaContext';
 import { useBanking } from '../context/BankingContext';
 import { useToast } from '../context/ToastContext';
@@ -8,6 +8,9 @@ import { VirtualDebitCard } from '../components/banking/VirtualDebitCard';
 import { SavingsGoals } from '../components/banking/SavingsGoals';
 import { RecentTransactions } from '../components/banking/RecentTransactions';
 import { UpiTransferModal } from '../components/banking/UpiTransferModal';
+import { GreenImpactHub } from '../components/hubs/GreenImpactHub';
+import { CommunityHub } from '../components/hubs/CommunityHub';
+import { InsuranceHub } from '../components/hubs/InsuranceHub';
 import { NavTabId } from '../components/common/BottomNav';
 
 export interface HomeViewProps {
@@ -21,6 +24,7 @@ export const HomeView: React.FC<HomeViewProps> = ({ onNavigateTab }) => {
 
   const [isUpiModalOpen, setIsUpiModalOpen] = useState(false);
   const [upiInitialMode, setUpiInitialMode] = useState<'send' | 'scan'>('send');
+  const [openHub, setOpenHub] = useState<'green' | 'community' | 'insurance' | null>(null);
 
   const handleOpenSend = () => {
     setUpiInitialMode('send');
@@ -122,12 +126,61 @@ export const HomeView: React.FC<HomeViewProps> = ({ onNavigateTab }) => {
         </div>
       </section>
 
+      {/* 7. Life-Hub Launchers (Green / Community / Insurance) */}
+      <section className="mt-5 pt-4 border-t border-slate-800/80 space-y-3">
+        <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400">
+          More Than Banking
+        </h3>
+        <div className="grid grid-cols-3 gap-2">
+          <button
+            onClick={() => setOpenHub('green')}
+            className="p-2.5 rounded-xl bg-gradient-to-br from-emerald-950/50 to-slate-900 border border-emerald-500/30 text-left hover:border-emerald-400/60 transition-all active:scale-95 group"
+            aria-label="Open Green Impact hub"
+          >
+            <Leaf size={16} className="text-emerald-400" />
+            <span className="block text-[11px] font-bold text-white mt-1.5 group-hover:text-emerald-300">
+              Green Impact
+            </span>
+            <span className="block text-[9px] text-slate-400 mt-0.5">Log actions · earn pts</span>
+          </button>
+
+          <button
+            onClick={() => setOpenHub('community')}
+            className="p-2.5 rounded-xl bg-gradient-to-br from-violet-950/50 to-slate-900 border border-violet-500/30 text-left hover:border-violet-400/60 transition-all active:scale-95 group"
+            aria-label="Open Community hub"
+          >
+            <Users size={16} className="text-violet-400" />
+            <span className="block text-[11px] font-bold text-white mt-1.5 group-hover:text-violet-300">
+              Community
+            </span>
+            <span className="block text-[9px] text-slate-400 mt-0.5">Join · learn · grow</span>
+          </button>
+
+          <button
+            onClick={() => setOpenHub('insurance')}
+            className="p-2.5 rounded-xl bg-gradient-to-br from-teal-950/50 to-slate-900 border border-teal-500/30 text-left hover:border-teal-400/60 transition-all active:scale-95 group"
+            aria-label="Open Insurance hub"
+          >
+            <Shield size={16} className="text-teal-400" />
+            <span className="block text-[11px] font-bold text-white mt-1.5 group-hover:text-teal-300">
+              Insurance
+            </span>
+            <span className="block text-[9px] text-slate-400 mt-0.5">Health · life · travel</span>
+          </button>
+        </div>
+      </section>
+
       {/* UPI Transfer Modal */}
       <UpiTransferModal
         isOpen={isUpiModalOpen}
         initialMode={upiInitialMode}
         onClose={() => setIsUpiModalOpen(false)}
       />
+
+      {/* Life-Hub Modals */}
+      <GreenImpactHub isOpen={openHub === 'green'} onClose={() => setOpenHub(null)} />
+      <CommunityHub isOpen={openHub === 'community'} onClose={() => setOpenHub(null)} />
+      <InsuranceHub isOpen={openHub === 'insurance'} onClose={() => setOpenHub(null)} />
     </main>
   );
 };
