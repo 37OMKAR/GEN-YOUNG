@@ -1,0 +1,302 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>GEN-YOUNG — Digital Youth Banking & Benefits Platform</title>
+  <meta name="description" content="A concept product for a digital-first bank account built around benefits, access, opportunity, trust — and radical inclusivity. Designed for every young Indian aged 15–25.">
+  <meta name="theme-color" content="#0d1117">
+
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🌱%3C/text%3E%3C/svg%3E">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap">
+
+  <!-- GitHub-flavoured Markdown CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/5.5.1/github-markdown.min.css">
+
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #0d1117;
+      --bg-elev: #161b22;
+      --accent: #22c55e;
+      --accent-2: #14b8a6;
+      --border: #30363d;
+      --text: #e6edf3;
+      --muted: #8b949e;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      min-height: 100vh;
+    }
+
+    /* Sticky top banner */
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: linear-gradient(90deg, rgba(34,197,94,0.15), rgba(20,184,166,0.15));
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 10px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .topbar .brand {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 800;
+      font-size: 15px;
+      letter-spacing: -0.01em;
+    }
+
+    .topbar .brand .leaf {
+      font-size: 18px;
+    }
+
+    .topbar .actions {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .topbar a.btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 12px;
+      font-weight: 700;
+      border: 1px solid var(--border);
+      color: var(--text);
+      background: var(--bg-elev);
+      transition: transform .12s ease, background .12s ease;
+    }
+    .topbar a.btn:hover { background: #21262d; transform: translateY(-1px); }
+    .topbar a.btn.primary {
+      background: linear-gradient(135deg, #22c55e, #14b8a6);
+      color: #08130a;
+      border-color: transparent;
+      box-shadow: 0 4px 16px rgba(34,197,94,0.25);
+    }
+    .topbar a.btn.primary:hover { filter: brightness(1.08); }
+
+    /* Loading skeleton */
+    .loading {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      align-items: center;
+      justify-content: center;
+      min-height: 60vh;
+      padding: 40px;
+    }
+    .loading .spinner {
+      width: 40px; height: 40px;
+      border: 3px solid rgba(34,197,94,0.2);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+    .loading .msg {
+      color: var(--muted);
+      font-size: 13px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* Markdown body — override github-markdown-css defaults where needed */
+    .markdown-body {
+      max-width: 1050px;
+      margin: 0 auto;
+      padding: 32px 24px 96px;
+      background: var(--bg) !important;
+      color: var(--text) !important;
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif !important;
+    }
+
+    .markdown-body img {
+      max-width: 100%;
+      border-radius: 10px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+      margin: 8px 0;
+    }
+    .markdown-body img[src*="shields.io"] {
+      box-shadow: none;
+      display: inline-block;
+      margin: 2px 3px;
+      border-radius: 4px;
+    }
+
+    .markdown-body h1, .markdown-body h2, .markdown-body h3, .markdown-body h4 {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      letter-spacing: -0.02em;
+    }
+    .markdown-body h1 {
+      text-align: center;
+      background: linear-gradient(135deg, #22c55e, #14b8a6);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      border-bottom: none;
+      font-size: 3rem;
+      margin-top: 8px;
+    }
+    .markdown-body h2 {
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 6px;
+    }
+
+    .markdown-body a { color: #58a6ff; }
+    .markdown-body a:hover { color: #79b8ff; text-decoration: underline; }
+    .markdown-body code {
+      background: rgba(110,118,129,0.4) !important;
+      color: #e6edf3 !important;
+      font-family: 'JetBrains Mono', 'SFMono-Regular', ui-monospace, monospace !important;
+    }
+    .markdown-body pre {
+      background: #010409 !important;
+      border: 1px solid var(--border);
+    }
+    .markdown-body pre code {
+      background: transparent !important;
+    }
+    .markdown-body table {
+      display: table;
+      width: 100%;
+      background: var(--bg-elev) !important;
+    }
+    .markdown-body table th, .markdown-body table td {
+      border-color: var(--border) !important;
+    }
+    .markdown-body table tr {
+      background: var(--bg-elev) !important;
+      border-color: var(--border) !important;
+    }
+    .markdown-body table tr:nth-child(2n) {
+      background: #10141a !important;
+    }
+    .markdown-body blockquote {
+      border-left-color: var(--accent) !important;
+      color: var(--muted) !important;
+    }
+    .markdown-body hr {
+      background: var(--border) !important;
+    }
+
+    /* Center paragraphs that only contain a single image or centered content */
+    .markdown-body p[align="center"],
+    .markdown-body p:has(> img:only-child) {
+      text-align: center;
+    }
+
+    /* Error state */
+    .error {
+      max-width: 620px;
+      margin: 80px auto;
+      padding: 24px;
+      background: var(--bg-elev);
+      border: 1px solid #ff6b6b;
+      border-radius: 10px;
+      color: #ffb4b4;
+    }
+    .error h2 { margin-top: 0; color: #ff8080; }
+    .error code {
+      background: #010409;
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+  <div class="topbar">
+    <div class="brand">
+      <span class="leaf">🌱</span>
+      <span>GEN-YOUNG</span>
+      <span style="color: var(--muted); font-weight: 500; font-size: 13px;">· Digital Youth Banking</span>
+    </div>
+    <div class="actions">
+      <a class="btn" href="https://github.com/37OMKAR/GEN-YOUNG" target="_blank" rel="noopener">GitHub</a>
+      <a class="btn" href="./GEN-YOUNG_50_Page_Concept_Paper.pdf" target="_blank" rel="noopener">📄 Concept Paper</a>
+      <a class="btn primary" href="./README.md" target="_blank" rel="noopener">Raw README</a>
+    </div>
+  </div>
+
+  <main id="content">
+    <div class="loading" id="loading">
+      <div class="spinner" role="status" aria-label="Loading"></div>
+      <div class="msg">Rendering README…</div>
+    </div>
+  </main>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/12.0.2/marked.min.js"></script>
+  <script>
+    (async function () {
+      const content = document.getElementById('content');
+      const loading = document.getElementById('loading');
+
+      try {
+        const res = await fetch('README.md', { cache: 'no-cache' });
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+        const md = await res.text();
+
+        // Configure marked with GFM (tables, task lists) enabled
+        marked.setOptions({
+          gfm: true,
+          breaks: false,
+          headerIds: true,
+          mangle: false,
+          smartLists: true,
+        });
+
+        const html = marked.parse(md);
+
+        // Wrap into a github-markdown-body container
+        const article = document.createElement('article');
+        article.className = 'markdown-body';
+        article.innerHTML = html;
+
+        content.innerHTML = '';
+        content.appendChild(article);
+
+        // Update page title with first h1 text if present
+        const firstH1 = article.querySelector('h1');
+        if (firstH1 && firstH1.textContent) {
+          document.title = firstH1.textContent.trim() + ' — Digital Youth Banking & Benefits Platform';
+        }
+
+        // Smooth-scroll to anchor if the URL has a hash
+        if (window.location.hash) {
+          const target = document.querySelector(window.location.hash);
+          if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      } catch (err) {
+        content.innerHTML =
+          '<div class="error"><h2>Could not load README</h2>' +
+          '<p>The rendered landing page tried to fetch <code>README.md</code> but the request failed.</p>' +
+          '<p><code>' + (err && err.message ? err.message : 'Unknown error') + '</code></p>' +
+          '<p>You can still read the source: <a href="README.md">README.md</a> · ' +
+          '<a href="https://github.com/37OMKAR/GEN-YOUNG#readme">view on GitHub</a>.</p>' +
+          '</div>';
+      }
+    })();
+  </script>
+</body>
+</html>

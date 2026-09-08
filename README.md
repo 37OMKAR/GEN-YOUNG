@@ -37,7 +37,7 @@
 </p>
 
 <p align="center">
-  <a href="#-live-demo">Live Demo</a> •
+  <a href="#-live-web-page">Live Web Page</a> •
   <a href="#-executive-summary">Overview</a> •
   <a href="#-visual-showcase">Visual Showcase</a> •
   <a href="#-the-lifecycle-model">Lifecycle</a> •
@@ -51,9 +51,9 @@
 
 ---
 
-## 🚀 Live Demo
+## 🌐 Live Web Page
 
-**Try the working app in your browser — no install, no signup:**
+**Read the full concept as a webpage — all 20 design boards, images, and the 50-page paper — in your browser:**
 
 <p align="center">
   <a href="https://37omkar.github.io/GEN-YOUNG/">
@@ -61,24 +61,13 @@
   </a>
 </p>
 
-Deployed automatically from `main` via GitHub Actions on every push. What you can click through today:
+Auto-deployed from `main` via GitHub Actions on every push. The landing page renders this README with a dark GitHub-flavoured theme, all 20 design boards inline, and a one-click download for the [50-page concept paper](GEN-YOUNG_50_Page_Concept_Paper.pdf).
 
-| Feature | Try it |
-|---|---|
-| 🏦 **Banking Foundation** | Home tab · virtual RuPay card 3D flip · UPI transfer · savings goals with confetti |
-| 🧠 **Benefits Marketplace** | Benefits tab · 18-scheme repository · 5-question cards · WhySeeing modal · 4-state Wallet · voucher + SVG QR |
-| ⚡ **Friday Drop Engine** | Drops tab · live 1-second countdown · atomic claim · sold-out waitlist |
-| 🆘 **Emergency SOS** | SOS tab · **press and hold the red button for 3 seconds** · SVG progress ring + Web Audio beeps → 112 ERSS dispatch → 10-second cancel window → trusted-contact fan-out |
-| 📚 **Learn** | Learn tab · complete an interactive quiz · earn real XP · streak tracker |
-| 🌱 **Green Impact Hub** | Home → *More Than Banking* → **Green Impact** · log eco-actions and earn Green Points → unlock levels |
-| 👥 **Community Hub** | Home → *More Than Banking* → **Community** · join a community · see upcoming events |
-| 🛡️ **Insurance Hub** | Home → *More Than Banking* → **Insurance** · activate Health/Life/Travel/Device plans → Protection Wallet |
-| 🤟 **ISL Assistant** | Top header · sign-language interface using `signLanguageGloss.ts` from [37OMKAR/text-to-signlanguage](https://github.com/37OMKAR/text-to-signlanguage) |
-| 👤 **Persona Switcher** | Top header · switch between **Priya** (21, student · Mumbai) · **Aarav** (16, minor · Ahmedabad) · **Ananya** (24, professional · Bengaluru) |
+**Enabling Pages (repo owner one-time setup):** *Settings → Pages → Source → **GitHub Actions***. Deploy status: [![Deploy status](https://github.com/37OMKAR/GEN-YOUNG/actions/workflows/deploy-pages.yml/badge.svg)](https://github.com/37OMKAR/GEN-YOUNG/actions/workflows/deploy-pages.yml)
 
-> Everything you interact with is dummy data — no real transactions, no PII leaves your browser. All state is per-persona in `localStorage`.
+### 🧪 Try the interactive app locally
 
-**Enabling Pages (repo owner one-time setup):** *Settings → Pages → Source → **GitHub Actions***. After that, the site auto-updates on every push to `main`. Deploy status: [![Deploy status](https://github.com/37OMKAR/GEN-YOUNG/actions/workflows/deploy-pages.yml/badge.svg)](https://github.com/37OMKAR/GEN-YOUNG/actions/workflows/deploy-pages.yml)
+The full click-through demo (SOS 3-sec hold, quizzes with XP, Green Impact points, Benefits claim + voucher, live Drop countdown) runs from source — see [Getting Started](#-getting-started) below. Deploying the interactive app to Pages will be a follow-up commit.
 
 ---
 

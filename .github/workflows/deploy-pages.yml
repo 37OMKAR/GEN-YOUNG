@@ -1,4 +1,4 @@
-name: Deploy Gen-Young web app to GitHub Pages
+name: Deploy README landing page to GitHub Pages
 
 on:
   push:
@@ -21,25 +21,15 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-          cache: 'npm'
-          cache-dependency-path: gen_young_app/package-lock.json
-
-      - name: Install dependencies
-        working-directory: gen_young_app
-        run: npm ci
-
-      - name: Build production bundle
-        working-directory: gen_young_app
-        run: npm run build
-
-      - name: Copy README assets into published bundle
+      - name: Assemble static site
         run: |
-          mkdir -p gen_young_app/dist/docs
-          cp -r docs/assets gen_young_app/dist/docs/assets
+          mkdir -p _site/docs
+          # README + reference PDF + all showcase images
+          cp README.md _site/README.md
+          cp GEN-YOUNG_50_Page_Concept_Paper.pdf _site/GEN-YOUNG_50_Page_Concept_Paper.pdf
+          cp -r docs/assets _site/docs/assets
+          # Landing page renders README client-side
+          cp .github/pages/index.html _site/index.html
 
       - name: Configure Pages
         uses: actions/configure-pages@v5
@@ -47,7 +37,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: gen_young_app/dist
+          path: _site
 
   deploy:
     needs: build
