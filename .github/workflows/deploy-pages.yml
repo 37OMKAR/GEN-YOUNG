@@ -32,11 +32,11 @@ jobs:
           cp .github/pages/index.html _site/index.html
 
       - name: Configure Pages
+        # ONE-TIME MANUAL STEP required before this workflow can succeed:
+        #   Settings → Pages → Source → "GitHub Actions"
+        # The default GITHUB_TOKEN lacks the admin scope needed to create a
+        # Pages site programmatically, so `enablement: true` does not help.
         uses: actions/configure-pages@v5
-        with:
-          # Automatically enable Pages on first run if not already enabled,
-          # so the repo owner does not have to click through Settings first.
-          enablement: true
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
