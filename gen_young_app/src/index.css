@@ -1,0 +1,83 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    font-family: 'Plus Jakarta Sans', Inter, system-ui, sans-serif;
+    -webkit-tap-highlight-color: transparent;
+  }
+  body {
+    @apply bg-slate-950 text-slate-100 min-h-screen antialiased selection:bg-brand-500 selection:text-slate-950;
+    overflow-x: hidden;
+  }
+}
+
+/* 3D Virtual RuPay Debit Card Flip Styles */
+.perspective-1000 {
+  perspective: 1000px;
+}
+.transform-style-3d {
+  transform-style: preserve-3d;
+}
+.backface-hidden {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+.rotate-y-180 {
+  transform: rotateY(180deg);
+}
+
+/* Custom Sleek Scrollbar */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Glassmorphism & Surface Utilities */
+.glass-panel {
+  background: rgba(15, 23, 42, 0.75);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.glass-card {
+  background: rgba(30, 41, 59, 0.6);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* WCAG AAA High Contrast Overrides */
+.high-contrast {
+  --hc-bg: #000000;
+  --hc-card: #0a0a0a;
+  --hc-text: #ffffff;
+  --hc-yellow: #ffff00;
+  --hc-cyan: #00ffff;
+  --hc-border: #ffff00;
+}
+
+.high-contrast body,
+.high-contrast .app-container {
+  background-color: #000000 !important;
+  color: #ffffff !important;
+}
+
+.high-contrast .glass-panel,
+.high-contrast .glass-card,
+.high-contrast .bg-slate-900,
+.high-contrast .bg-slate-800,
+.high-contrast .bg-slate-850 {
+  background-color: #0a0a0a !important;
+  border-color: #ffff00 !important;
+  color: #ffffff !important;
+}
+
+.high-contrast button {
+  border-color: #ffff00 !important;
+}
