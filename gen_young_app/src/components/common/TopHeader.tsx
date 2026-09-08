@@ -1,15 +1,17 @@
 import React from 'react';
-import { Sprout, ChevronDown, CheckCircle2, Contrast } from 'lucide-react';
+import { Sprout, ChevronDown, CheckCircle2, Contrast, Hand } from 'lucide-react';
 import { usePersona } from '../../context/PersonaContext';
 import { useAccessibility } from '../../context/AccessibilityContext';
 
 export interface TopHeaderProps {
   onOpenPersonaSwitcher: () => void;
   onOpenAccessibilityDrawer?: () => void;
+  onOpenSignLanguage?: () => void;
 }
 
 export const TopHeader: React.FC<TopHeaderProps> = ({
   onOpenPersonaSwitcher,
+  onOpenSignLanguage,
 }) => {
   const { activePersona } = usePersona();
   const { settings, toggleHighContrast } = useAccessibility();
@@ -49,6 +51,18 @@ export const TopHeader: React.FC<TopHeaderProps> = ({
         >
           <Contrast size={16} />
         </button>
+
+        {/* Indian Sign Language (ISL) Assistant Toggle */}
+        {onOpenSignLanguage && (
+          <button
+            onClick={onOpenSignLanguage}
+            aria-label="Open Indian Sign Language Guide"
+            title="Indian Sign Language (ISL) Assistant - Quoted from 37OMKAR/text-to-signlanguage"
+            className="p-1.5 rounded-lg border border-emerald-500/50 bg-emerald-950/40 text-emerald-400 hover:bg-emerald-900/50 hover:text-white transition-all active:scale-95"
+          >
+            <Hand size={16} />
+          </button>
+        )}
 
         {/* Persona Chip Selector */}
         <button
