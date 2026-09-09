@@ -1,0 +1,335 @@
+<title>Gen-Young · direction samples</title>
+<style>
+  :root{--bg:#EEF3FA;--ink:#0B2A5B;--leaf:#22C55E}
+  body{margin:0;font-family:'Inter',system-ui,sans-serif;background:linear-gradient(180deg,#0B2A5B 0%,#0f1a3c 40%,#111827 100%);color:#fff;min-height:100vh}
+  a{color:#22C55E}
+  header{padding:56px 40px 20px;text-align:center}
+  header h1{font-family:'Bricolage Grotesque','Space Grotesk',sans-serif;font-size:56px;letter-spacing:-0.04em;margin:0;line-height:1;font-weight:800}
+  header .brand-y{background:linear-gradient(90deg,#22C55E,#FBBF24,#F472B6,#22C55E);-webkit-background-clip:text;background-clip:text;color:transparent;background-size:200% auto;animation:sh 6s linear infinite}
+  @keyframes sh{to{background-position:200% 0}}
+  header p{max-width:640px;margin:14px auto 0;font-size:15px;opacity:.85;line-height:1.5}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(430px,1fr));gap:40px 30px;padding:40px}
+  .sample{position:relative}
+  .sample-label{position:absolute;top:-32px;left:8px;font-family:'Space Grotesk',sans-serif;font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#94A3B8}
+  .sample-label b{color:#fff}
+  .sample-note{position:absolute;bottom:-38px;left:8px;right:8px;font-size:12.5px;color:#94A3B8;line-height:1.4}
+  .phone{width:390px;height:844px;border-radius:44px;overflow:hidden;position:relative;box-shadow:0 30px 60px rgba(0,0,0,.5),0 0 0 8px #111,0 0 0 10px #333;margin:0 auto}
+  .notch{position:absolute;top:8px;left:50%;transform:translateX(-50%);width:110px;height:28px;background:#000;border-radius:20px;z-index:5}
+  .status{display:flex;justify-content:space-between;padding:12px 26px 6px;font-size:12.5px;font-weight:700}
+  .fd{font-family:'Bricolage Grotesque','Space Grotesk',sans-serif;letter-spacing:-0.03em}
+  .fm{font-family:'Space Grotesk',sans-serif;letter-spacing:-0.02em}
+  .fs{font-family:'Caveat',cursive}
+  footer{padding:60px 40px;text-align:center;font-size:13px;color:#94A3B8}
+
+  /* CASH APP - jet black */
+  .cash{background:#000;color:#fff}
+  .cash .status{color:#fff}
+  .cash .huge{font-family:'Cash Sans','Space Grotesk',sans-serif;font-size:60px;font-weight:700;letter-spacing:-0.04em}
+  .cash .row{display:flex;gap:8px;padding:0 20px;margin-top:12px}
+  .cash .chip{background:#111;color:#fff;border-radius:999px;padding:10px 16px;font-weight:700;font-size:13px;border:1px solid #222}
+  .cash .chip.on{background:#00D64F;color:#000}
+  .cash .card{background:#111;border-radius:24px;padding:22px;margin:12px 20px;color:#fff;border:1px solid #1a1a1a}
+  .cash .card.g{background:linear-gradient(160deg,#00D64F 0%,#00B247 100%);color:#000}
+  .cash .btn{background:#00D64F;color:#000;font-weight:800;border-radius:999px;padding:16px;text-align:center;margin:14px 20px;font-size:15px}
+
+  /* DUOLINGO */
+  .duo{background:#fff;color:#3c3c3c}
+  .duo .status{color:#4b4b4b}
+  .duo .top{padding:8px 20px;display:flex;justify-content:space-between;align-items:center}
+  .duo .flag{background:#FFC800;color:#4B4B4B;border-radius:16px;padding:8px 12px;font-weight:900;font-size:16px}
+  .duo .streak{background:#FFC800;color:#8b6300;border-radius:16px;padding:8px 12px;font-weight:900;font-size:16px}
+  .duo .lang{padding:20px;text-align:center}
+  .duo .lang h2{font-family:'Feather Bold','Nunito',sans-serif;font-size:38px;margin:8px 0 4px;color:#4B4B4B;font-weight:900;letter-spacing:-0.02em}
+  .duo .mascot{width:120px;height:120px;margin:20px auto 0;background:radial-gradient(circle at 40% 30%,#79c93c 0%,#58cc02 60%);border-radius:50%;position:relative;box-shadow:inset 0 -12px 0 rgba(0,0,0,.15)}
+  .duo .mascot::before{content:'';position:absolute;left:22px;top:38px;width:22px;height:22px;background:#fff;border-radius:50%;box-shadow:24px 0 #fff,inset 0 0 0 4px #000}
+  .duo .mascot::after{content:'';position:absolute;left:34px;top:70px;width:52px;height:16px;background:#FFC800;border-radius:0 0 30px 30px}
+  .duo .path{padding:16px 40px}
+  .duo .node{width:80px;height:80px;background:#58cc02;border-radius:50%;border-bottom:8px solid #58a700;display:flex;align-items:center;justify-content:center;font-size:36px;margin:12px auto;box-shadow:0 8px 0 rgba(0,0,0,.05)}
+  .duo .node.locked{background:#E5E5E5;border-color:#afafaf;color:#afafaf}
+  .duo .node.gold{background:#FFC800;border-color:#e6a500}
+  .duo .stagger:nth-child(2){margin-left:20%}
+  .duo .stagger:nth-child(3){margin-left:-20%}
+  .duo .btn{background:#58cc02;color:#fff;font-weight:900;border-radius:16px;padding:16px;text-align:center;margin:14px 20px;font-size:16px;border-bottom:4px solid #58a700;text-transform:uppercase;letter-spacing:.04em}
+
+  /* SPOTIFY */
+  .spot{background:#000;color:#fff}
+  .spot .top{background:linear-gradient(180deg,#065F46 0%,#000 60%);padding:14px 20px 28px}
+  .spot .greet{font-family:'CircularSp','Inter',sans-serif;font-size:24px;font-weight:900;letter-spacing:-0.02em}
+  .spot .pills{display:flex;gap:8px;margin-top:12px}
+  .spot .pill{background:rgba(255,255,255,0.1);border-radius:999px;padding:6px 14px;font-weight:700;font-size:12.5px}
+  .spot .pill.on{background:#22C55E;color:#000}
+  .spot .rowg{padding:0 20px}
+  .spot .tile{display:flex;align-items:center;gap:12px;background:rgba(255,255,255,0.08);border-radius:6px;padding:0;overflow:hidden;margin-bottom:10px}
+  .spot .tile .cover{width:64px;height:64px;flex-shrink:0}
+  .spot .tile b{font-size:14px;font-weight:700}
+  .spot h3{font-family:'CircularSp','Inter',sans-serif;font-size:22px;font-weight:900;padding:20px 20px 8px;margin:0;letter-spacing:-0.02em}
+  .spot .cards{display:flex;gap:12px;padding:4px 20px;overflow-x:auto}
+  .spot .card{flex-shrink:0;width:150px}
+  .spot .card .cov{width:150px;height:150px;border-radius:4px;box-shadow:0 8px 24px rgba(0,0,0,.4)}
+  .spot .card .t{font-size:14px;font-weight:700;margin-top:8px}
+  .spot .card .s{font-size:12px;color:#a7a7a7;margin-top:2px}
+
+  /* NOTHING - retro dot matrix */
+  .noth{background:#000;color:#fff;position:relative}
+  .noth::after{content:'';position:absolute;inset:0;background-image:radial-gradient(#333 1px,transparent 1px);background-size:8px 8px;opacity:.3;pointer-events:none}
+  .noth .n-top{padding:14px 20px;display:flex;justify-content:space-between;position:relative;z-index:2}
+  .noth .n-brand{font-family:'JetBrains Mono','ui-monospace',monospace;font-size:14px;letter-spacing:.15em;text-transform:uppercase}
+  .noth h1{font-family:'JetBrains Mono','ui-monospace',monospace;font-size:44px;letter-spacing:-0.02em;padding:0 20px;margin:20px 0 6px;text-transform:uppercase;position:relative;z-index:2}
+  .noth .sub{font-family:'JetBrains Mono','ui-monospace',monospace;font-size:11px;letter-spacing:.15em;padding:0 20px;opacity:.6;text-transform:uppercase;position:relative;z-index:2}
+  .noth .grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:#333;margin:24px 20px 0;position:relative;z-index:2}
+  .noth .box{background:#000;padding:22px 16px;position:relative;min-height:110px}
+  .noth .box .k{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.15em;opacity:.5;text-transform:uppercase}
+  .noth .box .v{font-family:'JetBrains Mono',monospace;font-size:22px;margin-top:6px;font-weight:600}
+  .noth .box.acc{background:#111;color:#FF3D00}
+  .noth .btn{position:relative;z-index:2;background:transparent;color:#fff;border:1px solid #fff;font-family:'JetBrains Mono',monospace;letter-spacing:.15em;text-transform:uppercase;font-size:12px;padding:14px;text-align:center;margin:20px}
+
+  /* INSTAGRAM */
+  .ig{background:#fff;color:#000}
+  .ig .top{display:flex;justify-content:space-between;padding:8px 16px;border-bottom:1px solid #efefef;align-items:center}
+  .ig .logo{font-family:'Billabong','Great Vibes',cursive;font-size:32px;font-weight:400;background:linear-gradient(45deg,#FEDA75,#FA7E1E,#D62976,#962FBF,#4F5BD5);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .ig .icons{display:flex;gap:14px;font-size:22px}
+  .ig .stories{display:flex;gap:12px;padding:12px 16px;overflow-x:auto}
+  .ig .story{flex-shrink:0;width:66px;text-align:center}
+  .ig .story .ring{width:64px;height:64px;border-radius:50%;padding:3px;background:linear-gradient(45deg,#FEDA75,#FA7E1E,#D62976,#962FBF,#4F5BD5)}
+  .ig .story .ring div{width:100%;height:100%;border-radius:50%;background:#fff;padding:2px;box-sizing:border-box}
+  .ig .story .ring div span{display:flex;width:100%;height:100%;border-radius:50%;background:linear-gradient(135deg,#FDE68A,#F87171);align-items:center;justify-content:center;font-size:20px}
+  .ig .story .name{font-size:11px;margin-top:6px;color:#000}
+  .ig .post{border-top:1px solid #efefef;padding-top:8px}
+  .ig .post-top{display:flex;align-items:center;padding:0 12px 8px;gap:10px}
+  .ig .post-avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(45deg,#FEDA75,#D62976,#4F5BD5);padding:2px}
+  .ig .post-avatar div{width:100%;height:100%;border-radius:50%;background:#DCFCE7;display:flex;align-items:center;justify-content:center}
+  .ig .post-user{font-weight:700;font-size:13px}
+  .ig .post-media{aspect-ratio:1;background:linear-gradient(135deg,#22C55E,#16A34A);position:relative;display:flex;align-items:center;justify-content:center;color:#fff;text-align:center}
+  .ig .post-media h2{font-family:'Bricolage Grotesque',sans-serif;font-size:38px;letter-spacing:-0.03em;margin:0;line-height:1;font-weight:800}
+  .ig .post-actions{display:flex;padding:10px 12px;font-size:24px;gap:14px}
+
+  /* AIRBNB */
+  .bnb{background:#fff;color:#222}
+  .bnb .top{padding:14px 20px;border-bottom:1px solid #ebebeb}
+  .bnb .search{background:#fff;border:1px solid #dddddd;border-radius:32px;padding:12px 18px;box-shadow:0 3px 12px rgba(0,0,0,.05);display:flex;justify-content:space-between;align-items:center}
+  .bnb .search .col{font-size:12px}
+  .bnb .search .col b{font-weight:700;color:#222;font-size:14px;display:block;font-family:'Circular','Inter',sans-serif}
+  .bnb .search .col span{color:#717171}
+  .bnb .cats{display:flex;gap:32px;overflow-x:auto;padding:16px 20px;border-bottom:1px solid #ebebeb;color:#717171}
+  .bnb .cat{text-align:center;flex-shrink:0;padding-bottom:12px}
+  .bnb .cat.on{color:#222;border-bottom:2px solid #222}
+  .bnb .cat .ic{font-size:24px}
+  .bnb .cat .nm{font-size:12px;font-weight:600;margin-top:6px}
+  .bnb .listing{padding:16px 20px}
+  .bnb .listing .img{aspect-ratio:1.05;border-radius:12px;background:linear-gradient(135deg,#22C55E,#0B2A5B);position:relative;overflow:hidden}
+  .bnb .listing .img .fav{position:absolute;top:12px;right:12px;font-size:22px;color:#fff}
+  .bnb .listing .meta{margin-top:12px;display:flex;justify-content:space-between;align-items:baseline}
+  .bnb .listing .title{font-weight:600;font-size:15px}
+  .bnb .listing .sub{color:#717171;font-size:14px;margin-top:2px}
+  .bnb .listing .price{margin-top:8px;font-size:15px}
+  .bnb .listing .price u{text-decoration:none;font-weight:700}
+</style>
+
+<header>
+  <h1>Gen-<span class="brand-y">Young</span> · direction samples</h1>
+  <p>Six Home-screen re-imaginings, each riffing off a famous app the target audience already loves. Pick a direction and I'll roll it across all 28 screens.</p>
+</header>
+
+<div class="grid" style="grid-template-columns:repeat(auto-fill,minmax(430px,1fr))">
+
+  <!-- CASH APP -->
+  <div class="sample">
+    <div class="sample-label">01 · <b>Cash App</b> — minimal, monospace numerics, jet black</div>
+    <div class="phone cash">
+      <div class="notch"></div>
+      <div class="status"><span>9:41</span><span>••••</span></div>
+      <div style="padding:20px">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <div style="width:32px;height:32px;border-radius:50%;background:#111;display:flex;align-items:center;justify-content:center;font-weight:900">🌿</div>
+          <div style="display:flex;gap:12px;font-size:22px">☰</div>
+        </div>
+      </div>
+      <div style="text-align:center;padding:20px 0">
+        <div style="color:#7a7a7a;font-size:13px;font-weight:600">Available balance</div>
+        <div class="huge">₹12,480<span style="opacity:.35">.50</span></div>
+        <div style="color:#00D64F;font-size:13px;font-weight:700;margin-top:4px">+ ₹2,000 this week</div>
+      </div>
+      <div class="row">
+        <span class="chip on">All</span><span class="chip">Money</span><span class="chip">Perks</span><span class="chip">Learn</span>
+      </div>
+      <div class="card g">
+        <div style="font-size:12px;font-weight:800;letter-spacing:.05em;opacity:.75">STUDENT · AI</div>
+        <div style="font-family:'Space Grotesk',sans-serif;font-size:24px;font-weight:800;margin-top:6px;letter-spacing:-0.02em">AI Pro Plan · 1yr free</div>
+        <div style="font-size:13px;margin-top:2px">Google AI Plus + Gemini + Cloud credits</div>
+      </div>
+      <div class="card">
+        <div style="display:flex;justify-content:space-between">
+          <div>
+            <div style="color:#7a7a7a;font-size:11px;font-weight:800;letter-spacing:.05em">FRIDAY DROP · 2d 14h</div>
+            <div style="font-family:'Space Grotesk',sans-serif;font-size:20px;font-weight:800;margin-top:6px">Movie tickets · 50% off</div>
+          </div>
+          <div style="font-size:32px">🎬</div>
+        </div>
+      </div>
+      <div class="btn">Continue →</div>
+    </div>
+    <div class="sample-note">Deep-black + neon lime, one huge numeric focal point, everything else pushed to chrome edges. Reads confident and grown-up.</div>
+  </div>
+
+  <!-- DUOLINGO -->
+  <div class="sample">
+    <div class="sample-label">02 · <b>Duolingo</b> — mascot-led, gamified, playful blocks</div>
+    <div class="phone duo">
+      <div class="notch" style="background:#000"></div>
+      <div class="status" style="color:#4b4b4b"><span>9:41</span><span>••••</span></div>
+      <div class="top">
+        <div class="flag">🇮🇳</div>
+        <div class="streak">🔥 12</div>
+        <div class="flag">💎 240</div>
+      </div>
+      <div class="lang">
+        <div class="mascot"></div>
+        <h2>Namaste, Aanya!</h2>
+        <div style="color:#777;font-size:13px;font-weight:700">Section 3 · Money · Unit 4</div>
+      </div>
+      <div class="path">
+        <div class="node stagger">⭐</div>
+        <div class="node gold stagger">🏆</div>
+        <div class="node locked stagger">🔒</div>
+      </div>
+      <div class="btn">Start +20 XP</div>
+    </div>
+    <div class="sample-note">Big playful mascot, streak flame front-and-centre, chunky border-bottom buttons, Feather Bold vibes. Highest engagement for 15-18s.</div>
+  </div>
+
+  <!-- SPOTIFY -->
+  <div class="sample">
+    <div class="sample-label">03 · <b>Spotify</b> — editorial, gradient hero, "rows for you"</div>
+    <div class="phone spot">
+      <div class="notch"></div>
+      <div class="status" style="color:#fff"><span>9:41</span><span>••••</span></div>
+      <div class="top">
+        <div class="greet">Good morning</div>
+        <div class="pills">
+          <span class="pill on">All</span><span class="pill">Learn</span><span class="pill">Drops</span><span class="pill">Green</span>
+        </div>
+        <div class="rowg" style="padding:16px 0 0">
+          <div class="tile"><div class="cover" style="background:linear-gradient(135deg,#22C55E,#065F46)"></div><b>Green Passport</b></div>
+          <div class="tile"><div class="cover" style="background:linear-gradient(135deg,#FBBF24,#DC2626)"></div><b>Friday Drop</b></div>
+          <div class="tile"><div class="cover" style="background:linear-gradient(135deg,#3B82F6,#7C3AED)"></div><b>AI Pro Plan</b></div>
+          <div class="tile"><div class="cover" style="background:linear-gradient(135deg,#EC4899,#8B5CF6)"></div><b>Movie tickets</b></div>
+        </div>
+      </div>
+      <h3>Made for Aanya</h3>
+      <div class="cards">
+        <div class="card"><div class="cov" style="background:linear-gradient(135deg,#22C55E,#065F46)"></div><div class="t">Green streak · Week 12</div><div class="s">Sustainability courses</div></div>
+        <div class="card"><div class="cov" style="background:linear-gradient(135deg,#FBBF24,#EA580C)"></div><div class="t">Friday Drop lineup</div><div class="s">3 new offers</div></div>
+        <div class="card"><div class="cov" style="background:linear-gradient(135deg,#3B82F6,#0B2A5B)"></div><div class="t">Money basics</div><div class="s">15-min lessons</div></div>
+      </div>
+      <h3 style="padding-top:16px">Trending on campus</h3>
+      <div class="cards">
+        <div class="card"><div class="cov" style="background:linear-gradient(135deg,#EC4899,#7C3AED)"></div><div class="t">Zomato interview</div><div class="s">Career quest</div></div>
+        <div class="card"><div class="cov" style="background:linear-gradient(135deg,#F87171,#DC2626)"></div><div class="t">Safety check-in</div><div class="s">SOS setup</div></div>
+      </div>
+    </div>
+    <div class="sample-note">Dark-first with a coloured gradient wash from the top, editorial "Made for you / Trending" rows. Feels like discovery, not a form.</div>
+  </div>
+
+  <!-- NOTHING / RETRO -->
+  <div class="sample">
+    <div class="sample-label">04 · <b>Nothing / Arc</b> — dot matrix, mono, retro-futuristic</div>
+    <div class="phone noth">
+      <div class="notch"></div>
+      <div class="status" style="color:#fff"><span>9:41</span><span>••••</span></div>
+      <div class="n-top">
+        <div class="n-brand">GEN—YOUNG</div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:11px;opacity:.6;letter-spacing:.15em">V.1.0</div>
+      </div>
+      <h1>YOUR<br>MONEY.<br>YOUR<br><span style="color:#FF3D00">MOVE.</span></h1>
+      <div class="sub">FRI · 09.09 · MUMBAI · 29°</div>
+      <div class="grid">
+        <div class="box"><div class="k">// Balance</div><div class="v">₹12,480</div></div>
+        <div class="box acc"><div class="k" style="color:#FF3D00">// Drop_ready</div><div class="v">02:14:18</div></div>
+        <div class="box"><div class="k">// XP · Lv3</div><div class="v">1,240</div></div>
+        <div class="box"><div class="k">// Streak</div><div class="v">12 days</div></div>
+        <div class="box acc" style="grid-column:span 2"><div class="k" style="color:#FF3D00">// Next_action</div><div class="v" style="font-size:15px;margin-top:8px">Claim Google AI Plus · 1 year, free</div></div>
+      </div>
+      <div class="btn">Continue →</div>
+    </div>
+    <div class="sample-note">Mono type, dot texture, orange accent. Zero decoration. Reads like a piece of hardware, not a lifestyle app. Great for tech-forward youth.</div>
+  </div>
+
+  <!-- INSTAGRAM -->
+  <div class="sample">
+    <div class="sample-label">05 · <b>Instagram</b> — story rings, full-bleed feed cards</div>
+    <div class="phone ig">
+      <div class="notch"></div>
+      <div class="status" style="color:#000"><span>9:41</span><span>••••</span></div>
+      <div class="top">
+        <div class="logo">Gen-Young</div>
+        <div class="icons">💬 🔔</div>
+      </div>
+      <div class="stories">
+        <div class="story"><div class="ring"><div><span>+</span></div></div><div class="name">Your story</div></div>
+        <div class="story"><div class="ring"><div><span>🎬</span></div></div><div class="name">Drop</div></div>
+        <div class="story"><div class="ring"><div><span>🌿</span></div></div><div class="name">Green</div></div>
+        <div class="story"><div class="ring"><div><span>🎓</span></div></div><div class="name">Learn</div></div>
+        <div class="story"><div class="ring"><div><span>🛡</span></div></div><div class="name">SOS</div></div>
+      </div>
+      <div class="post">
+        <div class="post-top">
+          <div class="post-avatar"><div>🌿</div></div>
+          <div style="flex:1">
+            <div class="post-user">green_passport</div>
+            <div style="font-size:11px;color:#8e8e8e">Level up · Aanya</div>
+          </div>
+          <div style="font-size:22px">···</div>
+        </div>
+        <div class="post-media">
+          <div>
+            <div style="font-size:12px;font-weight:800;letter-spacing:.05em;opacity:.85">STREAK · DAY 12 🔥</div>
+            <h2>You saved<br>42kg of CO₂</h2>
+            <div style="margin-top:10px;font-size:13px;opacity:.9">Tap to claim your Circular Explorer badge</div>
+          </div>
+        </div>
+        <div class="post-actions">❤ 💬 ↗<span style="margin-left:auto">🔖</span></div>
+        <div style="padding:0 12px 12px;font-size:13px"><b>1,204 friends</b> earned this badge · <span style="color:#8e8e8e">tap to claim yours</span></div>
+      </div>
+    </div>
+    <div class="sample-note">Story rings at top, feed post per benefit. Turns claiming an offer into a social moment. Highest sharability among 18-24s.</div>
+  </div>
+
+  <!-- AIRBNB -->
+  <div class="sample">
+    <div class="sample-label">06 · <b>Airbnb</b> — editorial, soft photos, whitespace-first</div>
+    <div class="phone bnb">
+      <div class="notch"></div>
+      <div class="status" style="color:#222"><span>9:41</span><span>••••</span></div>
+      <div class="top">
+        <div class="search">
+          <div class="col"><b>Discover offers</b><span>Anywhere · Any time · Any budget</span></div>
+          <div style="font-size:20px">🔍</div>
+        </div>
+      </div>
+      <div class="cats">
+        <div class="cat on"><div class="ic">✨</div><div class="nm">For you</div></div>
+        <div class="cat"><div class="ic">🎓</div><div class="nm">Learn</div></div>
+        <div class="cat"><div class="ic">🎬</div><div class="nm">Drops</div></div>
+        <div class="cat"><div class="ic">🌿</div><div class="nm">Green</div></div>
+        <div class="cat"><div class="ic">💼</div><div class="nm">Career</div></div>
+      </div>
+      <div class="listing">
+        <div class="img"><div class="fav">♡</div><div style="position:absolute;bottom:16px;left:16px;background:#fff;color:#222;padding:6px 10px;border-radius:6px;font-size:11px;font-weight:700">🏆 Editor's pick</div></div>
+        <div class="meta">
+          <div>
+            <div class="title">Google AI Plus · Student year</div>
+            <div class="sub">Ends 31 Dec · Free with .edu</div>
+          </div>
+          <div style="font-size:12px;color:#222">★ 4.9</div>
+        </div>
+        <div class="price"><u>Free for 1 year</u> · then ₹1,625/mo</div>
+      </div>
+    </div>
+    <div class="sample-note">Sofia serif-ish accents, editorial spacing, soft photo hero. Reads calm and trustworthy — best if the brand wants to age gracefully with 24-30.</div>
+  </div>
+
+</div>
+
+<footer>
+  Tell me the number to run with — or say <b>"mix 02 + 05"</b> etc. and I'll blend the aesthetics across the 28 mapped screens. All published under the same <code>claude/nifty-bohr-41ar3r</code> branch.
+</footer>
