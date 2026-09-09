@@ -1,0 +1,58 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><script src="./support.js"></script></head><body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700;800;900&display=swap">
+<style>
+  body{margin:0;font-family:'Inter',system-ui,sans-serif;background:#0B2A5B;color:#fff}
+  .phone{width:390px;height:844px;background:radial-gradient(circle at 50% 45%,#DC2626 0%,#7F1D1D 45%,#450A0A 100%);border-radius:44px;overflow:hidden;position:relative;box-shadow:0 30px 60px rgba(11,42,91,.18),0 0 0 10px #0B2A5B,0 0 0 12px #1e3a70;margin:24px auto}
+  .notch{position:absolute;top:8px;left:50%;transform:translateX(-50%);width:112px;height:28px;background:#000;border-radius:20px}
+  h1{font-family:'Space Grotesk',sans-serif;letter-spacing:-0.03em;font-weight:700}
+</style>
+</helmet>
+<div class="phone">
+  <div class="notch"></div>
+  <div style="padding:48px 20px 4px;text-align:center;">
+    <div style="display:inline-flex;gap:8px;align-items:center;background:rgba(0,0,0,0.35);padding:6px 12px;border-radius:999px;font-size:11.5px;font-weight:700;">
+      <span style="width:8px;height:8px;background:#FBBF24;border-radius:50%;"></span> Hold to send SOS
+    </div>
+    <h1 style="font-size:26px;margin:14px 0 4px;">Keep holding…</h1>
+    <div style="font-size:13px;opacity:.9;">Release to cancel · <b>2s</b> to dispatch 112</div>
+  </div>
+
+  <!-- Hold ring with countdown -->
+  <div style="display:flex;justify-content:center;padding:26px 0 12px;">
+    <div style="position:relative;width:260px;height:260px;">
+      <svg width="260" height="260" viewBox="0 0 260 260">
+        <circle cx="130" cy="130" r="118" fill="none" stroke="rgba(255,255,255,0.14)" stroke-width="14"/>
+        <circle cx="130" cy="130" r="118" fill="none" stroke="#FBBF24" stroke-width="14" stroke-linecap="round" stroke-dasharray="741" stroke-dashoffset="247" transform="rotate(-90 130 130)"/>
+      </svg>
+      <div style="position:absolute;inset:22px;border-radius:50%;background:radial-gradient(circle at 30% 30%,#EF4444,#B91C1C);display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 0 60px rgba(239,68,68,0.6),inset 0 -6px 20px rgba(0,0,0,0.25);">
+        <div style="font-size:60px;font-weight:900;font-family:'Space Grotesk',sans-serif;">2</div>
+        <div style="font-size:12px;opacity:.85;letter-spacing:.1em;font-weight:700;">SECONDS</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Audio cue chip -->
+  <div style="text-align:center;">
+    <div style="display:inline-flex;align-items:center;gap:8px;background:rgba(0,0,0,0.3);padding:8px 14px;border-radius:999px;font-size:12px;font-weight:700;">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="#FBBF24"><path d="M3 10v4h4l5 5V5L7 10zM16 8a5 5 0 010 8"/></svg>
+      Beep · Beep · <span style="opacity:.6;">Beep</span>
+    </div>
+  </div>
+
+  <!-- Live location strip -->
+  <div style="margin:24px 16px 0;background:rgba(0,0,0,0.35);border-radius:14px;padding:12px 14px;display:flex;align-items:center;gap:10px;font-size:12px;">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="#22C55E"><path d="M12 2a7 7 0 017 7c0 5-7 13-7 13S5 14 5 9a7 7 0 017-7z"/><circle cx="12" cy="9" r="2.5" fill="#0B2A5B"/></svg>
+    <div style="flex:1;">
+      <div style="font-weight:800;">Bandra West, Mumbai</div>
+      <div style="font-size:11px;opacity:.75;">Accuracy ±5 m · Ready to share with 112</div>
+    </div>
+  </div>
+
+  <div style="position:absolute;bottom:22px;left:0;right:0;text-align:center;font-size:11.5px;opacity:.85;">Release your finger anytime to abort</div>
+</div>
+</x-dc>
+<script data-dc-script data-props='{"$preview":{"width":440,"height":900}}'>class Component extends DCLogic{renderVals(){return{}}}</script>
+</body></html>

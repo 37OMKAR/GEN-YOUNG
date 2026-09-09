@@ -1,0 +1,78 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><script src="./support.js"></script></head><body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700;800;900&display=swap">
+<style>
+  body{margin:0;font-family:'Inter',system-ui,sans-serif;background:#EEF3FA;color:#0B2A5B}
+  .phone{width:390px;height:844px;background:#fff;border-radius:44px;overflow:hidden;position:relative;box-shadow:0 30px 60px rgba(11,42,91,.18),0 0 0 10px #0B2A5B,0 0 0 12px #1e3a70;margin:24px auto}
+  .notch{position:absolute;top:8px;left:50%;transform:translateX(-50%);width:112px;height:28px;background:#0B2A5B;border-radius:20px}
+  h1{font-family:'Space Grotesk',sans-serif;letter-spacing:-0.02em;font-weight:700}
+</style>
+</helmet>
+<div class="phone">
+  <div class="notch"></div>
+  <div style="padding:44px 20px 12px;display:flex;justify-content:space-between;align-items:center;">
+    <div>
+      <h1 style="font-size:22px;margin:0;">Inbox</h1>
+      <div style="font-size:11.5px;color:#64748B;">3 unread · 12 today</div>
+    </div>
+    <div style="display:flex;gap:8px;">
+      <div style="width:32px;height:32px;border-radius:10px;background:#F1F5F9;display:flex;align-items:center;justify-content:center;color:#0B2A5B;font-weight:800;">≡</div>
+      <div style="width:32px;height:32px;border-radius:10px;background:#F1F5F9;display:flex;align-items:center;justify-content:center;color:#0B2A5B;font-weight:800;">✓</div>
+    </div>
+  </div>
+
+  <!-- Segments -->
+  <div style="padding:0 16px 12px;display:flex;gap:6px;">
+    <sc-for list="{{tabs}}" as="t" hint-placeholder-count="4">
+      <div style="background:{{t.bg}};color:{{t.fg}};border:1px solid {{t.border}};padding:6px 12px;border-radius:999px;font-size:11.5px;font-weight:700;">{{t.label}}<span style="opacity:.7;margin-left:4px;">{{t.n}}</span></div>
+    </sc-for>
+  </div>
+
+  <!-- Notifications list -->
+  <div style="padding:0 16px 90px;display:flex;flex-direction:column;gap:8px;">
+    <sc-for list="{{items}}" as="n" hint-placeholder-count="7">
+      <div style="background:{{n.bg}};border:1px solid {{n.border}};border-radius:14px;padding:12px 14px;display:flex;gap:12px;">
+        <div style="width:38px;height:38px;border-radius:12px;background:{{n.iconBg}};color:#fff;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0;">{{n.emoji}}</div>
+        <div style="flex:1;">
+          <div style="display:flex;justify-content:space-between;align-items:baseline;">
+            <div style="font-weight:800;font-size:13px;">{{n.title}}</div>
+            <div style="font-size:10.5px;color:#94A3B8;font-weight:600;">{{n.time}}</div>
+          </div>
+          <div style="font-size:11.5px;color:#475569;line-height:1.4;margin-top:2px;">{{n.body}}</div>
+          <sc-if value="{{n.cta}}" hint-placeholder-val="{{true}}">
+            <div style="margin-top:8px;display:flex;gap:6px;">
+              <button style="background:{{n.ctaBg}};color:{{n.ctaColor}};border:none;padding:6px 12px;border-radius:8px;font-weight:800;font-size:11px;">{{n.cta}}</button>
+              <button style="background:transparent;color:#64748B;border:none;padding:6px 8px;border-radius:8px;font-weight:700;font-size:11px;">Later</button>
+            </div>
+          </sc-if>
+        </div>
+        <sc-if value="{{n.unread}}" hint-placeholder-val="{{true}}">
+          <div style="width:8px;height:8px;background:#22C55E;border-radius:50%;flex-shrink:0;margin-top:6px;"></div>
+        </sc-if>
+      </div>
+    </sc-for>
+  </div>
+</div>
+</x-dc>
+<script data-dc-script data-props='{"$preview":{"width":440,"height":900}}'>
+class Component extends DCLogic{renderVals(){return{
+  tabs:[
+    {label:'All',n:12,bg:'#0B2A5B',fg:'#fff',border:'#0B2A5B'},
+    {label:'Drops',n:3,bg:'#F1F5F9',fg:'#0B2A5B',border:'#E2E8F0'},
+    {label:'Benefits',n:5,bg:'#F1F5F9',fg:'#0B2A5B',border:'#E2E8F0'},
+    {label:'Safety',n:1,bg:'#F1F5F9',fg:'#0B2A5B',border:'#E2E8F0'},
+  ],
+  items:[
+    {title:'Friday Drop opens in 12 min',body:'100,000 movie tickets · 50% off. Be ready when the counter hits zero.',time:'now',emoji:'⚡',iconBg:'#F59E0B',bg:'#FFFBEB',border:'#FEF3C7',unread:true,cta:'Open Drop',ctaBg:'#F59E0B',ctaColor:'#fff'},
+    {title:'Your Green Passport levelled up',body:'Level 3 · Climate Learner unlocked. New badge on your profile.',time:'2m ago',emoji:'🌿',iconBg:'#22C55E',bg:'#F0FDF4',border:'#BBF7D0',unread:true},
+    {title:'Refund from Myntra · ₹899',body:'Credited to your Gen-Young RuPay ending 4487.',time:'1h ago',emoji:'↩',iconBg:'#16A34A',bg:'#fff',border:'#E2E8F0',unread:true},
+    {title:'Sustainability course · new module',body:'"Circular economy at home" is live. Enroll in one tap.',time:'3h ago',emoji:'🎓',iconBg:'#7C3AED',bg:'#fff',border:'#E2E8F0',cta:'Enroll',ctaBg:'#7C3AED',ctaColor:'#fff'},
+    {title:'Heavy rain warning · Mumbai',body:'Waterlogging 4–8 pm. Consider staying indoors.',time:'5h ago',emoji:'🌧',iconBg:'#0B82D6',bg:'#fff',border:'#E2E8F0'},
+    {title:'Priya paid you ₹ 500',body:'"Split for last night 🎉" · Balance ₹ 12,480.',time:'yday',emoji:'💸',iconBg:'#22C55E',bg:'#fff',border:'#E2E8F0'},
+    {title:'AI Pro Plan · voucher activated',body:'Your 1-year free tier starts today.',time:'2d ago',emoji:'🤖',iconBg:'#0B82D6',bg:'#fff',border:'#E2E8F0'},
+  ]
+}}}
+</script>
+</body></html>

@@ -1,0 +1,49 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><script src="./support.js"></script></head><body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700;800;900&display=swap">
+<style>
+  body{margin:0;font-family:'Inter',system-ui,sans-serif;background:#0B2A5B;color:#fff}
+  .phone{width:390px;height:844px;background:linear-gradient(180deg,#0B2A5B,#173B7A);border-radius:44px;overflow:hidden;position:relative;box-shadow:0 30px 60px rgba(11,42,91,.18),0 0 0 10px #0B2A5B,0 0 0 12px #1e3a70;margin:24px auto}
+  .notch{position:absolute;top:8px;left:50%;transform:translateX(-50%);width:112px;height:28px;background:#000;border-radius:20px}
+  h2{font-family:'Space Grotesk',sans-serif;letter-spacing:-0.02em}
+  .key{background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.12);border-radius:16px;padding:16px 0;font-size:22px;font-weight:700;text-align:center;color:#fff;font-family:'Space Grotesk',sans-serif;}
+</style>
+</helmet>
+<div class="phone">
+  <div class="notch"></div>
+  <div style="padding:48px 20px 8px;">
+    <div style="width:32px;height:32px;border-radius:10px;background:rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:center;">‹</div>
+  </div>
+  <div style="text-align:center;padding:20px 20px 12px;">
+    <div style="width:64px;height:64px;border-radius:20px;background:linear-gradient(135deg,#22C55E,#16A34A);margin:0 auto 16px;display:flex;align-items:center;justify-content:center;box-shadow:0 12px 30px rgba(34,197,94,0.4);">
+      <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round"><rect x="5" y="10" width="14" height="10" rx="2"/><path d="M8 10V7a4 4 0 018 0v3"/></svg>
+    </div>
+    <h2 style="font-size:22px;margin:0;">Enter your UPI PIN</h2>
+    <div style="font-size:12.5px;opacity:.75;margin-top:4px;">Paying <b>Priya Menon</b> · ₹ 500</div>
+  </div>
+
+  <!-- PIN dots -->
+  <div style="display:flex;justify-content:center;gap:16px;padding:24px 0;">
+    <div style="width:16px;height:16px;border-radius:50%;background:#22C55E;box-shadow:0 0 0 4px rgba(34,197,94,0.25);"></div>
+    <div style="width:16px;height:16px;border-radius:50%;background:#22C55E;box-shadow:0 0 0 4px rgba(34,197,94,0.25);"></div>
+    <div style="width:16px;height:16px;border-radius:50%;background:#22C55E;box-shadow:0 0 0 4px rgba(34,197,94,0.25);"></div>
+    <div style="width:16px;height:16px;border-radius:50%;background:rgba(255,255,255,0.18);border:2px solid rgba(255,255,255,0.35);"></div>
+    <div style="width:16px;height:16px;border-radius:50%;background:rgba(255,255,255,0.1);"></div>
+    <div style="width:16px;height:16px;border-radius:50%;background:rgba(255,255,255,0.1);"></div>
+  </div>
+  <div style="text-align:center;font-size:11px;opacity:.7;margin-bottom:16px;">Secure · Never share your PIN</div>
+
+  <!-- Keypad -->
+  <div style="margin:0 20px;display:grid;grid-template-columns:repeat(3,1fr);gap:12px;">
+    <sc-for list="{{keys}}" as="k" hint-placeholder-count="12"><div class="key">{{k}}</div></sc-for>
+  </div>
+
+  <div style="position:absolute;bottom:22px;left:16px;right:16px;text-align:center;font-size:11px;opacity:.65;">Powered by NPCI · UPI 2.0</div>
+</div>
+</x-dc>
+<script data-dc-script data-props='{"$preview":{"width":440,"height":900}}'>
+class Component extends DCLogic{renderVals(){return{keys:['1','2','3','4','5','6','7','8','9','','0','⌫']}}}
+</script>
+</body></html>
