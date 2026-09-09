@@ -15,6 +15,7 @@ import { LearnView } from './views/LearnView';
 import { DropsView } from './views/DropsView';
 import { SosView } from './views/SosView';
 import { ProfileView } from './views/ProfileView';
+import { ScreenShowcase } from './screens/ScreenRouter';
 
 const AppContent: React.FC = () => {
   const [activeTab, setActiveTab] = useState<NavTabId>('home');
@@ -22,53 +23,41 @@ const AppContent: React.FC = () => {
 
   const renderActiveView = () => {
     switch (activeTab) {
-      case 'home':
-        return <HomeView onNavigateTab={(tab) => setActiveTab(tab)} />;
-      case 'benefits':
-        return <BenefitsView />;
-      case 'learn':
-        return <LearnView />;
-      case 'drops':
-        return <DropsView />;
-      case 'safety':
-        return <SosView />;
-      case 'profile':
-        return <ProfileView onOpenPersonaModal={() => setIsPersonaModalOpen(true)} />;
-      default:
-        return <HomeView onNavigateTab={(tab) => setActiveTab(tab)} />;
+      case 'home':     return <HomeView onNavigateTab={(tab) => setActiveTab(tab)} />;
+      case 'benefits': return <BenefitsView />;
+      case 'learn':    return <LearnView />;
+      case 'drops':    return <DropsView />;
+      case 'safety':   return <SosView />;
+      case 'profile':  return <ProfileView onOpenPersonaModal={() => setIsPersonaModalOpen(true)} />;
+      default:         return <HomeView onNavigateTab={(tab) => setActiveTab(tab)} />;
     }
   };
 
   return (
     <div className="app-container min-h-screen bg-slate-950 text-slate-100 flex flex-col select-none">
-      {/* Top Persistent App Header */}
       <TopHeader onOpenPersonaSwitcher={() => setIsPersonaModalOpen(true)} />
-
-      {/* Main Dynamic Viewport Container */}
-      <div className="flex-1 w-full max-w-md mx-auto relative overflow-y-auto">
-        {renderActiveView()}
-      </div>
-
-      {/* Persistent Mobile Bottom Navigation */}
-      <BottomNav
-        activeTab={activeTab}
-        onTabChange={(tab) => setActiveTab(tab)}
-        dropBadgeCount={1}
-      />
-
-      {/* Global Interactive Persona Switcher Modal */}
-      <PersonaSwitcherModal
-        isOpen={isPersonaModalOpen}
-        onClose={() => setIsPersonaModalOpen(false)}
-      />
-
-      {/* App-Wide Floating Feedback Toasts */}
+      <div className="flex-1 w-full max-w-md mx-auto relative overflow-y-auto">{renderActiveView()}</div>
+      <BottomNav activeTab={activeTab} onTabChange={(tab) => setActiveTab(tab)} dropBadgeCount={1} />
+      <PersonaSwitcherModal isOpen={isPersonaModalOpen} onClose={() => setIsPersonaModalOpen(false)} />
       <ToastContainer />
     </div>
   );
 };
 
+const isShowcase = () => {
+  if (typeof window === 'undefined') return true;
+  const p = new URLSearchParams(window.location.search);
+  return p.get('legacy') !== '1';
+};
+
 export const App: React.FC = () => {
+  if (isShowcase()) {
+    return (
+      <AccessibilityProvider>
+        <ScreenShowcase />
+      </AccessibilityProvider>
+    );
+  }
   return (
     <AccessibilityProvider>
       <PersonaProvider>
