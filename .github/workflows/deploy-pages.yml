@@ -1,8 +1,8 @@
-name: Deploy README landing page to GitHub Pages
+name: Deploy Gen-Young app to GitHub Pages
 
 on:
   push:
-    branches: [main]
+    branches: [main, claude/nifty-bohr-41ar3r]
   workflow_dispatch:
 
 permissions:
@@ -17,31 +17,38 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: gen_young_app
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Assemble static site
-        run: |
-          mkdir -p _site/docs
-          # README + reference PDF + all showcase images
-          cp README.md _site/README.md
-          cp GEN-YOUNG_50_Page_Concept_Paper.pdf _site/GEN-YOUNG_50_Page_Concept_Paper.pdf
-          cp -r docs/assets _site/docs/assets
-          # Landing page renders README client-side
-          cp .github/pages/index.html _site/index.html
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+          cache-dependency-path: gen_young_app/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+
+      - name: SPA fallback (404 → index)
+        run: cp dist/index.html dist/404.html
 
       - name: Configure Pages
         # ONE-TIME MANUAL STEP required before this workflow can succeed:
         #   Settings → Pages → Source → "GitHub Actions"
-        # The default GITHUB_TOKEN lacks the admin scope needed to create a
-        # Pages site programmatically, so `enablement: true` does not help.
         uses: actions/configure-pages@v5
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: _site
+          path: gen_young_app/dist
 
   deploy:
     needs: build
