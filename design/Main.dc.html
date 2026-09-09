@@ -1,0 +1,142 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap">
+<style>
+  body { margin: 0; font-family: 'Plus Jakarta Sans', system-ui, sans-serif; background: #EEF3FA; }
+  a { color: #0B2A5B; } a:hover { color: #08214A; }
+  .phone { width: 390px; height: 844px; background: #ffffff; border-radius: 44px; overflow: hidden; position: relative; box-shadow: 0 30px 60px rgba(11,42,91,0.18), 0 0 0 10px #0B2A5B, 0 0 0 12px #1e3a70; margin: 24px auto; }
+  .status { display: flex; justify-content: space-between; align-items: center; padding: 14px 28px 8px; font-size: 13px; font-weight: 600; color: #0B2A5B; }
+  .notch { position: absolute; top: 8px; left: 50%; transform: translateX(-50%); width: 112px; height: 28px; background: #0B2A5B; border-radius: 20px; z-index: 3; }
+  .brand-wordmark { font-size: 22px; font-weight: 800; letter-spacing: -0.02em; color: #0B2A5B; display: inline-flex; align-items: baseline; gap: 2px; }
+  .brand-wordmark .green { color: #22C55E; }
+  .leaf { display: inline-block; width: 12px; height: 12px; vertical-align: baseline; }
+</style>
+</helmet>
+<div class="phone">
+  <div class="notch"></div>
+  <div class="status">
+    <span>3:31</span>
+    <span style="display:inline-flex; gap:6px; align-items:center;">
+      <svg width="16" height="10" viewBox="0 0 16 10" fill="none"><path d="M2 8h1M5 6h1M8 4h1M11 2h1" stroke="#0B2A5B" stroke-width="2" stroke-linecap="round"/></svg>
+      <svg width="16" height="10" viewBox="0 0 16 10" fill="none"><path d="M1 4a10 10 0 0114 0M4 6.5a6 6 0 018 0M7 9a1.5 1.5 0 012 0" stroke="#0B2A5B" stroke-width="1.5" stroke-linecap="round"/></svg>
+      <svg width="24" height="12" viewBox="0 0 24 12" fill="none"><rect x="1" y="1" width="20" height="10" rx="3" stroke="#0B2A5B" stroke-width="1.5"/><rect x="3" y="3" width="16" height="6" rx="1.5" fill="#0B2A5B"/><rect x="22" y="4" width="2" height="4" rx="1" fill="#0B2A5B"/></svg>
+    </span>
+  </div>
+
+  <!-- Top bar -->
+  <div style="padding: 6px 20px 8px; display: flex; justify-content: space-between; align-items: center;">
+    <span class="brand-wordmark">
+      Gen-<span class="green">Young</span>
+      <svg class="leaf" viewBox="0 0 24 24" fill="none"><path d="M4 20c0-8 6-14 16-16-1 10-7 16-16 16z" fill="#22C55E"/><path d="M4 20L12 12" stroke="#0B2A5B" stroke-width="1.5" stroke-linecap="round"/></svg>
+    </span>
+    <div style="display: flex; align-items: center; gap: 12px;">
+      <div style="position: relative;">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0B2A5B" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0112 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.9 1.9 0 003.4 0"/></svg>
+        <span style="position: absolute; top: -2px; right: -2px; width: 8px; height: 8px; background: #22C55E; border-radius: 50%; border: 2px solid #ffffff;"></span>
+      </div>
+      <div style="width: 34px; height: 34px; border-radius: 50%; background: linear-gradient(135deg,#FDE68A,#FCA5A5); border: 2px solid #22C55E; display: flex; align-items: center; justify-content: center; font-weight: 700; color: #7C2D12; font-size: 13px;">A</div>
+    </div>
+  </div>
+
+  <!-- Greeting -->
+  <div style="padding: 8px 20px 12px;">
+    <div style="color: #64748B; font-size: 13px; font-weight: 500;">Good morning, Aanya</div>
+    <div style="font-size: 24px; font-weight: 800; color: #0B2A5B; line-height: 1.15; margin-top: 2px;">Your future,<br>in one place <svg width="20" height="20" viewBox="0 0 24 24" style="vertical-align: -3px;"><path d="M4 20c0-8 6-14 16-16-1 10-7 16-16 16z" fill="#22C55E"/></svg></div>
+  </div>
+
+  <!-- Search -->
+  <div style="padding: 0 20px 14px;">
+    <label style="display: flex; align-items: center; gap: 10px; background: #F1F5F9; border: 1px solid #E2E8F0; border-radius: 14px; padding: 12px 14px;">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#64748B" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+      <span style="color: #94A3B8; font-size: 14px;">Search benefits, courses, offers…</span>
+    </label>
+  </div>
+
+  <!-- Category grid -->
+  <div style="padding: 0 20px 16px; display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 10px;">
+    <sc-for list="{{tiles}}" as="t" hint-placeholder-count="9">
+      <div style="background: #ffffff; border: 1px solid #E2E8F0; border-radius: 16px; padding: 12px 8px 10px; display: flex; flex-direction: column; align-items: center; gap: 6px;">
+        <div style="width: 40px; height: 40px; border-radius: 50%; background: {{t.bg}}; display: flex; align-items: center; justify-content: center;" innerHTML="{{t.icon}}"></div>
+        <div style="font-size: 11.5px; font-weight: 600; color: #0B2A5B; text-align: center; line-height: 1.15;">{{t.label}}</div>
+      </div>
+    </sc-for>
+  </div>
+
+  <!-- Recommended section -->
+  <div style="padding: 0 20px 8px; display: flex; justify-content: space-between; align-items: center;">
+    <div style="font-weight: 700; color: #0B2A5B; font-size: 15px;">Recommended for you</div>
+    <a href="#" style="font-size: 12px; font-weight: 600; text-decoration: none; color: #0B2A5B;">See all</a>
+  </div>
+
+  <!-- Recommendation cards -->
+  <div style="padding: 4px 20px 16px; display: flex; gap: 10px; overflow: hidden;">
+    <div style="flex: 1; background: #ffffff; border: 1px solid #E2E8F0; border-radius: 16px; padding: 10px;">
+      <div style="display: inline-block; background: #DBEAFE; color: #1D4ED8; font-size: 9.5px; font-weight: 700; padding: 3px 7px; border-radius: 999px; letter-spacing: 0.02em;">STUDENT OFFER</div>
+      <div style="font-weight: 700; color: #0B2A5B; margin-top: 8px; font-size: 14px;">AI Pro Plan</div>
+      <div style="font-size: 11px; color: #64748B; margin-top: 2px;">1 year free for eligible students</div>
+      <button style="margin-top: 10px; width: 100%; background: #0B2A5B; color: #ffffff; border: none; padding: 8px 0; border-radius: 10px; font-weight: 700; font-size: 12px;">Claim now</button>
+    </div>
+    <div style="flex: 1; background: #ffffff; border: 1px solid #E2E8F0; border-radius: 16px; padding: 10px;">
+      <div style="display: inline-block; background: #FEF3C7; color: #B45309; font-size: 9.5px; font-weight: 700; padding: 3px 7px; border-radius: 999px; letter-spacing: 0.02em;">FRIDAY DROP</div>
+      <div style="font-weight: 700; color: #0B2A5B; margin-top: 8px; font-size: 14px;">Movie Tickets</div>
+      <div style="font-size: 11px; color: #64748B; margin-top: 2px;">100,000 claims · 2d 12h 30m</div>
+      <button style="margin-top: 10px; width: 100%; background: #ffffff; color: #0B2A5B; border: 1.5px solid #0B2A5B; padding: 6.5px 0; border-radius: 10px; font-weight: 700; font-size: 12px;">Get reminder</button>
+    </div>
+  </div>
+
+  <!-- Small steps green banner -->
+  <div style="margin: 0 20px 90px; background: linear-gradient(120deg,#DCFCE7,#F0FDF4); border: 1px solid #BBF7D0; border-radius: 16px; padding: 12px 14px; display: flex; align-items: center; gap: 12px;">
+    <div style="flex: 1;">
+      <div style="font-weight: 800; color: #14532D; font-size: 14px;">Small steps. Big change.</div>
+      <div style="font-size: 11.5px; color: #166534; margin-top: 2px;">For you. For a greener tomorrow.</div>
+    </div>
+    <svg width="42" height="42" viewBox="0 0 24 24"><path d="M4 20c0-8 6-14 16-16-1 10-7 16-16 16z" fill="#22C55E"/><path d="M4 20L12 12" stroke="#166534" stroke-width="1.5" stroke-linecap="round"/></svg>
+  </div>
+
+  <!-- Bottom nav -->
+  <div style="position: absolute; bottom: 0; left: 0; right: 0; background: #ffffff; border-top: 1px solid #E2E8F0; padding: 10px 8px 22px; display: flex; justify-content: space-around;">
+    <sc-for list="{{nav}}" as="n" hint-placeholder-count="5">
+      <div style="display: flex; flex-direction: column; align-items: center; gap: 3px; color: {{n.color}}; font-size: 10.5px; font-weight: 600;">
+        <div innerHTML="{{n.icon}}"></div>
+        <div>{{n.label}}</div>
+      </div>
+    </sc-for>
+  </div>
+</div>
+</x-dc>
+<script data-dc-script data-props='{"$preview":{"width":440,"height":900}}'>
+class Component extends DCLogic {
+  renderVals() {
+    const svg = (path, fill) => `<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="${fill}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${path}</svg>`;
+    const filled = (path, fill) => `<svg width="20" height="20" viewBox="0 0 24 24" fill="${fill}">${path}</svg>`;
+    const tiles = [
+      { label: 'Banking', bg: '#DBEAFE', icon: filled('<path d="M3 10L12 4l9 6v1H3v-1z M5 12h2v6H5z M11 12h2v6h-2z M17 12h2v6h-2z M3 20h18v2H3z"/>', '#1D4ED8') },
+      { label: 'Government Benefits', bg: '#DCFCE7', icon: filled('<path d="M3 10L12 4l9 6v1H3v-1z M5 12h2v6H5z M11 12h2v6h-2z M17 12h2v6h-2z M3 20h18v2H3z"/>', '#16A34A') },
+      { label: 'AI & Learning', bg: '#EDE9FE', icon: filled('<rect x="6" y="6" width="12" height="12" rx="2"/><rect x="9" y="9" width="6" height="6" rx="1" fill="#EDE9FE"/><path d="M12 2v3 M12 19v3 M2 12h3 M19 12h3 M4.9 4.9l2.1 2.1 M17 17l2.1 2.1 M4.9 19.1l2.1-2.1 M17 7l2.1-2.1" stroke="#7C3AED" stroke-width="1.6" stroke-linecap="round"/>', '#7C3AED') },
+      { label: 'Health', bg: '#FEE2E2', icon: filled('<path d="M12 21s-7-4.5-9.5-9.5C.7 7.8 3 4 6.5 4c2 0 3.5 1 5.5 3 2-2 3.5-3 5.5-3 3.5 0 5.8 3.8 4 7.5C19 16.5 12 21 12 21z"/>', '#DC2626') },
+      { label: 'Career', bg: '#FFEDD5', icon: filled('<path d="M4 8h16v11H4z M9 8V6h6v2 M4 13h16" fill="none" stroke="#EA580C" stroke-width="1.8"/><rect x="10" y="12" width="4" height="3" fill="#EA580C"/>', '#EA580C') },
+      { label: 'Lifestyle Offers', bg: '#FCE7F3', icon: filled('<path d="M12 4l1.5 3H17l-2.5 2 1 3.5L12 10.5 8.5 12.5l1-3.5L7 7h3.5z M5 20h14v-2H5z"/>', '#DB2777') },
+      { label: 'Insurance', bg: '#DBEAFE', icon: filled('<path d="M12 2l8 3v7c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V5l8-3z"/><path d="M8 12l3 3 5-6" stroke="#DBEAFE" stroke-width="2" fill="none" stroke-linecap="round"/>', '#2563EB') },
+      { label: 'Green Future', bg: '#DCFCE7', icon: filled('<path d="M4 20c0-8 6-14 16-16-1 10-7 16-16 16z"/>', '#16A34A') },
+      { label: 'Accessibility', bg: '#EDE9FE', icon: filled('<circle cx="12" cy="4.5" r="2"/><path d="M6 8h12v2l-4 1v3l2 5h-2l-2-4-2 4H8l2-5v-3L6 10z"/>', '#7C3AED') },
+    ];
+    const nav = [
+      { label: 'Home', color: '#0B2A5B', icon: '<svg width="22" height="22" viewBox="0 0 24 24" fill="#0B2A5B"><path d="M3 12L12 3l9 9v9h-6v-6H9v6H3z"/></svg>' },
+      { label: 'Benefits', color: '#94A3B8', icon: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" stroke-width="1.8" stroke-linecap="round"><path d="M20 12v9H4v-9 M22 7H2v5h20z M12 22V7 M12 7s-2-5-5-5-2 5 5 5-2-5 5-5 2 5-5 5"/></svg>' },
+      { label: 'Learn', color: '#94A3B8', icon: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6l8-3 8 3-8 3-8-3z M4 6v6c0 2 4 4 8 4s8-2 8-4V6"/></svg>' },
+      { label: 'Offers', color: '#94A3B8', icon: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12l-8 8-9-9V3h8z"/><circle cx="7.5" cy="7.5" r="1.4" fill="#94A3B8"/></svg>' },
+      { label: 'Profile', color: '#94A3B8', icon: '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c1-4 5-6 8-6s7 2 8 6"/></svg>' },
+    ];
+    return { tiles, nav };
+  }
+}
+</script>
+</body>
+</html>
