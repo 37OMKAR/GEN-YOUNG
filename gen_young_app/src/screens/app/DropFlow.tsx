@@ -2,28 +2,40 @@ import React from 'react';
 import { PhoneFrame, BrandHeader } from '../shell/PhoneFrame';
 
 export const DropScreen: React.FC = () => (
-  <PhoneFrame>
+  <PhoneFrame bg="bg-slate-50">
     <BrandHeader />
-    <div className="relative mx-4 mt-2 overflow-hidden rounded-3xl bg-gradient-to-br from-navy-800 to-navy-700 p-5 text-center text-white">
-      <div className="text-[26px]">📣</div>
-      <div className="text-[16px] font-bold opacity-95">Get Ready!</div>
-      <div className="font-display text-[40px] font-bold leading-none">Friday <span className="text-amber-400">Drop</span></div>
-      <div className="mt-1.5 text-[12px] opacity-85">Exclusive offers for Gen-Young users</div>
-      <div className="mt-4 grid grid-cols-4 gap-2">
-        {[{n:'02',l:'Days'},{n:'14',l:'Hours'},{n:'18',l:'Minutes'},{n:'32',l:'Seconds'}].map((t) => (
-          <div key={t.l} className="rounded-xl border border-white/15 bg-white/10 py-2.5">
-            <div className="font-display text-[26px] font-bold">{t.n}</div>
-            <div className="text-[10px] opacity-80 uppercase tracking-wider">{t.l}</div>
+    <div className="relative mx-4 mt-2 overflow-hidden rounded-[28px] mesh-navy grainy p-5 text-center text-white">
+      <div className="absolute -right-8 -top-8 h-32 w-32 animate-float-slow rounded-full bg-amber-400/30 blur-2xl" />
+      <div className="absolute -bottom-10 -left-8 h-36 w-36 animate-float-slower rounded-full bg-leaf-500/30 blur-2xl" />
+      <div className="relative">
+        <div className="inline-flex items-center gap-1.5 rounded-full bg-white/15 px-3 py-1 text-[10.5px] font-black uppercase tracking-widest backdrop-blur">
+          <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-amber-400 shadow-[0_0_10px_#FBBF24]" /> Get ready
+        </div>
+        <div className="mt-2 font-display text-[46px] font-black leading-none tracking-tighter">
+          Friday <span className="text-shimmer">Drop</span>
+        </div>
+        <div className="mt-1.5 text-[12.5px] opacity-90">Exclusive weekly drop for Gen-Young</div>
+        <div className="mt-4 grid grid-cols-4 gap-2">
+          {[{n:'02',l:'DAYS'},{n:'14',l:'HRS'},{n:'18',l:'MIN'},{n:'32',l:'SEC'}].map((t) => (
+            <div key={t.l} className="rounded-2xl border border-white/20 bg-white/10 py-2.5 backdrop-blur">
+              <div className="font-mono-display text-[28px] font-black leading-none">{t.n}</div>
+              <div className="mt-1 text-[9px] font-black tracking-[0.15em] opacity-80">{t.l}</div>
+            </div>
+          ))}
+        </div>
+        <div className="mt-4 rounded-2xl border border-white/15 bg-white/8 p-3.5 text-left backdrop-blur">
+          <div className="flex justify-between text-[12px] font-black">
+            <span className="flex items-center gap-1.5">🎟️ <b className="font-mono-display text-[15px]">100,000</b> claims live</span>
+            <span className="rounded-full bg-leaf-500 px-2 py-0.5 text-[9px] font-black">READY</span>
           </div>
-        ))}
+          <div className="mt-0.5 text-[10.5px] opacity-70">First come, first served — no chance, no pay-to-win</div>
+          <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-white/18"><div className="h-full w-full bg-gradient-to-r from-amber-300 via-leaf-400 to-leaf-500" /></div>
+        </div>
+        <button className="mt-3.5 flex w-full items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-amber-300 to-amber-500 py-3.5 text-[15px] font-black text-navy-800 shadow-lg shadow-amber-500/40">
+          🔔 Remind me →
+        </button>
+        <div className="mt-2 text-[11px] opacity-85">📅 Friday, 10:00 AM · India time</div>
       </div>
-      <div className="mt-3.5 rounded-2xl border border-white/15 bg-white/10 p-3.5 text-left">
-        <div className="flex justify-between text-[12px] font-extrabold"><span>👥 <b>100,000</b> claims available</span><span className="text-[10.5px] opacity-75">100,000</span></div>
-        <div className="text-[10.5px] opacity-70">First come, first served</div>
-        <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-white/18"><div className="h-full w-full bg-gradient-to-r from-leaf-500 to-leaf-400" /></div>
-      </div>
-      <button className="mt-3 flex w-full items-center justify-center gap-2 rounded-2xl bg-amber-400 py-3 text-[14px] font-extrabold text-navy-800">🔔 Remind Me</button>
-      <div className="mt-2 text-[11px] opacity-85">📅 Friday, 10:00 AM</div>
     </div>
     <div className="flex items-center justify-between px-5 pb-2 pt-1">
       <div className="text-[15px] font-extrabold">Sneak Peek<div className="mt-0.5 text-[10.5px] font-medium text-slate-500">Here's what's coming…</div></div>

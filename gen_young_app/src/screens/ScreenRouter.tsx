@@ -61,36 +61,58 @@ export const ScreenShowcase: React.FC = () => {
   const [open, setOpen] = useState(true);
 
   return (
-    <div className="min-h-screen bg-slate-100 pb-20">
-      <header className="sticky top-0 z-40 border-b border-slate-200 bg-white/85 backdrop-blur">
-        <div className="mx-auto flex max-w-5xl items-center justify-between px-4 py-3">
-          <div className="flex items-center gap-2">
-            <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-navy-800 to-leaf-500 text-white">
-              <svg width="20" height="20" viewBox="0 0 24 24"><path d="M4 20c0-8 6-14 16-16-1 10-7 16-16 16z" fill="#fff"/></svg>
+    <div className="relative min-h-screen overflow-hidden bg-slate-100 pb-20">
+      {/* Ambient decoration */}
+      <div className="pointer-events-none absolute inset-0">
+        <div className="absolute -left-20 -top-20 h-96 w-96 rounded-full bg-leaf-400/20 blur-3xl" />
+        <div className="absolute -right-24 top-40 h-[500px] w-[500px] rounded-full bg-navy-800/10 blur-3xl" />
+        <div className="absolute bottom-0 left-1/2 h-96 w-96 -translate-x-1/2 rounded-full bg-amber-300/15 blur-3xl" />
+      </div>
+
+      <header className="sticky top-0 z-40 border-b border-white/40 bg-white/70 backdrop-blur-xl">
+        <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3">
+          <div className="flex items-center gap-2.5">
+            <div className="relative flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-navy-800 via-leaf-500 to-emerald-600 text-white shadow-lg shadow-leaf-500/30">
+              <svg width="22" height="22" viewBox="0 0 24 24"><path d="M4 20c0-8 6-14 16-16-1 10-7 16-16 16z" fill="#fff"/></svg>
             </div>
             <div>
-              <div className="font-display text-[16px] font-bold leading-none">Gen-<span className="text-leaf-500">Young</span> app</div>
-              <div className="text-[11px] text-slate-500">{active.label}</div>
+              <div className="font-display text-[18px] font-black leading-none tracking-tight">
+                Gen-<span className="text-shimmer">Young</span>
+              </div>
+              <div className="text-[11px] font-medium text-slate-500">{active.label} · Design showcase</div>
             </div>
           </div>
-          <button onClick={() => setOpen((o) => !o)} className="rounded-xl border border-slate-200 bg-white px-3 py-1.5 text-[12px] font-bold text-navy-800 hover:bg-slate-50">
-            {open ? 'Hide picker' : 'Show picker'}
-          </button>
+          <div className="flex items-center gap-2">
+            <div className="hidden rounded-full border border-slate-200 bg-white px-3 py-1.5 text-[11px] font-bold text-slate-600 md:block">
+              {screens.length} screens · {groups.length} flows
+            </div>
+            <button onClick={() => setOpen((o) => !o)} className="rounded-xl border border-slate-200 bg-white px-3 py-1.5 text-[12px] font-bold text-navy-800 hover:bg-slate-50">
+              {open ? 'Hide picker' : 'Show picker'}
+            </button>
+          </div>
         </div>
       </header>
 
-      <main className="mx-auto flex max-w-6xl gap-4 px-4 py-4">
+      <main className="relative mx-auto flex max-w-6xl gap-4 px-4 py-4">
         {open && (
-          <aside className="hidden w-64 shrink-0 rounded-2xl border border-slate-200 bg-white p-3 shadow-card-soft md:block">
-            <div className="mb-2 text-[11px] font-black uppercase tracking-wider text-slate-500">Screens · {screens.length}</div>
+          <aside className="hidden w-64 shrink-0 rounded-3xl border border-white/60 bg-white/85 p-3 shadow-xl shadow-navy-800/10 backdrop-blur md:block">
+            <div className="mb-2 rounded-2xl bg-gradient-to-br from-navy-800 to-leaf-600 p-3 text-white">
+              <div className="text-[10px] font-black uppercase tracking-widest opacity-80">Design showcase</div>
+              <div className="mt-0.5 font-display text-[18px] font-black">{screens.length} screens</div>
+              <div className="text-[10.5px] opacity-85">Across {groups.length} youth flows</div>
+            </div>
             {groups.map((g) => (
               <div key={g} className="mb-3">
-                <div className="mb-1 text-[11.5px] font-extrabold text-navy-800">{g}</div>
+                <div className="mb-1 px-1 text-[10.5px] font-black uppercase tracking-wider text-slate-500">{g}</div>
                 {screens.filter((s) => s.group === g).map((s) => (
                   <button
                     key={s.id}
                     onClick={() => setScreenId(s.id)}
-                    className={`block w-full rounded-lg px-2 py-1.5 text-left text-[12px] font-semibold ${screenId === s.id ? 'bg-navy-800 text-white' : 'text-slate-600 hover:bg-slate-100'}`}
+                    className={`block w-full rounded-xl px-2.5 py-1.5 text-left text-[12px] font-semibold transition ${
+                      screenId === s.id
+                        ? 'bg-gradient-to-r from-navy-800 to-leaf-600 text-white shadow-lg shadow-navy-800/25'
+                        : 'text-slate-600 hover:bg-white'
+                    }`}
                   >
                     {s.label}
                   </button>
