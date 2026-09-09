@@ -1,0 +1,124 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap">
+<style>
+  body { margin: 0; font-family: 'Plus Jakarta Sans', system-ui, sans-serif; background: #EEF3FA; color: #0B2A5B; }
+  .phone { width: 390px; height: 844px; background: #ffffff; border-radius: 44px; overflow: hidden; position: relative; box-shadow: 0 30px 60px rgba(11,42,91,0.18), 0 0 0 10px #0B2A5B, 0 0 0 12px #1e3a70; margin: 24px auto; }
+  .notch { position: absolute; top: 8px; left: 50%; transform: translateX(-50%); width: 112px; height: 28px; background: #0B2A5B; border-radius: 20px; z-index: 3; }
+  .status { display: flex; justify-content: space-between; align-items: center; padding: 14px 28px 8px; font-size: 13px; font-weight: 700; color: #0B2A5B; }
+  .brand { font-size: 20px; font-weight: 800; letter-spacing: -0.02em; }
+  .brand .g { color: #22C55E; }
+  .navitem { display: flex; flex-direction: column; align-items: center; gap: 3px; font-size: 10.5px; font-weight: 600; }
+</style>
+</helmet>
+<div class="phone">
+  <div class="notch"></div>
+  <div class="status">
+    <span>9:41</span>
+    <span style="display:inline-flex; gap:6px; align-items:center;">
+      <svg width="16" height="10" viewBox="0 0 16 10"><rect x="0" y="7" width="3" height="3" rx="0.5" fill="#0B2A5B"/><rect x="4" y="5" width="3" height="5" rx="0.5" fill="#0B2A5B"/><rect x="8" y="3" width="3" height="7" rx="0.5" fill="#0B2A5B"/><rect x="12" y="1" width="3" height="9" rx="0.5" fill="#0B2A5B"/></svg>
+      <svg width="24" height="12" viewBox="0 0 24 12" fill="none"><rect x="1" y="1" width="20" height="10" rx="3" stroke="#0B2A5B" stroke-width="1.5"/><rect x="3" y="3" width="16" height="6" rx="1.5" fill="#0B2A5B"/><rect x="22" y="4" width="2" height="4" rx="1" fill="#0B2A5B"/></svg>
+    </span>
+  </div>
+
+  <div style="padding: 6px 20px 8px; display: flex; justify-content: space-between; align-items: center;">
+    <div>
+      <div class="brand">Gen-<span class="g">Young</span> <svg width="12" height="12" viewBox="0 0 24 24" style="vertical-align:-1px"><path d="M4 20c0-8 6-14 16-16-1 10-7 16-16 16z" fill="#22C55E"/></svg></div>
+      <div style="color: #64748B; font-size: 11px;">More Opportunities. A Brighter You.</div>
+    </div>
+    <div style="display:flex; align-items:center; gap:12px;">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0B2A5B" stroke-width="1.8"><path d="M6 8a6 6 0 0112 0c0 7 3 9 3 9H3s3-2 3-9"/></svg>
+      <div style="width: 32px; height: 32px; border-radius: 50%; background: linear-gradient(135deg,#FDE68A,#F87171); border: 2px solid #22C55E;"></div>
+    </div>
+  </div>
+
+  <!-- Drop hero -->
+  <div style="margin: 12px 16px; background: linear-gradient(160deg,#0B2A5B,#0F3D8C); border-radius: 22px; padding: 22px 20px; color: #fff; text-align: center; position: relative; overflow: hidden;">
+    <div style="font-size: 26px; margin-bottom: 4px;">📣</div>
+    <div style="font-weight: 700; font-size: 16px; opacity: 0.95;">Get Ready!</div>
+    <div style="font-size: 40px; font-weight: 900; letter-spacing: -0.02em; line-height: 1;">Friday <span style="color:#FBBF24;">Drop</span></div>
+    <div style="font-size: 12px; opacity: 0.85; margin-top: 6px;">Exclusive offers for Gen-Young users</div>
+
+    <!-- Countdown -->
+    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 16px;">
+      <sc-for list="{{countdown}}" as="t" hint-placeholder-count="4">
+        <div style="background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.14); border-radius: 12px; padding: 10px 6px;">
+          <div style="font-size: 26px; font-weight: 900; color: #fff;">{{t.n}}</div>
+          <div style="font-size: 10px; opacity: 0.8; text-transform: uppercase; letter-spacing: 0.05em;">{{t.label}}</div>
+        </div>
+      </sc-for>
+    </div>
+
+    <!-- Claims meter -->
+    <div style="background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.14); border-radius: 14px; padding: 12px 14px; margin-top: 14px; text-align: left;">
+      <div style="display: flex; justify-content: space-between; align-items: center; font-size: 12px; font-weight: 700;">
+        <span>👥 <b>100,000</b> claims available</span>
+        <span style="font-size: 10.5px; opacity: 0.75;">100,000</span>
+      </div>
+      <div style="font-size: 10.5px; opacity: 0.7; margin-top: 1px;">First come, first served</div>
+      <div style="height: 6px; background: rgba(255,255,255,0.18); border-radius: 999px; margin-top: 8px; overflow: hidden;">
+        <div style="width: 100%; height: 100%; background: linear-gradient(90deg,#22C55E,#4ADE80);"></div>
+      </div>
+    </div>
+
+    <button style="margin-top: 12px; width: 100%; background: #FBBF24; color: #0B2A5B; border: none; padding: 12px; border-radius: 12px; font-weight: 800; font-size: 14px; display: flex; align-items: center; justify-content: center; gap: 8px;">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="#0B2A5B"><path d="M6 8a6 6 0 0112 0c0 7 3 9 3 9H3s3-2 3-9z M10.3 21a1.9 1.9 0 003.4 0"/></svg>
+      Remind Me
+    </button>
+    <div style="font-size: 11px; margin-top: 8px; opacity: 0.85;">📅 Friday, 10:00 AM</div>
+  </div>
+
+  <!-- Sneak Peek -->
+  <div style="display: flex; justify-content: space-between; align-items: center; padding: 4px 20px 8px;">
+    <div style="font-weight: 800; color: #0B2A5B; font-size: 15px;">Sneak Peek<div style="font-size: 10.5px; font-weight: 500; color: #64748B; margin-top:1px;">Here's what's coming…</div></div>
+    <a href="#" style="font-size: 12px; font-weight: 700; text-decoration: none; color: #0B2A5B;">View All</a>
+  </div>
+
+  <div style="padding: 0 16px 90px; display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px;">
+    <sc-for list="{{peeks}}" as="p" hint-placeholder-count="3">
+      <div style="background: #ffffff; border: 1px solid #E2E8F0; border-radius: 12px; padding: 8px; display:flex; flex-direction: column; gap: 5px;">
+        <div style="height: 54px; border-radius: 8px; background: {{p.bg}}; display: flex; align-items: center; justify-content: center; font-size: 26px;">{{p.emoji}}</div>
+        <div style="display: inline-block; background: {{p.tagBg}}; color: {{p.tagColor}}; font-size: 8px; font-weight: 800; padding: 2px 5px; border-radius: 4px; align-self: flex-start; letter-spacing: 0.04em;">{{p.tag}}</div>
+        <div style="font-weight: 800; font-size: 11px; color: #0B2A5B; line-height: 1.2;">{{p.title}}</div>
+        <div style="font-size: 9.5px; color: #94A3B8; font-weight: 700;">Coming Soon</div>
+      </div>
+    </sc-for>
+  </div>
+
+  <div style="position: absolute; bottom: 0; left: 0; right: 0; background: #ffffff; border-top: 1px solid #E2E8F0; padding: 10px 8px 22px; display: flex; justify-content: space-around;">
+    <div class="navitem" style="color:#94A3B8;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" stroke-width="1.8"><path d="M3 12L12 3l9 9v9h-6v-6H9v6H3z"/></svg><div>Home</div></div>
+    <div class="navitem" style="color:#94A3B8;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" stroke-width="1.8"><path d="M5 8h14l-1 12H6z M9 8V6a3 3 0 016 0v2"/></svg><div>Benefits</div></div>
+    <div class="navitem" style="color:#0B82D6;"><svg width="26" height="26" viewBox="0 0 24 24" fill="#0B82D6"><path d="M13 2L4 14h6l-1 8 9-12h-6z"/></svg><div style="color:#0B82D6;">Drop</div></div>
+    <div class="navitem" style="color:#94A3B8;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" stroke-width="1.8"><path d="M4 6l8-3 8 3-8 3z M4 6v6c0 2 4 4 8 4s8-2 8-4V6l-8 3z"/></svg><div>Learn</div></div>
+    <div class="navitem" style="color:#94A3B8;"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#94A3B8" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 21c1-4 5-6 8-6s7 2 8 6"/></svg><div>Profile</div></div>
+  </div>
+</div>
+</x-dc>
+<script data-dc-script data-props='{"$preview":{"width":440,"height":900}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      countdown: [
+        { n: '02', label: 'Days' },
+        { n: '14', label: 'Hours' },
+        { n: '18', label: 'Minutes' },
+        { n: '32', label: 'Seconds' },
+      ],
+      peeks: [
+        { title: 'Free Movie Tickets', emoji: '🍿', bg: '#FEE2E2', tag: 'ENTERTAINMENT', tagBg: '#EDE9FE', tagColor: '#6D28D9' },
+        { title: '₹200 Food Voucher', emoji: '🍔', bg: '#FEF3C7', tag: 'FOOD & BEVERAGE', tagBg: '#FEF3C7', tagColor: '#B45309' },
+        { title: 'Premium Headphones', emoji: '🎧', bg: '#EDE9FE', tag: 'LIFESTYLE', tagBg: '#FCE7F3', tagColor: '#BE185D' },
+      ],
+    };
+  }
+}
+</script>
+</body>
+</html>
