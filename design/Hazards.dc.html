@@ -1,0 +1,75 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><script src="./support.js"></script></head><body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap">
+<style>
+  body{margin:0;font-family:'Plus Jakarta Sans',system-ui,sans-serif;background:#EEF3FA;color:#0B2A5B}
+  .phone{width:390px;height:844px;background:#fff;border-radius:44px;overflow:hidden;position:relative;box-shadow:0 30px 60px rgba(11,42,91,.18),0 0 0 10px #0B2A5B,0 0 0 12px #1e3a70;margin:24px auto}
+  .notch{position:absolute;top:8px;left:50%;transform:translateX(-50%);width:112px;height:28px;background:#0B2A5B;border-radius:20px;z-index:3}
+</style>
+</helmet>
+<div class="phone">
+  <div class="notch"></div>
+  <div style="padding:44px 20px 8px;">
+    <div style="font-size:20px;font-weight:800;">Local safety today</div>
+    <div style="font-size:12px;color:#64748B;">Mumbai · Updated 8 min ago · IMD & NDMA feeds</div>
+  </div>
+
+  <!-- Weather -->
+  <div style="margin:8px 16px 12px;background:linear-gradient(135deg,#0B82D6,#1E3A8A);border-radius:20px;padding:18px;color:#fff;display:flex;justify-content:space-between;align-items:center;">
+    <div>
+      <div style="font-size:12px;opacity:.85;">Mumbai · Bandra</div>
+      <div style="font-size:44px;font-weight:900;letter-spacing:-0.03em;line-height:1;">29°</div>
+      <div style="font-size:12px;opacity:.85;margin-top:2px;">Light rain · Feels 33°</div>
+    </div>
+    <div style="text-align:right;">
+      <svg width="70" height="70" viewBox="0 0 24 24" fill="#FBBF24"><path d="M12 3v2 M12 19v2 M4 12H2 M22 12h-2 M4.9 4.9L6.3 6.3 M17.7 17.7l1.4 1.4 M4.9 19.1L6.3 17.7 M17.7 6.3l1.4-1.4"/><circle cx="12" cy="12" r="5"/></svg>
+      <div style="margin-top:2px;font-size:11px;font-weight:700;">☔ 60% rain</div>
+    </div>
+  </div>
+
+  <!-- Alerts -->
+  <div style="padding:0 20px 8px;font-weight:800;font-size:14px;">Active alerts</div>
+  <div style="padding:0 16px 12px;display:flex;flex-direction:column;gap:8px;">
+    <sc-for list="{{alerts}}" as="a" hint-placeholder-count="3">
+      <div style="background:{{a.bg}};border:1px solid {{a.border}};border-radius:14px;padding:12px;display:flex;gap:10px;">
+        <div style="width:40px;height:40px;border-radius:12px;background:{{a.iconBg}};color:#fff;display:flex;align-items:center;justify-content:center;font-size:20px;">{{a.icon}}</div>
+        <div style="flex:1;">
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <div style="font-weight:800;font-size:13px;color:{{a.fg}};">{{a.title}}</div>
+            <span style="background:{{a.tagBg}};color:{{a.tagColor}};font-size:9.5px;font-weight:900;padding:2px 8px;border-radius:999px;">{{a.level}}</span>
+          </div>
+          <div style="font-size:11.5px;color:{{a.body}};margin-top:2px;line-height:1.4;">{{a.msg}}</div>
+        </div>
+      </div>
+    </sc-for>
+  </div>
+
+  <!-- Safety tips -->
+  <div style="padding:0 20px 8px;font-weight:800;font-size:14px;">Quick safety tips</div>
+  <div style="padding:0 16px 90px;display:flex;flex-direction:column;gap:6px;">
+    <sc-for list="{{tips}}" as="t" hint-placeholder-count="3">
+      <div style="background:#fff;border:1px solid #E2E8F0;border-radius:12px;padding:10px 12px;display:flex;align-items:center;gap:10px;">
+        <div style="width:24px;height:24px;border-radius:50%;background:#DCFCE7;color:#166534;display:flex;align-items:center;justify-content:center;font-weight:800;">✓</div>
+        <div style="font-size:12px;color:#0B2A5B;">{{t}}</div>
+      </div>
+    </sc-for>
+  </div>
+</div>
+</x-dc>
+<script data-dc-script data-props='{"$preview":{"width":440,"height":900}}'>
+class Component extends DCLogic{renderVals(){return{
+  alerts:[
+    {title:'Heavy rain warning',msg:'Waterlogging expected 4–8 pm in low-lying areas. Avoid Andheri subway route.',level:'ORANGE',icon:'🌧',iconBg:'#F59E0B',bg:'#FFFBEB',border:'#FEF3C7',fg:'#78350F',body:'#92400E',tagBg:'#F59E0B',tagColor:'#fff'},
+    {title:'Heatwave watch',msg:'Peak 36°C between 12–3 pm. Carry water; wear light cotton.',level:'YELLOW',icon:'🌡',iconBg:'#EAB308',bg:'#FEFCE8',border:'#FEF08A',fg:'#713F12',body:'#854D0E',tagBg:'#EAB308',tagColor:'#fff'},
+    {title:'Traffic diversion',msg:'S V Road closed near Khar station · Use Linking Road.',level:'INFO',icon:'🚧',iconBg:'#0B82D6',bg:'#EFF6FF',border:'#DBEAFE',fg:'#1E3A8A',body:'#1E40AF',tagBg:'#0B82D6',tagColor:'#fff'},
+  ],
+  tips:[
+    'Share your live location with a trusted contact when travelling after 8 pm.',
+    'Save 112 as a favourite. Long-press power to call it from lock screen.',
+    'Charge your phone above 40% before heading out in the monsoon.',
+  ]
+}}}
+</script>
+</body></html>

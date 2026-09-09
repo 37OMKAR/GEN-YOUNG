@@ -1,0 +1,100 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><script src="./support.js"></script></head><body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap">
+<style>
+  body{margin:0;font-family:'Plus Jakarta Sans',system-ui,sans-serif;background:#EEF3FA;color:#0B2A5B}
+  .phone{width:390px;height:844px;background:#fff;border-radius:44px;overflow:hidden;position:relative;box-shadow:0 30px 60px rgba(11,42,91,.18),0 0 0 10px #0B2A5B,0 0 0 12px #1e3a70;margin:24px auto}
+  .notch{position:absolute;top:8px;left:50%;transform:translateX(-50%);width:112px;height:28px;background:#0B2A5B;border-radius:20px;z-index:3}
+</style>
+</helmet>
+<div class="phone">
+  <div class="notch"></div>
+  <div style="padding:44px 20px 8px;">
+    <div style="font-size:20px;font-weight:800;">Accessibility & Privacy</div>
+    <div style="font-size:12px;color:#64748B;">Designed for every young Indian.</div>
+  </div>
+
+  <!-- Read-aloud -->
+  <div style="margin:8px 16px 12px;background:linear-gradient(135deg,#EDE9FE,#DDD6FE);border-radius:16px;padding:14px;display:flex;align-items:center;gap:12px;">
+    <div style="width:44px;height:44px;border-radius:50%;background:#7C3AED;color:#fff;display:flex;align-items:center;justify-content:center;font-size:20px;">🔊</div>
+    <div style="flex:1;">
+      <div style="font-weight:800;font-size:13px;">Read aloud</div>
+      <div style="font-size:11.5px;color:#4C1D95;">On benefit cards and lessons. Speed 1.0×</div>
+    </div>
+    <div style="width:44px;height:26px;border-radius:999px;background:#7C3AED;position:relative;">
+      <div style="width:22px;height:22px;background:#fff;border-radius:50%;position:absolute;right:2px;top:2px;"></div>
+    </div>
+  </div>
+
+  <!-- Section: Vision -->
+  <div style="padding:0 20px 6px;font-weight:800;font-size:13px;color:#64748B;text-transform:uppercase;letter-spacing:.06em;">Vision</div>
+  <div style="margin:0 16px 12px;background:#fff;border:1px solid #E2E8F0;border-radius:14px;padding:4px 12px;">
+    <sc-for list="{{vision}}" as="v" hint-placeholder-count="3">
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid #F1F5F9;">
+        <div>
+          <div style="font-weight:700;font-size:13px;">{{v.name}}</div>
+          <div style="font-size:11px;color:#64748B;">{{v.sub}}</div>
+        </div>
+        <div style="display:flex;gap:6px;">
+          <sc-for list="{{v.options}}" as="o">
+            <span style="background:{{o.bg}};color:{{o.fg}};border:1px solid {{o.border}};font-size:11px;font-weight:800;padding:5px 10px;border-radius:999px;">{{o.label}}</span>
+          </sc-for>
+        </div>
+      </div>
+    </sc-for>
+  </div>
+
+  <!-- Sign Language -->
+  <div style="margin:0 16px 12px;background:#fff;border:1px solid #E2E8F0;border-radius:14px;padding:12px;display:flex;align-items:center;gap:12px;">
+    <div style="width:44px;height:44px;border-radius:12px;background:#0B82D6;color:#fff;display:flex;align-items:center;justify-content:center;font-size:20px;">🤟</div>
+    <div style="flex:1;">
+      <div style="font-weight:800;font-size:13px;">Indian Sign Language guides</div>
+      <div style="font-size:11px;color:#64748B;">Banking basics · SOS · claiming benefits</div>
+    </div>
+    <span style="background:#DBEAFE;color:#1D4ED8;font-size:10.5px;font-weight:800;padding:4px 10px;border-radius:999px;">Open</span>
+  </div>
+
+  <!-- Section: Privacy -->
+  <div style="padding:0 20px 6px;font-weight:800;font-size:13px;color:#64748B;text-transform:uppercase;letter-spacing:.06em;">Privacy · DPDP</div>
+  <div style="margin:0 16px 12px;background:#fff;border:1px solid #E2E8F0;border-radius:14px;padding:4px 12px;">
+    <sc-for list="{{privacy}}" as="p" hint-placeholder-count="4">
+      <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 0;border-bottom:1px solid #F1F5F9;">
+        <div>
+          <div style="font-weight:700;font-size:13px;">{{p.name}}</div>
+          <div style="font-size:11px;color:#64748B;">{{p.sub}}</div>
+        </div>
+        <div style="width:40px;height:24px;border-radius:999px;background:{{p.tOn}};position:relative;">
+          <div style="width:20px;height:20px;background:#fff;border-radius:50%;position:absolute;{{p.pos}}:2px;top:2px;"></div>
+        </div>
+      </div>
+    </sc-for>
+  </div>
+
+  <div style="margin:0 16px 90px;background:#F0FDF4;border:1px solid #BBF7D0;border-radius:12px;padding:10px 12px;font-size:11.5px;color:#166534;">
+    ● Zero third-party ad sharing · full data-access audit trail available.
+  </div>
+</div>
+</x-dc>
+<script data-dc-script data-props='{"$preview":{"width":440,"height":900}}'>
+class Component extends DCLogic{renderVals(){
+  const opts=(sel)=>[{label:'A',sel:sel==='A'},{label:'A+',sel:sel==='A+'},{label:'A++',sel:sel==='A++'}].map(o=>({label:o.label,bg:o.sel?'#0B2A5B':'#F1F5F9',fg:o.sel?'#fff':'#0B2A5B',border:o.sel?'#0B2A5B':'#E2E8F0'}));
+  const contrastOpts=[{label:'Normal',sel:false},{label:'High-contrast',sel:true}].map(o=>({label:o.label,bg:o.sel?'#0B2A5B':'#F1F5F9',fg:o.sel?'#fff':'#0B2A5B',border:o.sel?'#0B2A5B':'#E2E8F0'}));
+  const themeOpts=[{label:'Light',sel:true},{label:'Dark',sel:false}].map(o=>({label:o.label,bg:o.sel?'#0B2A5B':'#F1F5F9',fg:o.sel?'#fff':'#0B2A5B',border:o.sel?'#0B2A5B':'#E2E8F0'}));
+  return{
+    vision:[
+      {name:'Text size',sub:'Preserves layout at every size',options:opts('A+')},
+      {name:'Contrast',sub:'WCAG AAA yellow/black/cyan',options:contrastOpts},
+      {name:'Theme',sub:'Auto-follows sunset in your city',options:themeOpts},
+    ],
+    privacy:[
+      {name:'Location matching',sub:'Only used to show relevant benefits',tOn:'#22C55E',pos:'right'},
+      {name:'Partner personalisation',sub:'Never for marketing calls',tOn:'#94A3B8',pos:'left'},
+      {name:'Read-aloud analytics',sub:'Anonymous, on-device only',tOn:'#22C55E',pos:'right'},
+      {name:'Data access audit trail',sub:'See every criterion matched, always',tOn:'#22C55E',pos:'right'},
+    ]
+  }
+}}
+</script>
+</body></html>

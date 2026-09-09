@@ -1,0 +1,72 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><script src="./support.js"></script></head><body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap">
+<style>
+  body{margin:0;font-family:'Plus Jakarta Sans',system-ui,sans-serif;background:#EEF3FA;color:#0B2A5B}
+  .phone{width:390px;height:844px;background:#fff;border-radius:44px;overflow:hidden;position:relative;box-shadow:0 30px 60px rgba(11,42,91,.18),0 0 0 10px #0B2A5B,0 0 0 12px #1e3a70;margin:24px auto}
+  .notch{position:absolute;top:8px;left:50%;transform:translateX(-50%);width:112px;height:28px;background:#0B2A5B;border-radius:20px;z-index:3}
+  .status{display:flex;justify-content:space-between;padding:14px 28px 8px;font-size:13px;font-weight:700}
+</style>
+</helmet>
+<div class="phone">
+  <div class="notch"></div>
+  <div class="status"><span>9:41</span><span>••••</span></div>
+  <div style="padding:6px 20px 12px;">
+    <div style="font-size:20px;font-weight:800;">Savings goals</div>
+    <div style="font-size:12px;color:#64748B;">Save with intention. Grow with confidence.</div>
+  </div>
+
+  <!-- Focus goal ring -->
+  <div style="margin:0 16px 14px;background:linear-gradient(160deg,#0B2A5B,#1E3A8A);border-radius:20px;padding:20px;color:#fff;display:flex;align-items:center;gap:16px;">
+    <div style="width:120px;height:120px;position:relative;flex-shrink:0;">
+      <svg width="120" height="120" viewBox="0 0 120 120">
+        <circle cx="60" cy="60" r="52" fill="none" stroke="rgba(255,255,255,0.15)" stroke-width="10"/>
+        <circle cx="60" cy="60" r="52" fill="none" stroke="#22C55E" stroke-width="10" stroke-dasharray="326" stroke-dashoffset="196" stroke-linecap="round" transform="rotate(-90 60 60)"/>
+      </svg>
+      <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;">
+        <div style="font-size:22px;font-weight:900;">40%</div>
+        <div style="font-size:10px;opacity:.75;">complete</div>
+      </div>
+    </div>
+    <div>
+      <div style="font-size:20px;font-weight:800;">Laptop for college</div>
+      <div style="font-size:12px;opacity:.85;">Category · Education</div>
+      <div style="margin-top:8px;font-size:13px;"><b>₹18,200</b> <span style="opacity:.7;">/ ₹45,000</span></div>
+      <div style="font-size:11px;opacity:.85;margin-top:2px;">Target · Nov 2026</div>
+      <button style="margin-top:10px;background:#22C55E;color:#fff;border:none;padding:8px 14px;border-radius:10px;font-weight:800;font-size:12px;">Top up ₹500</button>
+    </div>
+  </div>
+
+  <!-- Other goals -->
+  <div style="padding:0 20px 8px;font-weight:800;font-size:14px;">Other goals</div>
+  <div style="padding:0 16px 8px;display:flex;flex-direction:column;gap:8px;">
+    <sc-for list="{{goals}}" as="g" hint-placeholder-count="3">
+      <div style="background:#fff;border:1px solid #E2E8F0;border-radius:14px;padding:12px;display:flex;align-items:center;gap:12px;">
+        <div style="width:44px;height:44px;border-radius:12px;background:{{g.bg}};display:flex;align-items:center;justify-content:center;font-size:20px;">{{g.emoji}}</div>
+        <div style="flex:1;">
+          <div style="display:flex;justify-content:space-between;font-size:13px;font-weight:800;"><span>{{g.name}}</span><span>{{g.pct}}%</span></div>
+          <div style="height:6px;background:#E2E8F0;border-radius:999px;margin-top:6px;"><div style="width:{{g.pct}}%;height:100%;background:{{g.bar}};border-radius:999px;"></div></div>
+          <div style="font-size:10.5px;color:#64748B;margin-top:4px;">{{g.have}} of {{g.target}}</div>
+        </div>
+      </div>
+    </sc-for>
+  </div>
+
+  <!-- Create -->
+  <div style="margin:8px 16px 90px;background:#F0FDF4;border:1px dashed #22C55E;border-radius:14px;padding:16px;text-align:center;">
+    <div style="width:40px;height:40px;border-radius:50%;background:#22C55E;color:#fff;margin:0 auto 8px;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:800;">+</div>
+    <div style="font-weight:800;color:#0B2A5B;">Create a new goal</div>
+    <div style="font-size:11.5px;color:#166534;">Name it, target it, watch it grow.</div>
+  </div>
+</div>
+</x-dc>
+<script data-dc-script data-props='{"$preview":{"width":440,"height":900}}'>
+class Component extends DCLogic{renderVals(){return{goals:[
+  {name:'Goa trip with friends',pct:42,have:'₹6,300',target:'₹15,000',emoji:'✈️',bg:'#EDE9FE',bar:'#7C3AED'},
+  {name:'Emergency fund',pct:75,have:'₹15,000',target:'₹20,000',emoji:'🛡️',bg:'#DBEAFE',bar:'#0B82D6'},
+  {name:'New headphones',pct:20,have:'₹1,600',target:'₹8,000',emoji:'🎧',bg:'#FEE2E2',bar:'#EF4444'},
+]}}}
+</script>
+</body></html>

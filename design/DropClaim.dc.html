@@ -1,0 +1,61 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><script src="./support.js"></script></head><body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap">
+<style>
+  body{margin:0;font-family:'Plus Jakarta Sans',system-ui,sans-serif;background:#0B2A5B;color:#fff}
+  .phone{width:390px;height:844px;background:linear-gradient(180deg,#0B2A5B,#173B7A);border-radius:44px;overflow:hidden;position:relative;box-shadow:0 30px 60px rgba(11,42,91,.18),0 0 0 10px #0B2A5B,0 0 0 12px #1e3a70;margin:24px auto}
+  .notch{position:absolute;top:8px;left:50%;transform:translateX(-50%);width:112px;height:28px;background:#000;border-radius:20px;z-index:3}
+</style>
+</helmet>
+<div class="phone">
+  <div class="notch"></div>
+  <div style="padding:44px 20px 20px;text-align:center;">
+    <div style="width:120px;height:120px;border-radius:50%;background:radial-gradient(circle,#22C55E,#16A34A);margin:20px auto 14px;display:flex;align-items:center;justify-content:center;box-shadow:0 20px 40px rgba(34,197,94,0.4);">
+      <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12l6 6L20 6"/></svg>
+    </div>
+    <div style="font-size:32px;font-weight:900;letter-spacing:-0.02em;">Claimed!</div>
+    <div style="font-size:13px;opacity:.85;margin-top:6px;">Your Friday Drop is safely in your Wallet.</div>
+  </div>
+
+  <!-- Voucher card -->
+  <div style="margin:0 16px 14px;background:#fff;border-radius:20px;padding:16px;color:#0B2A5B;position:relative;">
+    <div style="display:flex;justify-content:space-between;align-items:start;">
+      <div>
+        <div style="font-size:11px;font-weight:800;color:#DC2626;letter-spacing:.05em;">ENTERTAINMENT</div>
+        <div style="font-size:18px;font-weight:900;margin-top:2px;">Movie Tickets · Flat 50% off</div>
+      </div>
+      <div style="width:44px;height:44px;border-radius:12px;background:#FEE2E2;display:flex;align-items:center;justify-content:center;font-size:22px;">🎬</div>
+    </div>
+    <div style="margin-top:12px;border-top:2px dashed #E2E8F0;padding-top:12px;">
+      <div style="font-size:11px;color:#64748B;font-weight:600;">Voucher code</div>
+      <div style="font-family:ui-monospace,monospace;font-size:22px;font-weight:900;letter-spacing:0.12em;color:#0B2A5B;">MOVE-4487-2201</div>
+    </div>
+    <div style="display:flex;justify-content:space-between;font-size:11px;margin-top:10px;color:#475569;">
+      <span>Valid till <b>Sunday, 14 Sep · 11:59 pm</b></span>
+      <span>Across BookMyShow · PVR · Inox</span>
+    </div>
+  </div>
+
+  <!-- Live meter -->
+  <div style="margin:0 16px 14px;background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:14px;padding:12px 14px;">
+    <div style="display:flex;justify-content:space-between;font-size:12px;font-weight:800;">
+      <span>Remaining after your claim</span><span>84,213 / 100,000</span>
+    </div>
+    <div style="height:6px;background:rgba(255,255,255,0.18);border-radius:999px;margin-top:8px;overflow:hidden;">
+      <div style="width:84%;height:100%;background:linear-gradient(90deg,#22C55E,#4ADE80);"></div>
+    </div>
+    <div style="font-size:10.5px;opacity:.75;margin-top:4px;">Live · updated 2 seconds ago</div>
+  </div>
+
+  <div style="display:flex;gap:10px;padding:0 16px 90px;">
+    <button style="flex:1;background:rgba(255,255,255,0.12);color:#fff;border:1px solid rgba(255,255,255,0.2);padding:14px;border-radius:12px;font-weight:800;font-size:13px;">Add to Calendar</button>
+    <button style="flex:1;background:#22C55E;color:#fff;border:none;padding:14px;border-radius:12px;font-weight:800;font-size:13px;">Open Wallet</button>
+  </div>
+</div>
+</x-dc>
+<script data-dc-script data-props='{"$preview":{"width":440,"height":900}}'>
+class Component extends DCLogic{renderVals(){return{}}}
+</script>
+</body></html>

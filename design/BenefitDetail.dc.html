@@ -1,0 +1,75 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><script src="./support.js"></script></head><body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap">
+<style>
+  body{margin:0;font-family:'Plus Jakarta Sans',system-ui,sans-serif;background:#EEF3FA;color:#0B2A5B}
+  .phone{width:390px;height:844px;background:#fff;border-radius:44px;overflow:hidden;position:relative;box-shadow:0 30px 60px rgba(11,42,91,.18),0 0 0 10px #0B2A5B,0 0 0 12px #1e3a70;margin:24px auto}
+  .notch{position:absolute;top:8px;left:50%;transform:translateX(-50%);width:112px;height:28px;background:#0B2A5B;border-radius:20px;z-index:3}
+</style>
+</helmet>
+<div class="phone">
+  <div class="notch"></div>
+  <div style="padding:44px 20px 8px;display:flex;justify-content:space-between;align-items:center;">
+    <div style="width:32px;height:32px;border-radius:10px;background:#F1F5F9;display:flex;align-items:center;justify-content:center;font-weight:800;">‹</div>
+    <div style="font-size:14px;font-weight:800;">Benefit detail</div>
+    <div style="width:32px;height:32px;border-radius:10px;background:#F1F5F9;display:flex;align-items:center;justify-content:center;font-weight:800;">🔊</div>
+  </div>
+
+  <!-- Hero -->
+  <div style="margin:8px 16px 12px;background:linear-gradient(135deg,#7C3AED,#4F46E5);border-radius:20px;padding:18px;color:#fff;position:relative;overflow:hidden;">
+    <div style="display:inline-block;background:rgba(255,255,255,0.15);font-size:10px;font-weight:800;padding:3px 8px;border-radius:999px;letter-spacing:.05em;">AI & TECHNOLOGY · STUDENT OFFER</div>
+    <div style="font-size:22px;font-weight:900;margin-top:8px;line-height:1.15;">Google AI Plus · 1 year free</div>
+    <div style="font-size:12px;opacity:.85;margin-top:2px;">Provider: Google India</div>
+    <div style="display:flex;gap:8px;margin-top:12px;">
+      <span style="background:rgba(255,255,255,0.15);padding:4px 10px;border-radius:999px;font-size:10.5px;font-weight:700;">FREE</span>
+      <span style="background:rgba(255,255,255,0.15);padding:4px 10px;border-radius:999px;font-size:10.5px;font-weight:700;">Verified 3 Sep</span>
+      <span style="background:rgba(255,255,255,0.15);padding:4px 10px;border-radius:999px;font-size:10.5px;font-weight:700;">Ends 31 Dec 26</span>
+    </div>
+  </div>
+
+  <!-- 5 questions -->
+  <div style="padding:0 16px 12px;display:flex;flex-direction:column;gap:8px;">
+    <sc-for list="{{questions}}" as="q" hint-placeholder-count="5">
+      <div style="background:#fff;border:1px solid #E2E8F0;border-radius:14px;padding:12px;display:flex;gap:10px;">
+        <div style="width:32px;height:32px;border-radius:10px;background:{{q.bg}};color:#fff;display:flex;align-items:center;justify-content:center;font-weight:900;">{{q.q}}</div>
+        <div>
+          <div style="font-weight:800;font-size:13px;">{{q.title}}</div>
+          <div style="font-size:11.5px;color:#475569;line-height:1.4;">{{q.body}}</div>
+        </div>
+      </div>
+    </sc-for>
+  </div>
+
+  <!-- Why -->
+  <div style="margin:0 16px 12px;background:#F0FDF4;border:1px solid #BBF7D0;border-radius:14px;padding:12px;">
+    <div style="font-weight:800;font-size:13px;color:#166534;">Why am I seeing this?</div>
+    <div style="font-size:11.5px;color:#065F46;margin-top:4px;line-height:1.4;">
+      You're a verified student, age 21, from Mumbai. Interests include AI and design. Match criteria and access log:
+    </div>
+    <div style="margin-top:8px;font-size:10.5px;color:#065F46;">✓ Student status · ✓ Age 18–24 · ✓ Location: India · ● No third-party ad shared</div>
+  </div>
+
+  <!-- Renewal warning -->
+  <div style="margin:0 16px 12px;background:#FEF3C7;border:1px solid #FDE68A;border-radius:12px;padding:10px 12px;font-size:11.5px;color:#78350F;">
+    <b>Heads-up:</b> Renews at ₹19,500/yr after the free year. Cancel anytime, no penalty.
+  </div>
+
+  <!-- Action row -->
+  <div style="position:absolute;bottom:0;left:0;right:0;padding:14px 16px 22px;background:#fff;border-top:1px solid #E2E8F0;display:flex;gap:10px;">
+    <button style="flex:1;background:#F1F5F9;color:#0B2A5B;border:none;padding:14px;border-radius:12px;font-weight:800;font-size:13px;">Check eligibility</button>
+    <button style="flex:1.4;background:#22C55E;color:#fff;border:none;padding:14px;border-radius:12px;font-weight:800;font-size:13px;">Claim now</button>
+  </div>
+</div>
+</x-dc>
+<script data-dc-script data-props='{"$preview":{"width":440,"height":900}}'>
+class Component extends DCLogic{renderVals(){return{questions:[
+  {q:'W',title:'What is it?',body:'One-year free Google AI Plus subscription with Gemini access, cloud credits and study tools.',bg:'#0B82D6'},
+  {q:'W',title:'Why does it help?',body:'Faster research, better study notes, and hands-on AI skills without paying for the tier.',bg:'#22C55E'},
+  {q:'W',title:'Who can claim?',body:'Verified students aged 18–24 with an active .edu / DigiLocker credential.',bg:'#F59E0B'},
+  {q:'₹',title:'What does it cost?',body:'Free for the first 12 months. Renewal ₹19,500 / year (disclosed upfront).',bg:'#7C3AED'},
+  {q:'✓',title:'How to redeem?',body:'Tap Claim → sign in with Google → we verify and unlock. Voucher stays in your Wallet.',bg:'#EF4444'},
+]}}}
+</script>
+</body></html>

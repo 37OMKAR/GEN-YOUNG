@@ -1,0 +1,61 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><script src="./support.js"></script></head><body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap">
+<style>
+  body{margin:0;font-family:'Plus Jakarta Sans',system-ui,sans-serif;background:#EEF3FA;color:#0B2A5B}
+  .phone{width:390px;height:844px;background:#fff;border-radius:44px;overflow:hidden;position:relative;box-shadow:0 30px 60px rgba(11,42,91,.18),0 0 0 10px #0B2A5B,0 0 0 12px #1e3a70;margin:24px auto}
+  .notch{position:absolute;top:8px;left:50%;transform:translateX(-50%);width:112px;height:28px;background:#0B2A5B;border-radius:20px;z-index:3}
+  .status{display:flex;justify-content:space-between;padding:14px 28px 8px;font-size:13px;font-weight:700}
+</style>
+</helmet>
+<div class="phone">
+  <div class="notch"></div>
+  <div class="status"><span>9:41</span><span>••••</span></div>
+  <div style="padding:6px 20px 10px;">
+    <div style="font-size:20px;font-weight:800;">Benefits Wallet</div>
+    <div style="font-size:12px;color:#64748B;">Everything you've unlocked, in one place.</div>
+  </div>
+
+  <!-- Tabs -->
+  <div style="padding:0 16px 12px;display:grid;grid-template-columns:repeat(4,1fr);gap:6px;">
+    <sc-for list="{{tabs}}" as="t" hint-placeholder-count="4">
+      <div style="background:{{t.bg}};color:{{t.fg}};border:1px solid {{t.border}};padding:10px 4px;border-radius:10px;text-align:center;font-weight:800;font-size:11px;">
+        {{t.label}}<div style="font-size:14px;font-weight:900;margin-top:2px;">{{t.n}}</div>
+      </div>
+    </sc-for>
+  </div>
+
+  <div style="padding:0 20px 8px;font-weight:800;font-size:14px;">Claimed & active</div>
+  <div style="padding:0 16px 90px;display:flex;flex-direction:column;gap:8px;">
+    <sc-for list="{{items}}" as="i" hint-placeholder-count="4">
+      <div style="background:#fff;border:1px solid #E2E8F0;border-radius:14px;padding:12px;display:flex;align-items:center;gap:10px;">
+        <div style="width:44px;height:44px;border-radius:12px;background:{{i.bg}};display:flex;align-items:center;justify-content:center;font-size:20px;">{{i.emoji}}</div>
+        <div style="flex:1;">
+          <div style="font-weight:800;font-size:13px;">{{i.title}}</div>
+          <div style="font-size:10.5px;color:#64748B;">Code · <b>{{i.code}}</b> · {{i.expiry}}</div>
+        </div>
+        <span style="background:{{i.tagBg}};color:{{i.tagColor}};font-size:10px;font-weight:800;padding:3px 8px;border-radius:999px;">{{i.tag}}</span>
+      </div>
+    </sc-for>
+  </div>
+</div>
+</x-dc>
+<script data-dc-script data-props='{"$preview":{"width":440,"height":900}}'>
+class Component extends DCLogic{renderVals(){return{
+  tabs:[
+    {label:'Available',n:12,bg:'#0B2A5B',fg:'#fff',border:'#0B2A5B'},
+    {label:'Claimed',n:8,bg:'#F1F5F9',fg:'#0B2A5B',border:'#E2E8F0'},
+    {label:'Active',n:5,bg:'#F1F5F9',fg:'#0B2A5B',border:'#E2E8F0'},
+    {label:'Expiring',n:3,bg:'#F1F5F9',fg:'#0B2A5B',border:'#E2E8F0'},
+  ],
+  items:[
+    {title:'AI Pro Plan · 1 year',code:'GYAI-4487',expiry:'Valid till 31 Dec 2026',emoji:'🤖',bg:'#DBEAFE',tag:'Active',tagBg:'#DCFCE7',tagColor:'#166534'},
+    {title:'Movie tickets · 50% off',code:'MOVE-2201',expiry:'Ends Sunday',emoji:'🎬',bg:'#EDE9FE',tag:'Expiring',tagBg:'#FEF3C7',tagColor:'#B45309'},
+    {title:'₹200 food voucher',code:'FOOD-8890',expiry:'30 days left',emoji:'🍔',bg:'#FEF3C7',tag:'Active',tagBg:'#DCFCE7',tagColor:'#166534'},
+    {title:'Sustainability course',code:'SDG-1015',expiry:'Self-paced',emoji:'🌱',bg:'#DCFCE7',tag:'Claimed',tagBg:'#DBEAFE',tagColor:'#1D4ED8'},
+  ]
+}}}
+</script>
+</body></html>

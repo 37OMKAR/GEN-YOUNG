@@ -1,11 +1,33 @@
 {
-  "artboards": [
-    { "file": "Main.dc.html",    "x": 0,    "y": 0,    "w": 440, "h": 900, "title": "Home · Benefits Marketplace" },
-    { "file": "Learn.dc.html",   "x": 540,  "y": 0,    "w": 440, "h": 900, "title": "Learn · Skills" },
-    { "file": "Drop.dc.html",    "x": 1080, "y": 0,    "w": 440, "h": 900, "title": "Friday Drop" },
-    { "file": "SOS.dc.html",     "x": 0,    "y": 1020, "w": 440, "h": 900, "title": "Emergency SOS" },
-    { "file": "Finance.dc.html", "x": 540,  "y": 1020, "w": 440, "h": 900, "title": "Financial Learning" },
-    { "file": "Landing.dc.html", "x": 1080, "y": 1020, "w": 1440, "h": 1400, "title": "Marketing landing" }
+  "pages": [
+    { "id": "app", "name": "App screens (mobile)" },
+    { "id": "marketing", "name": "Marketing landing" }
   ],
-  "launch": { "view": "canvas" }
+  "artboards": [
+    { "file": "Onboard.dc.html",       "x": 0,    "y": 0,    "w": 440, "h": 900, "page": "app", "title": "01 · Onboard / persona" },
+    { "file": "Main.dc.html",          "x": 540,  "y": 0,    "w": 440, "h": 900, "page": "app", "title": "02 · Home · Marketplace" },
+    { "file": "Profile.dc.html",       "x": 1080, "y": 0,    "w": 440, "h": 900, "page": "app", "title": "03 · Profile · Benefits Engine" },
+    { "file": "BenefitDetail.dc.html", "x": 1620, "y": 0,    "w": 440, "h": 900, "page": "app", "title": "04 · Benefit detail" },
+    { "file": "Wallet.dc.html",        "x": 2160, "y": 0,    "w": 440, "h": 900, "page": "app", "title": "05 · Benefits wallet" },
+
+    { "file": "Banking.dc.html",       "x": 0,    "y": 1020, "w": 440, "h": 900, "page": "app", "title": "06 · Banking dashboard" },
+    { "file": "Card.dc.html",          "x": 540,  "y": 1020, "w": 440, "h": 900, "page": "app", "title": "07 · Virtual card" },
+    { "file": "UPI.dc.html",           "x": 1080, "y": 1020, "w": 440, "h": 900, "page": "app", "title": "08 · UPI send / scan" },
+    { "file": "Goals.dc.html",         "x": 1620, "y": 1020, "w": 440, "h": 900, "page": "app", "title": "09 · Savings goals" },
+    { "file": "Finance.dc.html",       "x": 2160, "y": 1020, "w": 440, "h": 900, "page": "app", "title": "10 · Financial learning" },
+
+    { "file": "Learn.dc.html",         "x": 0,    "y": 2040, "w": 440, "h": 900, "page": "app", "title": "11 · Learn · Skills" },
+    { "file": "Quiz.dc.html",          "x": 540,  "y": 2040, "w": 440, "h": 900, "page": "app", "title": "12 · Quiz" },
+    { "file": "Drop.dc.html",          "x": 1080, "y": 2040, "w": 440, "h": 900, "page": "app", "title": "13 · Friday Drop" },
+    { "file": "DropClaim.dc.html",     "x": 1620, "y": 2040, "w": 440, "h": 900, "page": "app", "title": "14 · Drop · claim success" },
+    { "file": "Green.dc.html",         "x": 2160, "y": 2040, "w": 440, "h": 900, "page": "app", "title": "15 · Green Passport" },
+
+    { "file": "SOS.dc.html",           "x": 0,    "y": 3060, "w": 440, "h": 900, "page": "app", "title": "16 · Emergency SOS" },
+    { "file": "SOSDispatch.dc.html",   "x": 540,  "y": 3060, "w": 440, "h": 900, "page": "app", "title": "17 · SOS · dispatched" },
+    { "file": "Hazards.dc.html",       "x": 1080, "y": 3060, "w": 440, "h": 900, "page": "app", "title": "18 · Weather & hazards" },
+    { "file": "Accessibility.dc.html", "x": 1620, "y": 3060, "w": 440, "h": 900, "page": "app", "title": "19 · Accessibility & Privacy" },
+
+    { "file": "Landing.dc.html",       "x": 0,    "y": 0,    "w": 1440, "h": 1400, "page": "marketing", "title": "20 · Marketing landing" }
+  ],
+  "launch": { "view": "canvas", "page": "app" }
 }

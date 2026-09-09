@@ -1,0 +1,60 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><script src="./support.js"></script></head><body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap">
+<style>
+  body{margin:0;font-family:'Plus Jakarta Sans',system-ui,sans-serif;background:#0B2A5B;color:#fff}
+  .phone{width:390px;height:844px;background:linear-gradient(180deg,#0B2A5B,#173B7A);border-radius:44px;overflow:hidden;position:relative;box-shadow:0 30px 60px rgba(11,42,91,.18),0 0 0 10px #0B2A5B,0 0 0 12px #1e3a70;margin:24px auto}
+  .notch{position:absolute;top:8px;left:50%;transform:translateX(-50%);width:112px;height:28px;background:#000;border-radius:20px;z-index:3}
+</style>
+</helmet>
+<div class="phone">
+  <div class="notch"></div>
+  <div style="padding:44px 20px 8px;display:flex;justify-content:space-between;align-items:center;">
+    <div style="width:32px;height:32px;border-radius:10px;background:rgba(255,255,255,0.12);display:flex;align-items:center;justify-content:center;">✕</div>
+    <div style="font-size:12px;opacity:.85;">Question <b>3 / 5</b></div>
+    <div style="background:#22C55E;color:#0B2A5B;font-size:11px;font-weight:900;padding:4px 10px;border-radius:999px;">🔥 12</div>
+  </div>
+
+  <!-- Progress -->
+  <div style="margin:8px 20px 20px;height:6px;background:rgba(255,255,255,0.15);border-radius:999px;overflow:hidden;">
+    <div style="width:60%;height:100%;background:linear-gradient(90deg,#22C55E,#4ADE80);"></div>
+  </div>
+
+  <!-- Category & Q -->
+  <div style="padding:0 20px 12px;">
+    <div style="font-size:11.5px;opacity:.75;text-transform:uppercase;letter-spacing:.08em;font-weight:800;">Budgeting Basics</div>
+    <div style="font-size:22px;font-weight:800;line-height:1.25;margin-top:6px;">Priya earns ₹8,000 a month. Which spending split follows the 50/30/20 rule?</div>
+  </div>
+
+  <div style="padding:0 16px 12px;display:flex;flex-direction:column;gap:10px;">
+    <sc-for list="{{options}}" as="o" hint-placeholder-count="4">
+      <div style="background:{{o.bg}};border:2px solid {{o.border}};border-radius:14px;padding:14px 16px;display:flex;align-items:center;gap:12px;color:{{o.fg}};">
+        <div style="width:32px;height:32px;border-radius:10px;background:{{o.dotBg}};color:{{o.dotFg}};display:flex;align-items:center;justify-content:center;font-weight:900;">{{o.k}}</div>
+        <div style="font-weight:700;font-size:13.5px;flex:1;">{{o.text}}</div>
+        <div style="width:24px;height:24px;border-radius:50%;background:{{o.iconBg}};color:{{o.iconFg}};display:flex;align-items:center;justify-content:center;font-weight:900;font-size:13px;">{{o.icon}}</div>
+      </div>
+    </sc-for>
+  </div>
+
+  <!-- Feedback -->
+  <div style="margin:8px 16px;background:#DCFCE7;color:#065F46;border-radius:14px;padding:12px 14px;">
+    <div style="font-weight:800;font-size:13px;">Correct! ✨ +20 XP</div>
+    <div style="font-size:11.5px;margin-top:2px;line-height:1.4;">50% for needs, 30% for wants, 20% for savings — the classic split for a first paycheck.</div>
+  </div>
+
+  <div style="position:absolute;bottom:0;left:0;right:0;padding:14px 16px 22px;background:rgba(11,42,91,0.6);backdrop-filter:blur(8px);">
+    <button style="width:100%;background:#22C55E;color:#fff;border:none;padding:14px;border-radius:12px;font-weight:800;font-size:14px;">Next question →</button>
+  </div>
+</div>
+</x-dc>
+<script data-dc-script data-props='{"$preview":{"width":440,"height":900}}'>
+class Component extends DCLogic{renderVals(){return{options:[
+  {k:'A',text:'₹4,000 needs · ₹2,400 wants · ₹1,600 save',bg:'#22C55E',border:'#22C55E',fg:'#fff',dotBg:'rgba(255,255,255,0.25)',dotFg:'#fff',iconBg:'#fff',iconFg:'#16A34A',icon:'✓'},
+  {k:'B',text:'₹3,000 needs · ₹3,000 wants · ₹2,000 save',bg:'rgba(255,255,255,0.08)',border:'rgba(255,255,255,0.14)',fg:'#fff',dotBg:'rgba(255,255,255,0.12)',dotFg:'#fff',iconBg:'transparent',iconFg:'transparent',icon:''},
+  {k:'C',text:'₹5,000 needs · ₹1,500 wants · ₹1,500 save',bg:'rgba(255,255,255,0.08)',border:'rgba(255,255,255,0.14)',fg:'#fff',dotBg:'rgba(255,255,255,0.12)',dotFg:'#fff',iconBg:'transparent',iconFg:'transparent',icon:''},
+  {k:'D',text:'₹6,000 wants · ₹2,000 save · ₹0 needs',bg:'rgba(255,255,255,0.08)',border:'rgba(255,255,255,0.14)',fg:'#fff',dotBg:'rgba(255,255,255,0.12)',dotFg:'#fff',iconBg:'transparent',iconFg:'transparent',icon:''},
+]}}}
+</script>
+</body></html>

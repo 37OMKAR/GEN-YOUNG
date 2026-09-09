@@ -1,0 +1,76 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><script src="./support.js"></script></head><body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap">
+<style>
+  body{margin:0;font-family:'Plus Jakarta Sans',system-ui,sans-serif;background:#EEF3FA;color:#0B2A5B}
+  .phone{width:390px;height:844px;background:#fff;border-radius:44px;overflow:hidden;position:relative;box-shadow:0 30px 60px rgba(11,42,91,.18),0 0 0 10px #0B2A5B,0 0 0 12px #1e3a70;margin:24px auto}
+  .notch{position:absolute;top:8px;left:50%;transform:translateX(-50%);width:112px;height:28px;background:#0B2A5B;border-radius:20px;z-index:3}
+  .status{display:flex;justify-content:space-between;align-items:center;padding:14px 28px 8px;font-size:13px;font-weight:700}
+  .navitem{display:flex;flex-direction:column;align-items:center;gap:3px;font-size:10.5px;font-weight:600}
+</style>
+</helmet>
+<div class="phone">
+  <div class="notch"></div>
+  <div class="status"><span>9:41</span><span>••••</span></div>
+  <div style="padding:6px 20px 12px;display:flex;align-items:center;gap:10px;">
+    <div style="width:32px;height:32px;border-radius:8px;background:#F1F5F9;display:flex;align-items:center;justify-content:center;">‹</div>
+    <div style="font-size:18px;font-weight:800;">Virtual RuPay card</div>
+  </div>
+  <div style="margin:0 16px 12px;background:linear-gradient(135deg,#0B2A5B,#22C55E);border-radius:20px;padding:22px;color:#fff;box-shadow:0 15px 35px rgba(11,42,91,.3);position:relative;overflow:hidden;">
+    <div style="display:flex;justify-content:space-between;align-items:start;">
+      <div style="font-weight:800;">Gen-Young</div>
+      <div style="font-weight:900;font-size:16px;">RuPay</div>
+    </div>
+    <div style="margin-top:36px;font-family:ui-monospace,monospace;letter-spacing:0.18em;font-size:17px;font-weight:700;">6521  1284  6412  4487</div>
+    <div style="display:flex;justify-content:space-between;margin-top:14px;font-size:11px;">
+      <div><span style="opacity:.7;">Card holder</span><br><b>AANYA SHARMA</b></div>
+      <div><span style="opacity:.7;">Valid</span><br><b>08/29</b></div>
+      <div><span style="opacity:.7;">CVV</span><br><b>245</b></div>
+    </div>
+  </div>
+  <div style="padding:0 16px 12px;display:grid;grid-template-columns:repeat(2,1fr);gap:10px;">
+    <div style="background:#fff;border:1px solid #E2E8F0;border-radius:14px;padding:12px;display:flex;align-items:center;justify-content:space-between;">
+      <div><div style="font-weight:800;font-size:13px;">Freeze card</div><div style="font-size:11px;color:#64748B;">Instant lock</div></div>
+      <div style="width:38px;height:22px;border-radius:999px;background:#22C55E;position:relative;"><div style="width:18px;height:18px;background:#fff;border-radius:50%;position:absolute;right:2px;top:2px;"></div></div>
+    </div>
+    <div style="background:#fff;border:1px solid #E2E8F0;border-radius:14px;padding:12px;">
+      <div style="font-weight:800;font-size:13px;">Show CVV</div>
+      <div style="font-size:11px;color:#64748B;">Auto-hides in 30s</div>
+    </div>
+  </div>
+  <div style="margin:0 16px 12px;background:#fff;border:1px solid #E2E8F0;border-radius:14px;padding:14px;">
+    <div style="display:flex;justify-content:space-between;align-items:center;">
+      <div style="font-weight:800;font-size:13px;">Online transaction limit</div>
+      <div style="font-weight:900;color:#0B2A5B;">₹ 10,000</div>
+    </div>
+    <div style="height:6px;background:#E2E8F0;border-radius:999px;margin-top:10px;position:relative;">
+      <div style="width:40%;height:100%;background:linear-gradient(90deg,#22C55E,#4ADE80);border-radius:999px;"></div>
+      <div style="position:absolute;left:40%;top:-5px;width:16px;height:16px;background:#fff;border:3px solid #22C55E;border-radius:50%;transform:translateX(-8px);"></div>
+    </div>
+    <div style="display:flex;justify-content:space-between;font-size:10.5px;color:#64748B;margin-top:6px;"><span>₹500</span><span>₹25,000</span></div>
+  </div>
+  <div style="padding:0 20px 8px;font-weight:800;font-size:14px;">Recent card activity</div>
+  <div style="padding:0 20px 90px;">
+    <sc-for list="{{txns}}" as="t" hint-placeholder-count="3">
+      <div style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid #F1F5F9;">
+        <div style="width:36px;height:36px;border-radius:10px;background:{{t.bg}};color:#fff;display:flex;align-items:center;justify-content:center;">{{t.emoji}}</div>
+        <div style="flex:1;"><div style="font-weight:700;font-size:13px;">{{t.n}}</div><div style="font-size:10.5px;color:#64748B;">{{t.time}}</div></div>
+        <div style="font-weight:800;color:{{t.c}};">{{t.a}}</div>
+      </div>
+    </sc-for>
+  </div>
+  <div style="position:absolute;bottom:0;left:0;right:0;background:#fff;border-top:1px solid #E2E8F0;padding:10px 8px 22px;display:flex;justify-content:space-around;color:#94A3B8;">
+    <div class="navitem" style="color:#0B2A5B;">Home</div><div class="navitem">Benefits</div><div class="navitem">Learn</div><div class="navitem">Drop</div><div class="navitem">Profile</div>
+  </div>
+</div>
+</x-dc>
+<script data-dc-script data-props='{"$preview":{"width":440,"height":900}}'>
+class Component extends DCLogic{renderVals(){return{txns:[
+  {n:'Amazon',time:'Today',a:'- ₹ 1,299',c:'#DC2626',bg:'#F59E0B',emoji:'🛒'},
+  {n:'Netflix',time:'Yesterday',a:'- ₹ 199',c:'#DC2626',bg:'#EF4444',emoji:'🎬'},
+  {n:'Refund · Myntra',time:'6 Sep',a:'+ ₹ 899',c:'#16A34A',bg:'#22C55E',emoji:'↩'},
+]}}}
+</script>
+</body></html>
