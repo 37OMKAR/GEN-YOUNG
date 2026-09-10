@@ -42,6 +42,7 @@ export const TopHeader: React.FC<TopHeaderProps> = ({
         <button
           onClick={toggleHighContrast}
           aria-label="Toggle High-Contrast Mode"
+          aria-pressed={settings.highContrast}
           title="Toggle High-Contrast Mode"
           className={`p-1.5 rounded-lg border transition-all active:scale-95 ${
             settings.highContrast

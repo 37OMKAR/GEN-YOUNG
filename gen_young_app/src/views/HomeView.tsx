@@ -54,10 +54,10 @@ export const HomeView: React.FC<HomeViewProps> = ({ onNavigateTab }) => {
           <h2 className="text-base font-bold text-white tracking-tight">
             Hi, {activePersona.name.split(' ')[0]} 👋
           </h2>
-          <p className="text-[11px] text-slate-300 mt-0.5">
-            {activePersona.role === 'student' && '📚 College Senior • Mumbai Tech Track'}
-            {activePersona.role === 'aspirant' && '🎯 Class 11 Aspirant • Minor Account'}
-            {activePersona.role === 'professional' && '💼 Young Pro • Bengaluru FinTrack'}
+          <p className="text-xs text-slate-300 mt-0.5">
+            {activePersona.role === 'student' && 'College Senior • Mumbai Tech Track'}
+            {activePersona.role === 'aspirant' && 'Class 11 Aspirant • Minor Account'}
+            {activePersona.role === 'professional' && 'Young Pro • Bengaluru FinTrack'}
           </p>
         </div>
         <div className="text-right">
@@ -97,7 +97,7 @@ export const HomeView: React.FC<HomeViewProps> = ({ onNavigateTab }) => {
             className="p-3 bg-gradient-to-br from-purple-950/40 to-slate-850 border border-purple-500/30 rounded-xl text-left hover:border-purple-400/60 transition-all active:scale-95 group"
           >
             <div className="flex items-center justify-between">
-              <span className="text-[10px] bg-purple-500/20 text-purple-300 font-semibold px-1.5 py-0.2 rounded">
+              <span className="text-[10px] bg-purple-500/20 text-purple-300 font-semibold px-1.5 py-0.5 rounded">
                 AI Perk
               </span>
               <Sparkles size={13} className="text-purple-400" />
@@ -113,7 +113,7 @@ export const HomeView: React.FC<HomeViewProps> = ({ onNavigateTab }) => {
             className="p-3 bg-gradient-to-br from-amber-950/40 to-slate-850 border border-amber-500/30 rounded-xl text-left hover:border-amber-400/60 transition-all active:scale-95 group"
           >
             <div className="flex items-center justify-between">
-              <span className="text-[10px] bg-amber-500/20 text-amber-300 font-semibold px-1.5 py-0.2 rounded">
+              <span className="text-[10px] bg-amber-500/20 text-amber-300 font-semibold px-1.5 py-0.5 rounded">
                 Friday Drop
               </span>
               <Flame size={13} className="text-amber-400" />

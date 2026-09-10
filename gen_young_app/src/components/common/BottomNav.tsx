@@ -10,6 +10,9 @@ export interface BottomNavProps {
   hasActiveSos?: boolean;
 }
 
+const noMotion = typeof window !== 'undefined'
+  && window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+
 interface TabConfig {
   id: NavTabId;
   label: string;
@@ -51,7 +54,7 @@ export const BottomNav: React.FC<BottomNavProps> = ({
               onClick={() => onTabChange(tab.id)}
               aria-label={`${tab.label} tab`}
               aria-current={isActive ? 'page' : undefined}
-              className={`min-h-[50px] flex flex-col items-center justify-center relative rounded-xl transition-all duration-150 active:scale-90 ${
+              className={`min-h-[50px] flex flex-col items-center justify-center relative rounded-xl transition-all duration-150 active:scale-90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400 ${
                 isActive
                   ? isSafety
                     ? 'text-rose-400 bg-rose-500/15'
@@ -63,19 +66,19 @@ export const BottomNav: React.FC<BottomNavProps> = ({
             >
               {/* Badge indicator */}
               {tab.badge && (
-                <span className="absolute -top-1 right-2 bg-gradient-to-r from-amber-500 to-rose-500 text-white text-[9px] font-bold px-1.5 py-0.2 rounded-full uppercase shadow-sm tracking-wider animate-pulse">
+                <span className={`absolute -top-1 right-2 bg-gradient-to-r from-amber-500 to-rose-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full uppercase shadow-sm tracking-wider ${noMotion ? '' : 'animate-pulse'}`}>
                   {tab.badge}
                 </span>
               )}
 
               {/* Safety SOS glowing indicator */}
               {isSafety && hasActiveSos && (
-                <span className="absolute -top-1 right-2 w-2.5 h-2.5 bg-rose-500 rounded-full animate-ping" />
+                <span className={`absolute -top-1 right-2 w-2.5 h-2.5 bg-rose-500 rounded-full ${noMotion ? '' : 'animate-ping'}`} />
               )}
 
               <Icon size={20} className={isActive ? 'stroke-[2.5px]' : 'stroke-2'} />
               <span
-                className={`text-[10px] mt-0.5 tracking-tight ${
+                className={`text-[11px] mt-0.5 tracking-tight ${
                   isActive ? 'font-bold' : 'font-medium'
                 }`}
               >

@@ -40,7 +40,7 @@ const AppContent: React.FC = () => {
   };
 
   return (
-    <div className="app-container min-h-screen bg-slate-950 text-slate-100 flex flex-col select-none">
+    <div className="app-container min-h-screen bg-slate-950 text-slate-100 flex flex-col">
       {/* Top Persistent App Header */}
       <TopHeader onOpenPersonaSwitcher={() => setIsPersonaModalOpen(true)} />
 
