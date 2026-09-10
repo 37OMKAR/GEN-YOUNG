@@ -1,5 +1,5 @@
 import React from 'react';
-import { Sprout, ChevronDown, CheckCircle2, Contrast, Hand } from 'lucide-react';
+import { ChevronDown, Contrast, Hand, Bell } from 'lucide-react';
 import { usePersona } from '../../context/PersonaContext';
 import { useAccessibility } from '../../context/AccessibilityContext';
 
@@ -17,72 +17,64 @@ export const TopHeader: React.FC<TopHeaderProps> = ({
   const { settings, toggleHighContrast } = useAccessibility();
 
   return (
-    <header className="sticky top-0 z-30 max-w-md mx-auto w-full bg-slate-900/90 backdrop-blur-md border-b border-slate-800/80 px-4 py-2.5 flex items-center justify-between shadow-sm">
-      {/* Brand & Zero-Balance Badge */}
-      <div className="flex flex-col">
-        <div className="flex items-center gap-1.5">
-          <div className="w-6 h-6 rounded-lg bg-gradient-to-tr from-emerald-500 to-teal-400 flex items-center justify-center text-slate-950 shadow-sm shadow-emerald-500/30">
-            <Sprout size={15} className="stroke-[2.5px]" />
-          </div>
-          <span className="font-extrabold text-base tracking-tight bg-gradient-to-r from-emerald-400 via-teal-300 to-white bg-clip-text text-transparent">
-            Gen-Young
-          </span>
-        </div>
-        <div className="flex items-center gap-1 mt-0.5">
-          <CheckCircle2 size={10} className="text-emerald-400" />
-          <span className="text-[10px] font-medium text-slate-400">
-            Zero-Balance Youth Account
-          </span>
-        </div>
-      </div>
+    <header className="sticky top-0 z-30 max-w-md mx-auto w-full bg-white/90 backdrop-blur-md border-b border-slate-200/70 px-4 py-3 flex items-center justify-between">
+      {/* Brand — deep blue wordmark + green leaf */}
+      <button
+        onClick={onOpenPersonaSwitcher}
+        aria-label="Open persona switcher"
+        className="flex items-center gap-1.5 active:scale-95 transition-transform"
+      >
+        <span className="font-extrabold text-xl tracking-tight text-blue-800">
+          Gen-Young
+        </span>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden>
+          <path d="M12 2C7 6 4 10 4 14c0 4 3 7 7 7 1 0 2-.2 3-.6-.5-2 .5-4 2-5 2-1 4-1 6 0 .3-1 .5-2 .5-3 0-4-3-8-11-10.4Z" fill="#22C55E"/>
+          <path d="M6 20c2-4 6-7 12-9" stroke="#065F46" strokeWidth="1.6" strokeLinecap="round"/>
+        </svg>
+      </button>
 
-      {/* Right Controls: High-Contrast Toggle & Active Persona Chip */}
+      {/* Right controls */}
       <div className="flex items-center gap-2">
-        {/* High Contrast Quick Toggle */}
         <button
           onClick={toggleHighContrast}
           aria-label="Toggle High-Contrast Mode"
           aria-pressed={settings.highContrast}
           title="Toggle High-Contrast Mode"
-          className={`p-1.5 rounded-lg border transition-all active:scale-95 ${
+          className={`p-2 rounded-full transition-all active:scale-95 ${
             settings.highContrast
-              ? 'bg-yellow-400 text-slate-950 border-yellow-300 font-bold'
-              : 'bg-slate-800/80 text-slate-300 border-slate-700/60 hover:text-white hover:bg-slate-700'
+              ? 'bg-yellow-300 text-black'
+              : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
           }`}
         >
           <Contrast size={16} />
         </button>
 
-        {/* Indian Sign Language (ISL) Assistant Toggle */}
         {onOpenSignLanguage && (
           <button
             onClick={onOpenSignLanguage}
             aria-label="Open Indian Sign Language Guide"
-            title="Indian Sign Language (ISL) Assistant - Quoted from 37OMKAR/text-to-signlanguage"
-            className="p-1.5 rounded-lg border border-emerald-500/50 bg-emerald-950/40 text-emerald-400 hover:bg-emerald-900/50 hover:text-white transition-all active:scale-95"
+            className="p-2 rounded-full bg-emerald-50 text-emerald-700 hover:bg-emerald-100 transition-all active:scale-95"
           >
             <Hand size={16} />
           </button>
         )}
 
-        {/* Persona Chip Selector */}
+        <button
+          aria-label="Notifications"
+          className="p-2 rounded-full bg-slate-100 text-slate-600 hover:bg-slate-200 transition-all active:scale-95"
+        >
+          <Bell size={16} />
+        </button>
+
         <button
           onClick={onOpenPersonaSwitcher}
-          aria-label={`Current Persona: ${activePersona.name}, age ${activePersona.age}. Click to switch.`}
-          className="flex items-center gap-1.5 bg-slate-800/80 hover:bg-slate-700/80 active:scale-95 transition-all border border-slate-700/70 rounded-full pl-1.5 pr-2.5 py-1 text-left"
+          aria-label={`Current Persona: ${activePersona.name}. Click to switch.`}
+          className="flex items-center gap-1.5 pl-0.5 pr-2 py-0.5 rounded-full bg-slate-100 hover:bg-slate-200 active:scale-95 transition-all"
         >
-          <div className="w-6 h-6 rounded-full bg-emerald-600/30 border border-emerald-400/40 flex items-center justify-center text-emerald-300 text-xs font-bold uppercase">
+          <div className="w-7 h-7 rounded-full bg-blue-600 text-white flex items-center justify-center text-xs font-bold">
             {activePersona.avatarInitials || activePersona.name.charAt(0)}
           </div>
-          <div className="flex flex-col">
-            <span className="text-xs font-semibold text-slate-100 leading-tight">
-              {activePersona.name.split(' ')[0]}
-            </span>
-            <span className="text-[9px] text-emerald-400 font-medium leading-none">
-              Age {activePersona.age}
-            </span>
-          </div>
-          <ChevronDown size={14} className="text-slate-400 ml-0.5" />
+          <ChevronDown size={14} className="text-slate-500" />
         </button>
       </div>
     </header>

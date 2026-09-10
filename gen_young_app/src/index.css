@@ -4,19 +4,20 @@
 
 @layer base {
   :root {
-    /* Semantic surfaces (dark theme default) */
-    --surface-0: 8 13 26;         /* app background */
-    --surface-1: 15 23 42;        /* sunk panels */
-    --surface-2: 23 32 51;        /* raised cards */
-    --surface-3: 30 41 59;        /* elevated cards / modals */
-    --border-subtle: 255 255 255 / 0.06;
-    --border-strong: 255 255 255 / 0.12;
-    --text-strong: 241 245 249;
-    --text-soft: 203 213 225;
-    --text-muted: 148 163 184;
-    --accent: 16 185 129;          /* emerald primary */
-    --accent-soft: 56 203 147;
-    --ring: 56 203 147;
+    /* LIGHT THEME — matches marketing collateral */
+    --surface-0: 247 250 254;     /* app background (near-white blue-tint) */
+    --surface-1: 255 255 255;     /* raised cards */
+    --surface-2: 241 245 249;     /* sunk panels */
+    --surface-3: 226 232 240;     /* elevated */
+    --border-subtle: 15 23 42 / 0.06;
+    --border-strong: 15 23 42 / 0.12;
+    --text-strong: 15 23 42;      /* near-black slate */
+    --text-soft: 51 65 85;
+    --text-muted: 100 116 139;
+    --accent: 30 64 175;           /* deep blue primary */
+    --accent-soft: 59 130 246;
+    --leaf: 34 197 94;             /* green leaf accent */
+    --ring: 59 130 246;
   }
 
   html {
@@ -24,7 +25,7 @@
     -webkit-tap-highlight-color: transparent;
   }
   body {
-    @apply min-h-screen antialiased selection:bg-brand-500 selection:text-slate-950;
+    @apply min-h-screen antialiased;
     background: rgb(var(--surface-0));
     color: rgb(var(--text-strong));
     overflow-x: hidden;
@@ -45,45 +46,46 @@
 }
 
 /* 3D Virtual RuPay Debit Card Flip Styles */
-.perspective-1000 {
-  perspective: 1000px;
-}
-.transform-style-3d {
-  transform-style: preserve-3d;
-}
-.backface-hidden {
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-}
-.rotate-y-180 {
-  transform: rotateY(180deg);
-}
+.perspective-1000 { perspective: 1000px; }
+.transform-style-3d { transform-style: preserve-3d; }
+.backface-hidden { backface-visibility: hidden; -webkit-backface-visibility: hidden; }
+.rotate-y-180 { transform: rotateY(180deg); }
 
-/* Custom Sleek Scrollbar */
-.no-scrollbar::-webkit-scrollbar {
-  display: none;
-}
-.no-scrollbar {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
-/* Glassmorphism & Surface Utilities */
+/* Surface + card utilities on light theme */
 .glass-panel {
-  background: rgb(var(--surface-1) / 0.75);
+  background: rgb(var(--surface-1) / 0.85);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border: 1px solid rgb(var(--border-subtle));
 }
-
 .glass-card {
-  background: rgb(var(--surface-3) / 0.6);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+  background: rgb(var(--surface-1));
   border: 1px solid rgb(var(--border-subtle));
+  box-shadow: 0 1px 2px rgba(15,23,42,0.04), 0 4px 12px rgba(15,23,42,0.04);
 }
 
-/* WCAG AAA High Contrast — variable swap, no !important sprawl */
+/* Category tile — pastel, iconic, matches marketing */
+.tile {
+  background: rgb(var(--surface-1));
+  border: 1px solid rgb(var(--border-subtle));
+  border-radius: 20px;
+  box-shadow: 0 1px 2px rgba(15,23,42,0.05), 0 6px 16px -8px rgba(15,23,42,0.08);
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+.tile:hover { transform: translateY(-1px); box-shadow: 0 2px 4px rgba(15,23,42,0.06), 0 10px 24px -8px rgba(15,23,42,0.12); }
+.tile:active { transform: scale(.97); }
+
+.tile-icon {
+  width: 44px; height: 44px;
+  border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  color: white;
+}
+
+/* WCAG AAA High-Contrast — swap tokens, no !important sprawl */
 .high-contrast {
   --surface-0: 0 0 0;
   --surface-1: 10 10 10;
@@ -96,15 +98,6 @@
   --text-muted: 255 255 0;
   --accent: 255 255 0;
   --accent-soft: 255 255 0;
+  --leaf: 0 255 0;
   --ring: 0 255 255;
-}
-
-/* Legacy slate overrides only where hardcoded classes bypass tokens */
-.high-contrast .bg-slate-900,
-.high-contrast .bg-slate-800,
-.high-contrast .bg-slate-850,
-.high-contrast [class*="bg-slate-9"],
-.high-contrast [class*="bg-slate-8"] {
-  background-color: rgb(var(--surface-2));
-  border-color: rgb(var(--border-subtle));
 }
