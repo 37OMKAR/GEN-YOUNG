@@ -94,7 +94,7 @@ export const HomeView: React.FC<HomeViewProps> = ({ onNavigateTab }) => {
         <div className="grid grid-cols-2 gap-2.5">
           <button
             onClick={() => onNavigateTab('benefits')}
-            className="p-3 bg-gradient-to-br from-purple-950/40 to-slate-850 border border-purple-500/30 rounded-xl text-left hover:border-purple-400/60 transition-all active:scale-95 group"
+            className="p-3 bg-chip-perk border border-purple-500/30 rounded-xl text-left hover:border-purple-400/60 transition-all active:scale-95 group"
           >
             <div className="flex items-center justify-between">
               <span className="text-[10px] bg-purple-500/20 text-purple-300 font-semibold px-1.5 py-0.5 rounded">
@@ -110,7 +110,7 @@ export const HomeView: React.FC<HomeViewProps> = ({ onNavigateTab }) => {
 
           <button
             onClick={() => onNavigateTab('drops')}
-            className="p-3 bg-gradient-to-br from-amber-950/40 to-slate-850 border border-amber-500/30 rounded-xl text-left hover:border-amber-400/60 transition-all active:scale-95 group"
+            className="p-3 bg-chip-drop border border-amber-500/30 rounded-xl text-left hover:border-amber-400/60 transition-all active:scale-95 group"
           >
             <div className="flex items-center justify-between">
               <span className="text-[10px] bg-amber-500/20 text-amber-300 font-semibold px-1.5 py-0.5 rounded">
@@ -134,7 +134,7 @@ export const HomeView: React.FC<HomeViewProps> = ({ onNavigateTab }) => {
         <div className="grid grid-cols-3 gap-2">
           <button
             onClick={() => setOpenHub('green')}
-            className="p-2.5 rounded-xl bg-gradient-to-br from-emerald-950/50 to-slate-900 border border-emerald-500/30 text-left hover:border-emerald-400/60 transition-all active:scale-95 group"
+            className="p-2.5 rounded-xl bg-hub-green border border-emerald-500/30 text-left hover:border-emerald-400/60 transition-all active:scale-95 group"
             aria-label="Open Green Impact hub"
           >
             <Leaf size={16} className="text-emerald-400" />
@@ -146,7 +146,7 @@ export const HomeView: React.FC<HomeViewProps> = ({ onNavigateTab }) => {
 
           <button
             onClick={() => setOpenHub('community')}
-            className="p-2.5 rounded-xl bg-gradient-to-br from-violet-950/50 to-slate-900 border border-violet-500/30 text-left hover:border-violet-400/60 transition-all active:scale-95 group"
+            className="p-2.5 rounded-xl bg-hub-community border border-violet-500/30 text-left hover:border-violet-400/60 transition-all active:scale-95 group"
             aria-label="Open Community hub"
           >
             <Users size={16} className="text-violet-400" />
@@ -158,7 +158,7 @@ export const HomeView: React.FC<HomeViewProps> = ({ onNavigateTab }) => {
 
           <button
             onClick={() => setOpenHub('insurance')}
-            className="p-2.5 rounded-xl bg-gradient-to-br from-teal-950/50 to-slate-900 border border-teal-500/30 text-left hover:border-teal-400/60 transition-all active:scale-95 group"
+            className="p-2.5 rounded-xl bg-hub-insurance border border-teal-500/30 text-left hover:border-teal-400/60 transition-all active:scale-95 group"
             aria-label="Open Insurance hub"
           >
             <Shield size={16} className="text-teal-400" />

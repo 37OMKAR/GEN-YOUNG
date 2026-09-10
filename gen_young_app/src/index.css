@@ -3,16 +3,34 @@
 @tailwind utilities;
 
 @layer base {
+  :root {
+    /* Semantic surfaces (dark theme default) */
+    --surface-0: 8 13 26;         /* app background */
+    --surface-1: 15 23 42;        /* sunk panels */
+    --surface-2: 23 32 51;        /* raised cards */
+    --surface-3: 30 41 59;        /* elevated cards / modals */
+    --border-subtle: 255 255 255 / 0.06;
+    --border-strong: 255 255 255 / 0.12;
+    --text-strong: 241 245 249;
+    --text-soft: 203 213 225;
+    --text-muted: 148 163 184;
+    --accent: 16 185 129;          /* emerald primary */
+    --accent-soft: 56 203 147;
+    --ring: 56 203 147;
+  }
+
   html {
     font-family: 'Plus Jakarta Sans', Inter, system-ui, sans-serif;
     -webkit-tap-highlight-color: transparent;
   }
   body {
-    @apply bg-slate-950 text-slate-100 min-h-screen antialiased selection:bg-brand-500 selection:text-slate-950;
+    @apply min-h-screen antialiased selection:bg-brand-500 selection:text-slate-950;
+    background: rgb(var(--surface-0));
+    color: rgb(var(--text-strong));
     overflow-x: hidden;
   }
   :focus-visible {
-    outline: 2px solid #38cb93;
+    outline: 2px solid rgb(var(--ring));
     outline-offset: 2px;
     border-radius: 6px;
   }
@@ -52,45 +70,41 @@
 
 /* Glassmorphism & Surface Utilities */
 .glass-panel {
-  background: rgba(15, 23, 42, 0.75);
+  background: rgb(var(--surface-1) / 0.75);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid rgb(var(--border-subtle));
 }
 
 .glass-card {
-  background: rgba(30, 41, 59, 0.6);
+  background: rgb(var(--surface-3) / 0.6);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-  border: 1px solid rgba(255, 255, 255, 0.06);
+  border: 1px solid rgb(var(--border-subtle));
 }
 
-/* WCAG AAA High Contrast Overrides */
+/* WCAG AAA High Contrast — variable swap, no !important sprawl */
 .high-contrast {
-  --hc-bg: #000000;
-  --hc-card: #0a0a0a;
-  --hc-text: #ffffff;
-  --hc-yellow: #ffff00;
-  --hc-cyan: #00ffff;
-  --hc-border: #ffff00;
+  --surface-0: 0 0 0;
+  --surface-1: 10 10 10;
+  --surface-2: 13 13 13;
+  --surface-3: 15 15 15;
+  --border-subtle: 255 255 0 / 1;
+  --border-strong: 255 255 0 / 1;
+  --text-strong: 255 255 255;
+  --text-soft: 255 255 255;
+  --text-muted: 255 255 0;
+  --accent: 255 255 0;
+  --accent-soft: 255 255 0;
+  --ring: 0 255 255;
 }
 
-.high-contrast body,
-.high-contrast .app-container {
-  background-color: #000000 !important;
-  color: #ffffff !important;
-}
-
-.high-contrast .glass-panel,
-.high-contrast .glass-card,
+/* Legacy slate overrides only where hardcoded classes bypass tokens */
 .high-contrast .bg-slate-900,
 .high-contrast .bg-slate-800,
-.high-contrast .bg-slate-850 {
-  background-color: #0a0a0a !important;
-  border-color: #ffff00 !important;
-  color: #ffffff !important;
-}
-
-.high-contrast button {
-  border-color: #ffff00 !important;
+.high-contrast .bg-slate-850,
+.high-contrast [class*="bg-slate-9"],
+.high-contrast [class*="bg-slate-8"] {
+  background-color: rgb(var(--surface-2));
+  border-color: rgb(var(--border-subtle));
 }

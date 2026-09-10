@@ -34,6 +34,18 @@ export default {
           900: '#0f172a',
           950: '#080d1a',
         },
+        // Semantic surfaces (backed by CSS vars in index.css)
+        surface: {
+          0: 'rgb(var(--surface-0) / <alpha-value>)',
+          1: 'rgb(var(--surface-1) / <alpha-value>)',
+          2: 'rgb(var(--surface-2) / <alpha-value>)',
+          3: 'rgb(var(--surface-3) / <alpha-value>)',
+        },
+        ink: {
+          strong: 'rgb(var(--text-strong) / <alpha-value>)',
+          soft: 'rgb(var(--text-soft) / <alpha-value>)',
+          muted: 'rgb(var(--text-muted) / <alpha-value>)',
+        },
         // WCAG AAA High-Contrast Palette
         hc: {
           bg: '#000000',
@@ -52,6 +64,13 @@ export default {
         'pulse-fast': 'pulse 1s cubic-bezier(0.4, 0, 0.6, 1) infinite',
         'ping-once': 'ping 0.8s cubic-bezier(0, 0, 0.2, 1) 1',
         'spin-slow': 'spin 12s linear infinite',
+      },
+      backgroundImage: {
+        'hub-green':     'linear-gradient(135deg, rgba(6,78,59,0.55) 0%, rgba(15,23,42,0.9) 100%)',
+        'hub-community': 'linear-gradient(135deg, rgba(76,29,149,0.55) 0%, rgba(15,23,42,0.9) 100%)',
+        'hub-insurance': 'linear-gradient(135deg, rgba(19,78,74,0.55) 0%, rgba(15,23,42,0.9) 100%)',
+        'chip-perk':     'linear-gradient(135deg, rgba(76,29,149,0.35) 0%, rgba(23,32,51,0.9) 100%)',
+        'chip-drop':     'linear-gradient(135deg, rgba(120,53,15,0.35) 0%, rgba(23,32,51,0.9) 100%)',
       },
       boxShadow: {
         'glow-emerald': '0 0 20px -5px rgba(16, 185, 129, 0.4)',

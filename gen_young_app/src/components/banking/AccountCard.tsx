@@ -43,7 +43,7 @@ export const AccountCard: React.FC<AccountCardProps> = ({
           <span className="text-xs font-bold uppercase tracking-wider text-emerald-400">
             Gen-Young Youth Savings
           </span>
-          <span className="bg-emerald-950 text-emerald-300 text-[10px] font-medium px-1.5 py-0.2 rounded border border-emerald-500/30">
+          <span className="bg-emerald-950 text-emerald-300 text-[10px] font-medium px-1.5 py-0.5 rounded border border-emerald-500/30">
             Zero-Min Bal
           </span>
         </div>
